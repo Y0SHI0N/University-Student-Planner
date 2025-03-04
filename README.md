@@ -24,14 +24,14 @@ breif overview of what can be found in the following repo
 ### Dependencies (Amazon corretto and potentially more)
 
 ### how to setup IntelliJ 
-1. Download the IntelliJ IDEA Community Edition .exe file from https://www.jetbrains.com/idea/download/?section=windows
+1. Download the IntelliJ IDEA Community Edition .exe file from [JetBrains.com](https://www.jetbrains.com/idea/download/?section=windows)
 2. Select Installation location
 3. Select Installation options
 4. chose a start menu folder
 #### IntelliJ should now be correctly installed.
 
 ### how to setup Amazon Corretto on IntelliJ
-1. Download Amazon Corretto Version 21 .msi file from https://corretto.aws/downloads/latest/amazon-corretto-21-x64-windows-jdk.msi
+1. Download Amazon Corretto Version 21 .msi file from [Corretto.aws](https://corretto.aws/downloads/latest/amazon-corretto-21-x64-windows-jdk.msi)
 2. When a new project is created in IntelliJ select Amazon Corretto version 21 as the JDK 
 #### The project will utilise Amazon Corretto as its JDK because it is Free, has multiplatform support and has optimised memory management compared to other JDK's
 

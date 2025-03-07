@@ -66,7 +66,23 @@ breif overview of what can be found in the following repo
 (can implement MySQL with a JDBC[https://www.geeksforgeeks.org/establishing-jdbc-connection-in-java/] note: will have to reference this if we use its code)
 
 ## Project Requirements
-(what tasks need to be completed by the end of the project)
+| ID  | Name                          | Description  | Importance  | Expected End Date | Status  |
+|----|------------------------------|-----------------------------------------------|-------------|----------------|-----------|
+| 1  | Live Heatmap                 | Enable real-time display of university heatmap data. | High  | - | Incomplete |
+| 2  | Predictive Heatmap            | Implement AI-based predictions for heatmap trends based on past bookings and usage patterns. | High  | - | Incomplete |
+| 3  | Student KPI Dashboard         | Display key performance indicators (KPIs) for students in a clear and interactive format. | Medium | - | Incomplete |
+| 4  | Performance Goal Management   | Allow users to set custom goals or receive AI-generated recommendations to enhance performance. | High  | - | Incomplete |
+| 5  | AI-Generated Study Quotes     | Provide AI-curated motivational or relevant study quotes based on the user’s workload. | Low | - | Incomplete |
+| 6  | Weekly Performance Report     | Generate automated weekly performance reports based on KPIs and goals, with AI-driven suggestions for improvement. | High | - | Incomplete |
+| 7  | Assignment Deadline Tracker   | Display upcoming assignment details, including name, class, weighting, and due date. | High  | - | Incomplete |
+| 8  | Calendar Event Management     | Allow users to add and manage events in their personal calendar. | Medium | - | Incomplete |
+| 9  | Assignment Management         | Enable users to create, edit, and manage their assignments efficiently. | High  | - | Incomplete |
+| 10 | Timetable Filtering           | Implement filtering options for timetables based on unit codes, event types (e.g., study sessions), and tags. | Medium | - | Incomplete |
+| 11 | Timetable View Modes          | Provide options to switch between weekly, monthly, and widget-based timetable views. | Medium | - | Incomplete |
+| 12 | Database Structure Creation   | Design and create necessary database (.db) files for the application. | High  | - | Incomplete |
+| 13 | Database Integration          | Integrate the created database files with the application’s backend. | High  | - | Incomplete |
+| 14 | User Interface Development    | Develop an intuitive and user-friendly GUI for the application. | High  | - | Incomplete |
+
 ---
 # Testing
 

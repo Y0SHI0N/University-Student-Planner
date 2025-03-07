@@ -8,15 +8,15 @@ breif overview of what can be found in the following repo
    - [Workflow](#workflow)
    - [Contributing to the repository](#contributing-to-the-repo)
 3) [Planning](#planning)
-   - [System Structure](#system-structure)
    - [User Stories](#user-stories)
    - [UML Class Diagram](#uml-class-diagram)
    - [Database Structuring](#database-structuring)
    - [Project Requirements](#project-requirements)
 4) [Testing](#testing)
+   - [Demo Video](#demo-video)
    - [UI/UX Navigation](#uiux-navigation)
    - [Backend Logic Testing](#backend-logical-tests)
-5) [Appendix](#appendix)
+6) [Appendix](#appendix)
 ---
 # Getting Started
 
@@ -56,10 +56,8 @@ breif overview of what can be found in the following repo
 5. Open a Pull Request
 ---
 # Planning
-## System Structure
-(can determine if we need this much depth once we determine the assignment)
 ## User Stories
-
+![Alt text](/UML_Diagram.png)
 ## UML class diagram
 
 ## database structuring 
@@ -85,10 +83,10 @@ breif overview of what can be found in the following repo
 
 ---
 # Testing
+## Demo Video
 
 ## UI/UX navigation 
 (show different screens and explain whats happening)
-Demo video inserted here
 ## Backend Logical tests
 (if backend can be unit tested to confirm logic put here)
 ---

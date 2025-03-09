@@ -31,15 +31,17 @@ breif overview of what can be found in the following repo
 #### IntelliJ should now be correctly installed.
 
 ### how to setup Amazon Corretto on IntelliJ
-1. Download Amazon Corretto Version 21 .msi file from [Corretto.aws](https://corretto.aws/downloads/latest/amazon-corretto-21-x64-windows-jdk.msi)
+1. Select correct operating system and download Amazon Corretto Version 21 .msi file from [Corretto.aws](https://docs.aws.amazon.com/corretto/latest/corretto-21-ug/what-is-corretto-21.html)
 2. When a new project is created in IntelliJ select Amazon Corretto version 21 as the JDK 
 #### The project will utilise Amazon Corretto as its JDK because it is Free, has multiplatform support and has optimised memory management compared to other JDK's
 
-### how to create a JavaFX File on IntelliJ
-1. when creating a new project navigate to the "Generators" section and select JavaFX
-2. select Maven as the build system
-3. select Amazon Corretto version 21 as the JDK
+### how to setup a JavaFX project on IntelliJ
+1. download a SDK for JavaFX from [JavaFX](https://gluonhq.com/products/javafx/)
+2. while in IntelliJ navigate to modify run configuration
+3. select Modify options and navigate to add VM options
+4. Input the JavaFX SDK file directory
 #### JavaFX will be responsible for the GUI for the project
+### how to setup Scenebuilder
 ---
 # Collaboration
 
@@ -57,9 +59,9 @@ breif overview of what can be found in the following repo
 ---
 # Planning
 ## User Stories
-![Alt text](/UML_Diagram.png)
-## UML class diagram
 
+## UML class diagram
+![Alt text](/UML_Diagram.png)
 ## database structuring 
 (can implement MySQL with a JDBC[https://www.geeksforgeeks.org/establishing-jdbc-connection-in-java/] note: will have to reference this if we use its code)
 

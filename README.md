@@ -50,9 +50,11 @@ breif overview of what can be found in the following repo
 - when contributing code to this repository ensure camelcase is used for variable and method naming
 - when contributing to this repository ensure variable and method names are given meaning in respect to the application
 ##### Example Coding stucture
-`public void someMethodName(){
-variableName.methodName();
-}`
+```java
+public void someMethodName() {
+    variableName.methodName();
+}
+```
 
 ## Contributing to the repo
 1. Fork the repository

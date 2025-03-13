@@ -69,7 +69,14 @@ public void someMethodName() {
 ## UML class diagram
 ![Alt text](/UML_Diagram.png)
 ## database structuring 
-(can implement MySQL with a JDBC[https://www.geeksforgeeks.org/establishing-jdbc-connection-in-java/] note: will have to reference this if we use its code)
+| Column          | Type    | Description                                |
+|----------------|--------|--------------------------------------------|
+| `Student_Number`          | VARCHAR | Primary key, Allocated Student id     |
+| `First_Name`   | CHAR    | Users first name                          |
+| `Last_Name` | CHAR    | Users last name                   |
+| `Email`    | VARCHAR    | Users Email (example@outlook.com)      |
+| `Phone_Number` | VARCHAR | Users Phone Number (+61 41234567 or 0412345678) |
+| `Login_Password`      | VARCHAR    | Users Password to login |
 
 ## Project Requirements
 | ID  | Name                          | Description  | Importance  | Expected End Date | Status  |

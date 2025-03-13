@@ -69,6 +69,7 @@ public void someMethodName() {
 ## UML class diagram
 ![Alt text](/UML_Diagram.png)
 ## database structuring 
+### User Signup Data
 | Column          | Type    | Description                                |
 |----------------|--------|--------------------------------------------|
 | `Student_Number`          | VARCHAR | Primary key, Allocated Student id     |
@@ -77,6 +78,25 @@ public void someMethodName() {
 | `Email`    | VARCHAR    | Users Email (example@outlook.com)      |
 | `Phone_Number` | VARCHAR | Users Phone Number (+61 41234567 or 0412345678) |
 | `Login_Password`      | VARCHAR    | Users Password to login |
+### User app usage Data
+| Column          | Type    | Description                                |
+|----------------|--------|--------------------------------------------|
+| `Student_Number`          | VARCHAR | Primary key, Allocated Student id     |
+| `GPA`          | INT | Users actual GPA KPI     |
+| `GPA_GOAL`   | INT    | Users GPA Goal                          |
+| `HOURS_STUDIED` | TIME    | Users actual study time KPI                   |
+| `HOURS_STUDIED_GOAL`    | TIME    | Users study time goal       |
+| `ATTENDANCE_RATE` | FLOAT | Users actual attendance rate KPI stored as a float to be represented as a percentage |
+| `ATTENDANCE_RATE_GOAL`      | FLOAT    | Users attendance rate goal |
+| `UNITS_ENROLLED`      | VARCHAR    | a list of the users enrolled Units |
+### User Timetable Data
+| Column          | Type    | Description                                |
+|----------------|--------|--------------------------------------------|
+| `Student_Number`          | VARCHAR | Primary key, Allocated Student id     |
+| `EVENT_TYPE`          | VARCHAR | what type of event it is (study,work,unit lecture)     |
+| `EVENT_START_DATETIME`   | DATETIME    | Expected event start time                          |
+| `EVENT_END_DATETIME` | DATETIME    | Expected event end time                   |
+| `EVENT_ATTENDANCE`    | INT    | 1 represents did attend and 0 represents did not attend       |
 
 ## Project Requirements
 | ID  | Name                          | Description  | Importance  | Expected End Date | Status  |

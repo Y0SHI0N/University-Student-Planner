@@ -112,9 +112,9 @@ public void someMethodName() {
 | 9  | Assignment Management         | Enable users to create, edit, and manage their assignments efficiently. | High  | - | Incomplete |
 | 10 | Timetable Filtering           | Implement filtering options for timetables based on unit codes, event types (e.g., study sessions), and tags. | Medium | - | Incomplete |
 | 11 | Timetable View Modes          | Provide options to switch between weekly, monthly, and widget-based timetable views. | Medium | - | Incomplete |
-| 12 | Database Structure Creation   | Design and create necessary database (.db) files for the application. | High  | - | Incomplete |
-| 13 | Database Integration          | Integrate the created database files with the application’s backend. | High  | - | Incomplete |
-| 14 | User Interface Development    | Develop an intuitive and user-friendly GUI for the application. | High  | - | Incomplete |
+| 12 | Database Structure Creation   | Design and create necessary database (.db) files for the application. | High  | - | Complete |
+| 13 | Database Integration          | Integrate the created database files with the application’s backend. | High  | - | Complete |
+| 14 | User Interface Development    | Develop an intuitive and user-friendly GUI for the application. | High  | - | Complete |
 
 ---
 # Testing

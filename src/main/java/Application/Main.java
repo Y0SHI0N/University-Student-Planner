@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import java.net.URL;
 import javafx.stage.Window;
 
 import java.io.IOException;
@@ -34,7 +35,7 @@ public class Main extends Application {
             applicationStage.setScene(new Scene(root));
             applicationStage.show();
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println("Startup error: " + e);
         }
     }
 
@@ -53,9 +54,24 @@ public class Main extends Application {
 
         applicationStage.show(); // shows the stage
     }
-    public void formatStage(){
-        applicationStage.getIcons().add(new Image("Img/QUT-Logo.jpg"));
+
+    public void formatStage() {
+        try {
+            String imagePath = "/Img/QUT-Logo.jpg";
+            URL imageUrl = getClass().getResource(imagePath);
+
+            if (imageUrl == null) {
+                throw new IllegalArgumentException("Image file not found: " + imagePath);
+            }
+
+            applicationStage.getIcons().add(new Image(imageUrl.toExternalForm()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error loading stage icon.");
+        }
     }
+
+
     public void closeActiveStage(){
         Platform.runLater(() -> {
             for (Window window : Stage.getWindows()) {

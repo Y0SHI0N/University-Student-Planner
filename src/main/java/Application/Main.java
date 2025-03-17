@@ -55,27 +55,19 @@ public class Main extends Application {
         applicationStage.show(); // shows the stage
     }
 
-//    public void formatStage(){
-//        applicationStage.getIcons().add(new Image("Img/QUT-Logo.jpg"));
-//    }
-
     public void formatStage() {
         try {
-            String imagePath = "/Img/QUT-Logo.jpg"; // Ensure correct path
+            String imagePath = "/Img/QUT-Logo.jpg";
             URL imageUrl = getClass().getResource(imagePath);
 
-            // Debugging output
-            System.out.println("🔍 Looking for Image: " + imagePath);
-            System.out.println("📌 Resolved Image URL: " + imageUrl);
-
             if (imageUrl == null) {
-                throw new IllegalArgumentException("❌ Image file NOT FOUND: " + imagePath);
+                throw new IllegalArgumentException("Image file not found: " + imagePath);
             }
 
             applicationStage.getIcons().add(new Image(imageUrl.toExternalForm()));
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("❌ Error loading stage icon.");
+            System.out.println("Error loading stage icon.");
         }
     }
 

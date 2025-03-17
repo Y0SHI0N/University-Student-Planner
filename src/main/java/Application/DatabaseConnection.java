@@ -15,8 +15,8 @@ public class DatabaseConnection {
     private DatabaseConnection() {
         HikariConfig config = new HikariConfig();
         config.setJdbcUrl("jdbc:mysql://localhost:3306/student_planner_db?serverTimezone=UTC");
-        config.setUsername("student_user");
-        config.setPassword("SecurePass123");
+        config.setUsername("root");
+        config.setPassword("cab302");
         config.setMaximumPoolSize(10);
         config.setMinimumIdle(2);
         config.setIdleTimeout(30000);

@@ -129,6 +129,7 @@ public void someMethodName() {
 ### Documentation
 - JavaFx UI/UX components via [Oracle](https://docs.oracle.com/javase/8/javafx/user-interface-tutorial/ui_controls.htm#JFXUI336)
 - JDBC Documentation via [Geeks for Geeks](https://www.geeksforgeeks.org/establishing-jdbc-connection-in-java/)
+- Hakari Documentation via [baeldung](https://www.baeldung.com/hikaricp)
 - JavaDoc Documentation via [Geeks for Geeks](https://www.geeksforgeeks.org/what-is-javadoc-tool-and-how-to-use-it/)
 - OpenAi API Repository via [Github](https://github.com/openai/openai-java)
 ---

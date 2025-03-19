@@ -1,6 +1,6 @@
 # University-Student-Planner
 
-breif overview of what can be found in the following repo
+Brief overview of what can be found in the following repo
 ## Contents Table
 1) [Getting Started](#getting-Started)
    - [Setting up work environment](#setting-up-work-environment)

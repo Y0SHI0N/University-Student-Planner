@@ -1,7 +1,6 @@
 package Application.Controllers;
 
-import Application.sceneLoaderController;
-import Application.DatabaseConnection;
+import Application.Database.DatabaseConnection;
 import javafx.fxml.FXML;
 import java.sql.Connection;
 import java.sql.SQLException;

@@ -1,7 +1,9 @@
-package Application;
+package Application.Controllers;
 
 
-public class sceneLoaderController extends Main{
+import Application.Main;
+
+public class sceneLoaderController extends Main {
     public void switchToLoginPage() throws Exception {
         try{
             changeScene("/Login-Page.fxml");

@@ -4,23 +4,21 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.calendarPageController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.profilePageController">
     <children>
         <MenuButton ellipsisString="" layoutX="535.0" layoutY="1.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="65.0" text="Options" wrapText="true">
             <items>
-            <MenuItem mnemonicParsing="false" text="View Profile" />
+                <MenuItem mnemonicParsing="false" text="View Profile" />
                 <MenuItem mnemonicParsing="false" text="Update Details" />
                 <MenuItem mnemonicParsing="false" text="Update Goals" />
                 <MenuItem mnemonicParsing="false" text="Log Out" />
@@ -29,9 +27,9 @@
             <cursor>
                 <Cursor fx:constant="OPEN_HAND" />
             </cursor>
-         <font>
-            <Font size="10.0" />
-         </font>
+            <font>
+                <Font size="10.0" />
+            </font>
         </MenuButton>
         <ButtonBar layoutY="361.0" prefHeight="40.0" prefWidth="600.0">
             <buttons>
@@ -50,12 +48,12 @@
                         <Cursor fx:constant="OPEN_HAND" />
                     </cursor>
                 </Button>
-                <Button mnemonicParsing="false" style="-fx-background-color: #003C72;" text="Calendar" textFill="WHITE" onMouseClicked="#switchToCalendarPage">
+                <Button mnemonicParsing="false" style="-fx-background-color: #87CEEB;" text="Calendar" onMouseClicked="#switchToCalendarPage">
                     <cursor>
                         <Cursor fx:constant="OPEN_HAND" />
                     </cursor>
                 </Button>
-                <Button mnemonicParsing="false" style="-fx-background-color: #87CEEB;" text="Profile" onMouseClicked="#switchToProfilePage">
+                <Button mnemonicParsing="false" style="-fx-background-color: #003C72;" text="Profile" textFill="WHITE" onMouseClicked="#switchToProfilePage">
                     <cursor>
                         <Cursor fx:constant="OPEN_HAND" />
                     </cursor>
@@ -70,29 +68,13 @@
                 <Image url="@Img/QUT-Logo.jpg" />
             </image>
         </ImageView>
-      <Button layoutX="237.0" layoutY="60.0" mnemonicParsing="false" text="Add Assignment" />
-      <MenuButton layoutX="427.0" layoutY="60.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="104.0" text="Add Event">
-        <items>
-          <MenuItem mnemonicParsing="false" text="Add Study period" />
-          <MenuItem mnemonicParsing="false" text="Add Food Break" />
-            <MenuItem mnemonicParsing="false" text="Add Work schedule" />
-        </items>
-      </MenuButton>
-      <TextField layoutX="238.0" layoutY="26.0" prefHeight="25.0" prefWidth="294.0" promptText="Search for events" />
-      <TextArea layoutX="237.0" layoutY="91.0" prefHeight="257.0" prefWidth="294.0" text="Monthly style Calendar" />
-      <VBox layoutX="33.0" layoutY="60.0" prefHeight="204.0" prefWidth="178.0">
-         <children>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="134.0" prefWidth="178.0">
-               <children>
-                  <Text layoutX="46.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Upcoming Events">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Text>
-                  <ListView fx:id="upcomingEventsList" layoutY="26.0" prefHeight="174.0" prefWidth="176.0" />
-               </children>
-            </AnchorPane>
-         </children>
-      </VBox>
+      <Circle fill="DODGERBLUE" layoutX="300.0" layoutY="60.0" radius="55.0" stroke="BLACK" strokeType="INSIDE" />
+      <TextField layoutX="142.0" layoutY="174.0" prefHeight="26.0" prefWidth="235.0" promptText="Name" />
+      <TextField layoutX="142.0" layoutY="218.0" prefHeight="26.0" prefWidth="235.0" promptText="Email" />
+      <TextField layoutX="142.0" layoutY="255.0" prefHeight="26.0" prefWidth="235.0" promptText="Phone number" />
+      <Button layoutX="142.0" layoutY="115.0" mnemonicParsing="false" text="Update" />
+      <Text layoutX="260.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ERROR TEXT" />
+      <Text layoutX="268.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Profile img" />
+      <Button layoutX="318.0" layoutY="84.0" mnemonicParsing="false" text="Change IMG" />
     </children>
 </AnchorPane>

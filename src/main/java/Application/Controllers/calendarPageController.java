@@ -1,15 +1,12 @@
-package Application;
+package Application.Controllers;
 
+import Application.sceneLoaderController;
+import Application.DatabaseConnection;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class calendarPageController extends sceneLoaderController{
+public class calendarPageController extends sceneLoaderController {
 protected Connection dBConnection;
 
 @FXML
@@ -22,6 +19,6 @@ public void initialize() {
 }
 
 public void setDbConnection() throws SQLException {
-    dBConnection = DatabaseConnection.getInstance().getConnection();
+    dBConnection = DatabaseConnection.getInstance();
 }
 }

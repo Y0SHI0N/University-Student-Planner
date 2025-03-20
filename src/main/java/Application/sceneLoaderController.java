@@ -1,5 +1,6 @@
 package Application;
 
+
 public class sceneLoaderController extends Main{
     public void switchToLoginPage() throws Exception {
         try{

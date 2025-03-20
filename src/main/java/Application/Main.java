@@ -39,7 +39,7 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-
+        Connection connection = DatabaseConnection.getInstance();
         launch(args);
     }
 
@@ -53,6 +53,7 @@ public class Main extends Application {
 
         applicationStage.show(); // shows the stage
     }
+
     public void formatStage(){
         try {
             String imagePath = "/Img/QUT-Logo.jpg";

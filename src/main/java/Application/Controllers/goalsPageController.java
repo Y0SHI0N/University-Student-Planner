@@ -1,11 +1,12 @@
-package Application;
+package Application.Controllers;
 
+import Application.sceneLoaderController;
+import Application.DatabaseConnection;
 import javafx.fxml.FXML;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class mapPageController extends sceneLoaderController{
+public class goalsPageController extends sceneLoaderController {
     protected Connection dBConnection;
 
     @FXML
@@ -18,6 +19,6 @@ public class mapPageController extends sceneLoaderController{
     }
 
     public void setDbConnection() throws SQLException {
-        dBConnection = DatabaseConnection.getInstance().getConnection();
+        dBConnection = DatabaseConnection.getInstance();
     }
 }

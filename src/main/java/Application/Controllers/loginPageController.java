@@ -1,5 +1,7 @@
-package Application;
+package Application.Controllers;
 
+import Application.sceneLoaderController;
+import Application.DatabaseConnection;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -7,9 +9,10 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
+
 import java.sql.*;
 
-public class loginPageController extends sceneLoaderController{
+public class loginPageController extends sceneLoaderController {
     public Button loginButton;
     protected Connection dBConnection;
     @FXML private Label loginLabel;
@@ -26,7 +29,7 @@ public class loginPageController extends sceneLoaderController{
     }
 
     public void setDbConnection() throws SQLException {
-        dBConnection = DatabaseConnection.getInstance().getConnection();
+        dBConnection = DatabaseConnection.getInstance();
     }
 
     public void loginButtonOnClick(MouseEvent click){

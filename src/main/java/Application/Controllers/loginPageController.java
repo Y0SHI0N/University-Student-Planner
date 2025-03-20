@@ -13,23 +13,9 @@ import java.sql.*;
 
 public class loginPageController extends sceneLoaderController {
     public Button loginButton;
-    protected Connection dBConnection;
     @FXML private Label loginLabel;
     @FXML private TextField loginTextField;
     @FXML private PasswordField loginPasswordField;
-
-    @FXML
-    public void initialize() {
-        try {
-            setDbConnection();
-        } catch (SQLException e) {
-            System.err.println("Error initializing database connection: " + e.getMessage());
-        }
-    }
-
-    public void setDbConnection() throws SQLException {
-        dBConnection = DatabaseConnection.getInstance();
-    }
 
     public void loginButtonOnClick(MouseEvent click){
         if(loginTextField.getText().isBlank() == false && loginPasswordField.getText().isBlank() == false){
@@ -43,7 +29,7 @@ public class loginPageController extends sceneLoaderController {
     public void validateLogin(){
         try {
             String verifyLoginQuery = "SELECT count(1) FROM User_Signup_Data where StudentNumber = ? AND LoginPassword = ?";
-            PreparedStatement statement = dBConnection.prepareStatement(verifyLoginQuery);
+            PreparedStatement statement = userSignupDAO.getDBConnection().prepareStatement(verifyLoginQuery);
             statement.setString(1, loginTextField.getText());
             statement.setString(2, loginPasswordField.getText());
             ResultSet resultSet = statement.executeQuery();

@@ -67,7 +67,7 @@
        </ButtonBar>
       <ImageView fitHeight="40.0" fitWidth="60.0" layoutX="13.0" layoutY="356.0" pickOnBounds="true" preserveRatio="true">
        <image>
-           <Image url="@Img/QUT-Logo.jpg" />
+           <Image url="@../Img/QUT-Logo.jpg" />
        </image>
        </ImageView>
       <Button layoutX="243.0" layoutY="78.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="151.0" text="Live Feed" />

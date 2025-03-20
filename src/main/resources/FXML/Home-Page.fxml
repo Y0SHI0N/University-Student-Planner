@@ -65,7 +65,7 @@
       </ButtonBar>
       <ImageView fitHeight="40.0" fitWidth="60.0" layoutX="13.0" layoutY="356.0" pickOnBounds="true" preserveRatio="true">
        <image>
-           <Image url="@Img/QUT-Logo.jpg" />
+           <Image url="@../Img/QUT-Logo.jpg" />
        </image>
        </ImageView>
       <Text layoutX="13.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="AI Generated quote based on the Users Timetable Data" wrappingWidth="212.53668212890625" />

@@ -8,14 +8,13 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import java.net.URL;
 import javafx.stage.Window;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.Connection;
 
 public class Main extends Application {
-
     private Parent root;
     private Stage applicationStage = new Stage(); //global stage reference
     protected FXMLLoader homePage;
@@ -35,7 +34,7 @@ public class Main extends Application {
             applicationStage.setScene(new Scene(root));
             applicationStage.show();
         } catch (Exception e) {
-            System.out.println("Startup error: " + e);
+            System.out.println(e);
         }
     }
 
@@ -54,8 +53,7 @@ public class Main extends Application {
 
         applicationStage.show(); // shows the stage
     }
-
-    public void formatStage() {
+    public void formatStage(){
         try {
             String imagePath = "/Img/QUT-Logo.jpg";
             URL imageUrl = getClass().getResource(imagePath);
@@ -70,8 +68,6 @@ public class Main extends Application {
             System.out.println("Error loading stage icon.");
         }
     }
-
-
     public void closeActiveStage(){
         Platform.runLater(() -> {
             for (Window window : Stage.getWindows()) {

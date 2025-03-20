@@ -54,5 +54,13 @@ public class sceneLoaderController extends Main{
             System.out.println(e);
         }
     }
+    public void switchToProfilePage() throws Exception{
+        try{
+            changeScene("/Profile-Page.fxml");
+            closeActiveStage();
+        } catch (Exception e){
+            System.out.println(e);
+        }
+    }
 
 }

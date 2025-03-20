@@ -15,11 +15,12 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Controller">
+<?import javafx.scene.text.Font?>
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.goalsPageController">
    <children>
-      <Text layoutX="567.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="☰" />
-      <MenuButton ellipsisString="" layoutX="557.0" layoutY="7.0" mnemonicParsing="false" opacity="0.0" prefHeight="26.0" prefWidth="12.0" text="☰">
+      <MenuButton ellipsisString="" layoutX="535.0" layoutY="1.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="65.0" text="Options" wrapText="true">
          <items>
+            <MenuItem mnemonicParsing="false" text="View Profile" />
             <MenuItem mnemonicParsing="false" text="Update Details" />
             <MenuItem mnemonicParsing="false" text="Update Goals" />
             <MenuItem mnemonicParsing="false" text="Log Out" />
@@ -28,32 +29,55 @@
          <cursor>
             <Cursor fx:constant="OPEN_HAND" />
          </cursor>
+         <font>
+            <Font size="10.0" />
+         </font>
+      </MenuButton>
+      <MenuButton ellipsisString="" layoutX="535.0" layoutY="1.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="65.0" text="Options" wrapText="true">
+         <items>
+            <MenuItem mnemonicParsing="false" text="View Profile" />
+            <MenuItem mnemonicParsing="false" text="Update Details" />
+            <MenuItem mnemonicParsing="false" text="Update Goals" />
+            <MenuItem mnemonicParsing="false" text="Log Out" />
+            <MenuItem mnemonicParsing="false" text="Close App" />
+         </items>
+         <cursor>
+            <Cursor fx:constant="OPEN_HAND" />
+         </cursor>
+         <font>
+            <Font size="10.0" />
+         </font>
       </MenuButton>
       <ButtonBar layoutY="361.0" prefHeight="40.0" prefWidth="600.0">
-        <buttons>
-          <Button mnemonicParsing="false" style="-fx-background-color: #87CEEB;" text="Home" textAlignment="CENTER">
+         <buttons>
+            <Button mnemonicParsing="false" style="-fx-background-color: #87CEEB;" text="Home" textAlignment="CENTER" onMouseClicked="#switchToHomePage">
                <cursor>
                   <Cursor fx:constant="OPEN_HAND" />
                </cursor>
             </Button>
-            <Button mnemonicParsing="false" style="-fx-background-color: #003C72;" text="Goals" textFill="WHITE">
+            <Button mnemonicParsing="false" style="-fx-background-color: #003C72;" text="Goals" textFill="WHITE" onMouseClicked="#switchToGoalsPage">
                <cursor>
                   <Cursor fx:constant="OPEN_HAND" />
                </cursor>
             </Button>
-            <Button mnemonicParsing="false" style="-fx-background-color: #87CEEB;" text="Map">
+            <Button mnemonicParsing="false" style="-fx-background-color: #87CEEB;" text="Map" onMouseClicked="#switchToMapPage">
                <cursor>
                   <Cursor fx:constant="OPEN_HAND" />
                </cursor>
             </Button>
-            <Button mnemonicParsing="false" style="-fx-background-color: #87CEEB;" text="Calendar">
+            <Button mnemonicParsing="false" style="-fx-background-color: #87CEEB;" text="Calendar" onMouseClicked="#switchToCalendarPage">
                <cursor>
                   <Cursor fx:constant="OPEN_HAND" />
                </cursor>
             </Button>
-        </buttons>
+            <Button mnemonicParsing="false" style="-fx-background-color: #87CEEB;" text="Profile" onMouseClicked="#switchToProfilePage">
+               <cursor>
+                  <Cursor fx:constant="OPEN_HAND" />
+               </cursor>
+            </Button>
+         </buttons>
          <padding>
-            <Insets right="125.0" />
+            <Insets right="75.0" />
          </padding>
       </ButtonBar>
       <ImageView fitHeight="40.0" fitWidth="60.0" layoutX="13.0" layoutY="356.0" pickOnBounds="true" preserveRatio="true">

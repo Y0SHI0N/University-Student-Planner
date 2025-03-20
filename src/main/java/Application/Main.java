@@ -11,10 +11,10 @@ import javafx.stage.StageStyle;
 import javafx.stage.Window;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.Connection;
 
 public class Main extends Application {
-
     private Parent root;
     private Stage applicationStage = new Stage(); //global stage reference
     protected FXMLLoader homePage;
@@ -54,7 +54,19 @@ public class Main extends Application {
         applicationStage.show(); // shows the stage
     }
     public void formatStage(){
-        applicationStage.getIcons().add(new Image("Img/QUT-Logo.jpg"));
+        try {
+            String imagePath = "/Img/QUT-Logo.jpg";
+            URL imageUrl = getClass().getResource(imagePath);
+
+            if (imageUrl == null) {
+                throw new IllegalArgumentException("Image file not found: " + imagePath);
+            }
+
+            applicationStage.getIcons().add(new Image(imageUrl.toExternalForm()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error loading stage icon.");
+        }
     }
     public void closeActiveStage(){
         Platform.runLater(() -> {

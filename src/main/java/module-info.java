@@ -8,5 +8,6 @@ module Application {
 
     exports Application;
     exports Application.Controllers;
+    exports Application.Database;
 
 }

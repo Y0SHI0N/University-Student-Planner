@@ -1,10 +1,8 @@
-package Application;
+package Application.Database;
 
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.sql.DriverManager;
 
 public class DatabaseConnection {

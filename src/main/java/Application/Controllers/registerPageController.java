@@ -1,5 +1,7 @@
-package Application;
+package Application.Controllers;
 
+import Application.sceneLoaderController;
+import Application.DatabaseConnection;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -7,7 +9,7 @@ import javafx.scene.control.TextField;
 
 import java.sql.*;
 
-public class registerPageController extends sceneLoaderController{
+public class registerPageController extends sceneLoaderController {
     protected Connection dBConnection;
 
     @FXML private TextField registerFirstName;
@@ -28,7 +30,7 @@ public class registerPageController extends sceneLoaderController{
     }
 
     public void setDbConnection() throws SQLException {
-        dBConnection = DatabaseConnection.getInstance().getConnection();
+        dBConnection = DatabaseConnection.getInstance();
     }
 
     public boolean checkDuplicateStudentNumbers(String studentNumber){

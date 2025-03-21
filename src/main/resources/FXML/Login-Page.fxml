@@ -10,13 +10,13 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.loginPageController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Controllers.loginPageController">
    <children>
       <AnchorPane prefHeight="400.0" prefWidth="244.0" style="-fx-background-color: #003C72;">
          <children>
             <ImageView blendMode="SRC_ATOP" fitHeight="400.0" fitWidth="244.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@Img/QUT-Logo.jpg" />
+                  <Image url="@../Img/QUT-Logo.jpg" />
                </image>
             </ImageView>
             <Text fill="WHITE" layoutX="38.0" layoutY="233.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Student Planner" wrappingWidth="168.09375">

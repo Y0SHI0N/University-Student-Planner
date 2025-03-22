@@ -14,6 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
+<?import javafx.scene.control.Label?>
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Controllers.profilePageController">
     <children>
         <MenuButton ellipsisString="" layoutX="535.0" layoutY="1.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="65.0" text="Options" wrapText="true">
@@ -69,9 +70,10 @@
             </image>
         </ImageView>
       <Circle fill="DODGERBLUE" layoutX="300.0" layoutY="60.0" radius="55.0" stroke="BLACK" strokeType="INSIDE" />
-      <TextField layoutX="142.0" layoutY="174.0" prefHeight="26.0" prefWidth="235.0" promptText="Name" />
-      <TextField layoutX="142.0" layoutY="218.0" prefHeight="26.0" prefWidth="235.0" promptText="Email" />
-      <TextField layoutX="142.0" layoutY="255.0" prefHeight="26.0" prefWidth="235.0" promptText="Phone number" />
+      <Label layoutX="142.0" layoutY="150.0" prefHeight="26.0" prefWidth="235.0" fx:id="firstName"/>
+      <Label layoutX="142.0" layoutY="175.0" prefHeight="26.0" prefWidth="235.0" fx:id="lastName"/>
+      <Label layoutX="142.0" layoutY="200.0" prefHeight="26.0" prefWidth="235.0" fx:id="Email" />
+      <Label layoutX="142.0" layoutY="225.0" prefHeight="26.0" prefWidth="235.0" fx:id="phoneNumber" />
       <Button layoutX="142.0" layoutY="115.0" mnemonicParsing="false" text="Update" />
       <Text layoutX="260.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ERROR TEXT" />
       <Text layoutX="268.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Profile img" />

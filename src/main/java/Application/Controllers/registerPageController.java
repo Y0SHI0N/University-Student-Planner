@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import java.sql.*;
+import java.util.stream.Stream;
 
 public class registerPageController extends sceneLoaderController {
 
@@ -19,16 +20,13 @@ public class registerPageController extends sceneLoaderController {
 
     public boolean checkDuplicateStudentNumbers(String studentNumber){
         String checkUnique = "SELECT count(1) FROM User_Signup_Data where StudentNumber = '" + studentNumber + "';";
-        try{
+        try {
             Statement statement = userSignupDAO.getDBConnection().createStatement();
             ResultSet queryResult = statement.executeQuery(checkUnique);
             queryResult.next();
-            if(queryResult.getInt(1) == 1){
-                return true; // returns true because the student number already exists
-            }else{
-                return false; //
-            }
-        }catch(Exception e){
+
+            return queryResult.getInt(1) == 1; // returns true if the student number already exists
+        } catch (Exception e){
             System.out.println(e + "exception");
         }
         return false; // will never execute but needed for no syntax error
@@ -73,37 +71,53 @@ public class registerPageController extends sceneLoaderController {
 //        }
 //    }
 
-    private boolean inputValidation(String ... inputs){
-        boolean ret = false;
-
+    private boolean inputValidation(
+            String studentNumber,
+            String firstName,
+            String lastName,
+            String email,
+            String password,
+            String confirmedPassword
+    ){
         try {
             // Check for empty fields
-            for (String value : inputs){
-                if (value.equals("")){
-                    registerErrorMessagesText.setText("don't leave fields empty");
-                    return false;
-                }
+            if (Stream.of(studentNumber, firstName, lastName, email, password, confirmedPassword).anyMatch(String::isEmpty)) {
+                registerErrorMessagesText.setText("don't leave fields empty");
+                return false;
             }
 
-            // check for password == confirmPassword
-            if (!inputs[4].equals(inputs[5])){
+            if (!password.equals(confirmedPassword)) {
                 registerErrorMessagesText.setText("passwords don't match");
-                return ret;
+                return false;
+            }
+
+            if (password.length() < 8) {
+                registerErrorMessagesText.setText("password must be at least 8 characters long");
+                return false;
+            }
+
+            // check if email has an '@' with characters on either side
+            if (!email.matches(".+@.+")) {
+                registerErrorMessagesText.setText("invalid email");
+            }
+
+            // check if student number solely comprised of 8 numeric digits
+            if (!studentNumber.matches("^[0-9]{8}$")) {
+                registerErrorMessagesText.setText("invalid student number");
+                return false;
             }
 
             // check if record already exists within db
-            if(checkDuplicateStudentNumbers(inputs[1])){
+            if (checkDuplicateStudentNumbers(studentNumber)) {
                 registerErrorMessagesText.setText("student number is already registered");
-                return ret;
+                return false;
             }
-
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
         // Passed all checks (so far), return True
-        ret = true;
-        return ret;
+        return true;
     }
 
     public void registerUser(){

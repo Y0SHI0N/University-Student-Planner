@@ -11,52 +11,61 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.homePageController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Controllers.homePageController">
    <children>
-      <Text layoutX="567.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="☰" />
-      <MenuButton ellipsisString="" layoutX="557.0" layoutY="7.0" mnemonicParsing="false" opacity="0.0" prefHeight="26.0" prefWidth="12.0" text="☰">
-         <items>
-            <MenuItem mnemonicParsing="false" text="Update Details" />
-            <MenuItem mnemonicParsing="false" text="Update Goals" />
-            <MenuItem mnemonicParsing="false" text="Log Out" />
-            <MenuItem mnemonicParsing="false" text="Close App" />
-         </items>
-         <cursor>
-            <Cursor fx:constant="OPEN_HAND" />
-         </cursor>
-      </MenuButton>
+       <MenuButton ellipsisString="" layoutX="535.0" layoutY="1.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="65.0" text="Options" wrapText="true">
+           <items>
+               <MenuItem mnemonicParsing="false" text="View Profile" />
+               <MenuItem mnemonicParsing="false" text="Update Details" />
+               <MenuItem mnemonicParsing="false" text="Update Goals" />
+               <MenuItem mnemonicParsing="false" text="Log Out" />
+               <MenuItem mnemonicParsing="false" text="Close App" />
+           </items>
+           <cursor>
+               <Cursor fx:constant="OPEN_HAND" />
+           </cursor>
+           <font>
+               <Font size="10.0" />
+           </font>
+       </MenuButton>
       <ButtonBar layoutY="361.0" prefHeight="40.0" prefWidth="600.0">
         <buttons>
-          <Button mnemonicParsing="false" style="-fx-background-color: #003C72;" text="Home" textAlignment="CENTER" textFill="WHITE">
+          <Button mnemonicParsing="false" onMouseClicked="#switchToHomePage" style="-fx-background-color: #003C72;" text="Home" textAlignment="CENTER" textFill="WHITE">
                <cursor>
                   <Cursor fx:constant="OPEN_HAND" />
                </cursor>
             </Button>
-            <Button mnemonicParsing="false" style="-fx-background-color: #87CEEB;" text="Goals">
+            <Button mnemonicParsing="false" onMouseClicked="#switchToGoalsPage" style="-fx-background-color: #87CEEB;" text="Goals">
                <cursor>
                   <Cursor fx:constant="OPEN_HAND" />
                </cursor>
             </Button>
-            <Button mnemonicParsing="false" style="-fx-background-color: #87CEEB;" text="Map">
+            <Button mnemonicParsing="false" onMouseClicked="#switchToMapPage" style="-fx-background-color: #87CEEB;" text="Map">
                <cursor>
                   <Cursor fx:constant="OPEN_HAND" />
                </cursor>
             </Button>
-            <Button mnemonicParsing="false" style="-fx-background-color: #87CEEB;" text="Calendar">
-               <cursor>
-                  <Cursor fx:constant="OPEN_HAND" />
-               </cursor>
+            <Button mnemonicParsing="false" onMouseClicked="#switchToCalendarPage" style="-fx-background-color: #87CEEB;" text="Calendar">
+                <cursor>
+                    <Cursor fx:constant="OPEN_HAND" />
+                </cursor>
+            </Button>
+            <Button mnemonicParsing="false" onMouseClicked="#switchToProfilePage" style="-fx-background-color: #87CEEB;" text="Profile">
+                <cursor>
+                    <Cursor fx:constant="OPEN_HAND" />
+                </cursor>
             </Button>
         </buttons>
          <padding>
-            <Insets right="125.0" />
+            <Insets right="75.0" />
          </padding>
       </ButtonBar>
       <ImageView fitHeight="40.0" fitWidth="60.0" layoutX="13.0" layoutY="356.0" pickOnBounds="true" preserveRatio="true">
        <image>
-           <Image url="@Img/QUT-Logo.jpg" />
+           <Image url="@../Img/QUT-Logo.jpg" />
        </image>
        </ImageView>
       <Text layoutX="13.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="AI Generated quote based on the Users Timetable Data" wrappingWidth="212.53668212890625" />

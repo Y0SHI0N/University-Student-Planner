@@ -1,9 +1,17 @@
-package Application;
+package Application.Controllers;
 
-public class sceneLoaderController extends Main{
+
+import Application.Main;
+import Application.Database.*;
+
+public class sceneLoaderController extends Main {
+    protected final UserSignupDAO userSignupDAO = DatabaseConnection.getUserSignupDAO();
+//    protected UserCollectedDAO userDAO; // uncomment when implemented
+//    protected TimetableDAO userDAO;
+
     public void switchToLoginPage() throws Exception {
         try{
-            changeScene("/Login-Page.fxml");
+            changeScene("/FXML/Login-Page.fxml");
             closeActiveStage();
         } catch (Exception e) {
             System.out.println(e);
@@ -12,7 +20,7 @@ public class sceneLoaderController extends Main{
 
     public void switchToRegisterPage() throws Exception {
         try{
-            changeScene("/Register-Page.fxml");
+            changeScene("/FXML/Register-Page.fxml");
             closeActiveStage();
         } catch (Exception e) {
             System.out.println(e);
@@ -21,7 +29,7 @@ public class sceneLoaderController extends Main{
 
     public void switchToHomePage() throws Exception {
         try{
-            changeScene("/Home-Page.fxml");
+            changeScene("/FXML/Home-Page.fxml");
             closeActiveStage();
         } catch (Exception e) {
             System.out.println(e);
@@ -30,7 +38,7 @@ public class sceneLoaderController extends Main{
 
     public void switchToMapPage() throws Exception {
         try{
-            changeScene("/Map-Page.fxml");
+            changeScene("/FXML/Map-Page.fxml");
             closeActiveStage();
         } catch (Exception e) {
             System.out.println(e);
@@ -39,7 +47,7 @@ public class sceneLoaderController extends Main{
 
     public void switchToGoalsPage() throws Exception {
         try{
-            changeScene("/Goals-Page.fxml");
+            changeScene("/FXML/Goals-Page.fxml");
             closeActiveStage();
         } catch (Exception e) {
             System.out.println(e);
@@ -48,9 +56,17 @@ public class sceneLoaderController extends Main{
 
     public void switchToCalendarPage() throws Exception {
         try{
-            changeScene("/Calendar-Page.fxml");
+            changeScene("/FXML/Calendar-Page.fxml");
             closeActiveStage();
         } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+    public void switchToProfilePage() throws Exception{
+        try{
+            changeScene("/FXML/Profile-Page.fxml");
+            closeActiveStage();
+        } catch (Exception e){
             System.out.println(e);
         }
     }

@@ -15,6 +15,7 @@
 <?import javafx.scene.text.Text?>
 
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.StackPane?>
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Controllers.profilePageController">
     <children>
         <MenuButton ellipsisString="" layoutX="535.0" layoutY="1.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="65.0" text="Options" wrapText="true">
@@ -69,7 +70,17 @@
                 <Image url="@../Img/QUT-Logo.jpg" />
             </image>
         </ImageView>
-      <Circle fill="DODGERBLUE" layoutX="300.0" layoutY="60.0" radius="55.0" stroke="BLACK" strokeType="INSIDE" />
+      <StackPane layoutX="250.0" layoutY="5.0">
+      <Circle fill="DODGERBLUE" radius="55.0" strokeType="INSIDE"
+              fx:id="profileBackGround"/>
+      <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Profile img"
+      fx:id="profileText">
+          <font>
+              <Font size="55.0" />
+          </font>
+      </Text>
+      </StackPane>
+
       <Label layoutX="142.0" layoutY="150.0" prefHeight="26.0" prefWidth="235.0" fx:id="firstName"/>
       <Label layoutX="142.0" layoutY="175.0" prefHeight="26.0" prefWidth="235.0" fx:id="lastName"/>
       <Label layoutX="142.0" layoutY="200.0" prefHeight="26.0" prefWidth="235.0" fx:id="Email" />
@@ -93,7 +104,5 @@
               onMouseClicked="#updateButtonOnClick" fx:id="updateButton" visible="false" />
 
       <Text layoutX="220" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" fx:id="notice" visible="false"/>
-      <Text layoutX="268.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Profile img" />
-      <Button layoutX="318.0" layoutY="84.0" mnemonicParsing="false" text="Change IMG" />
     </children>
 </AnchorPane>

@@ -28,17 +28,19 @@ public class loginPageController extends sceneLoaderController {
 
     public void validateLogin(){
         try {
-            String verifyLoginQuery = "SELECT count(1) FROM User_Signup_Data where StudentNumber = ? AND LoginPassword = ?";
+            String verifyLoginQuery = "SELECT StudentNumber FROM User_Signup_Data where StudentNumber = ? AND LoginPassword = ?";
             PreparedStatement statement = userSignupDAO.getDBConnection().prepareStatement(verifyLoginQuery);
             statement.setString(1, loginTextField.getText());
             statement.setString(2, loginPasswordField.getText());
             ResultSet resultSet = statement.executeQuery();
-            while(resultSet.next()){
-                if(resultSet.getInt(1) == 1){
-                    switchToHomePage(); // when the user is correctly logged in it will load the users home page
-                }else{
-                    loginLabel.setText("Invalid login. Please try again!");
-                }
+
+            if(resultSet.getString("StudentNumber") != null){
+                // when the user is correctly logged in it will load the users home page and set the currentUserNumber
+                currentUserNumber=resultSet.getString("StudentNumber");
+                switchToHomePage();
+            }else{
+                loginLabel.setText("Invalid login. Please try again!");
+
             }
         }catch(Exception e){
             System.out.println(e + "exception");

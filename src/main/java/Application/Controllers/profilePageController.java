@@ -9,6 +9,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import java.sql.Connection;
@@ -16,6 +18,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.Random;
+import static java.util.Locale.filter;
 
 public class profilePageController extends sceneLoaderController {
     @FXML private Label firstName;
@@ -30,19 +34,20 @@ public class profilePageController extends sceneLoaderController {
     @FXML private Button cancelButton;
     @FXML private Button updateButton;
     @FXML private Text notice;
+    @FXML private Circle profileBackGround;
+    @FXML private Text profileText;
     private UserSignup userSignup;
 
     public void initialize(){
         try {
-            //making a test student num var since there doesn't seem to be anything tracking the ID of the current user rn
-            String testStudentNumber = "50";
+            //get the info on the current user
             String profileInfoQuery = "SELECT * FROM User_Signup_Data where StudentNumber = ?";
             PreparedStatement statement = userSignupDAO.getDBConnection().prepareStatement(profileInfoQuery);
-            statement.setString(1,testStudentNumber);
+            statement.setString(1,currentUserNumber);
             ResultSet resultSet = statement.executeQuery();
 
             //make a UserSignup instance to use for this page
-            userSignup = new UserSignup(testStudentNumber
+            userSignup = new UserSignup(currentUserNumber
                     ,resultSet.getString("FirstName")
                     ,resultSet.getString("LastName")
                     ,resultSet.getString("Email")
@@ -53,6 +58,14 @@ public class profilePageController extends sceneLoaderController {
             lastName.setText("Last Name: "+userSignup.getLastName());
             Email.setText("Email: "+userSignup.getEmail());
             phoneNumber.setText("Phone number: "+userSignup.getPhoneNumber());
+            //set profileImg placeholder
+            //get a random seed from the currentUserNumber so the color is different for each user
+            Random random = new Random(Long.parseLong(currentUserNumber.replaceAll("[^0-9]]","")));
+            profileBackGround.setFill(Color.rgb(random.nextInt(1,255),
+                                                random.nextInt(1,255),
+                                                random.nextInt(1,255)));
+            profileText.setText(resultSet.getString("FirstName").substring(0,1)
+                    +resultSet.getString("LastName").substring(0,1));
 
         }catch(Exception e){
             System.out.println(e + "exception");
@@ -139,6 +152,8 @@ public class profilePageController extends sceneLoaderController {
                 lastName.setText(userSignup.getLastName());
                 Email.setText(userSignup.getEmail());
                 phoneNumber.setText(userSignup.getPhoneNumber());
+                profileText.setText(userSignup.getFirstName().substring(0,1)
+                        +userSignup.getLastName().substring(0,1));
 
                 notice.setText("changes saved successfully");
                 notice.setVisible(true);

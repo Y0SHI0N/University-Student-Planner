@@ -1,6 +1,26 @@
 # University-Student-Planner
 
-breif overview of what can be found in the following repo
+## Project Brief: QUT Study Planner
+
+### Problem Space:
+Current QUT Student Planner Services either have inadequate UI design or lack essential features that students value. QUT students prioritise:
+- Minimising the time spent searching for key information.
+- Reducing the number of hyperlinks required to navigate to desired pages.
+- Clear and concise textual information for quick and efficient reading.
+
+### Resolution:
+The "QUT Study Planner" app was developed to provide students with a study planning service that features a user-friendly UI, enhancing ease of use while incorporating innovative functionalities aligned with students' needs.
+
+### Scope:
+To achieve its objectives, the application will leverage Jira, an industry-recognised product management tool, to track and document all project requirements. The development process will be structured within designated sprints over 11 weeks to ensure systematic progress and project completion.
+
+### Key Features & Justification:
+1. **User-Friendly Interface for Easy Navigation** – Ensures that students can quickly access the information they need without unnecessary complexity, reducing cognitive load and time spent searching for essential resources.
+2. **AI-Generated Study-Based Quotes** – Provides motivational content tailored to students based on current timetable, helping to maintain engagement and a positive study mindset.
+3. **AI-Generated Weekly Overview Based on Real-Time Timetable Data** – Automatically presents a personalised weekly overview allowing students to better manage their time and workload efficiently.
+4. **Study Goals and Tracking** – Enables students to set, track, and achieve their academic goals which promotes accountability and structured study habits.
+5. **Campus Map with Real-Time Busy Location Indicators** – Assists students in locating less crowded study areas, improving study efficiency and campus navigation during peak times.
+
 ## Contents Table
 1) [Getting Started](#getting-Started)
    - [Setting up work environment](#setting-up-work-environment)

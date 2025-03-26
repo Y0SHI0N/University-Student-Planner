@@ -61,11 +61,14 @@ public class profilePageController extends sceneLoaderController {
             //set profileImg placeholder
             //get a random seed from the currentUserNumber so the color is different for each user
             Random random = new Random(Long.parseLong(currentUserNumber.replaceAll("[^0-9]]","")));
-            profileBackGround.setFill(Color.rgb(random.nextInt(1,255),
-                                                random.nextInt(1,255),
-                                                random.nextInt(1,255)));
-            profileText.setText(resultSet.getString("FirstName").substring(0,1)
-                    +resultSet.getString("LastName").substring(0,1));
+            int[] colors={random.nextInt(1,255),random.nextInt(1,255),random.nextInt(1,255)};
+            //if all three are too high make one lower so the background doesn't hide the text
+            int brightColors=0;
+            for (int color :colors){if (color > 220){brightColors+=1;}}
+            if (brightColors == 3){colors[random.nextInt(1,4)]=random.nextInt(1,200);}
+            profileBackGround.setFill(Color.rgb(colors[0],colors[1],colors[2]));
+            profileText.setText(resultSet.getString("FirstName").substring(0,1).toUpperCase()
+                    +resultSet.getString("LastName").substring(0,1).toUpperCase());
 
         }catch(Exception e){
             System.out.println(e + "exception");
@@ -120,6 +123,8 @@ public class profilePageController extends sceneLoaderController {
         for (String value : fields){
             if (value.isEmpty()){
                 notice.setText("don't leave fields empty");
+                notice.setFill(Color.RED);
+                notice.setVisible(true);
                 return false;
             }
         }
@@ -152,8 +157,8 @@ public class profilePageController extends sceneLoaderController {
                 lastName.setText(userSignup.getLastName());
                 Email.setText(userSignup.getEmail());
                 phoneNumber.setText(userSignup.getPhoneNumber());
-                profileText.setText(userSignup.getFirstName().substring(0,1)
-                        +userSignup.getLastName().substring(0,1));
+                profileText.setText(userSignup.getFirstName().substring(0,1).toUpperCase()
+                        +userSignup.getLastName().substring(0,1).toUpperCase());
 
                 notice.setText("changes saved successfully");
                 notice.setVisible(true);

@@ -135,6 +135,8 @@ public void someMethodName() {
 | 12 | Database Structure Creation   | Design and create necessary database (.db) files for the application. | High  | - | Complete |
 | 13 | Database Integration          | Integrate the created database files with the application’s backend. | High  | - | Complete |
 | 14 | User Interface Development    | Develop an intuitive and user-friendly GUI for the application. | High  | - | Complete |
+| 15 | Goal Progress Line Chart      | Show how the goal has changed over time represented via a line chart. | Medium | - | Incomplete |
+| 16 | Profile Page                  | Have a profile page that allows easy information reading and updates. | Medium | - | Incomplete |
 
 ---
 # Testing

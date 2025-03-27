@@ -18,20 +18,6 @@ public class registerPageController extends sceneLoaderController {
     @FXML private Label registerErrorMessagesText;
     @FXML private TextField registerStudentNumber;
 
-    public boolean checkDuplicateStudentNumbers(String studentNumber){
-        String checkUnique = "SELECT count(1) FROM User_Signup_Data where StudentNumber = '" + studentNumber + "';";
-        try {
-            Statement statement = userSignupDAO.getDBConnection().createStatement();
-            ResultSet queryResult = statement.executeQuery(checkUnique);
-            queryResult.next();
-
-            return queryResult.getInt(1) == 1; // returns true if the student number already exists
-        } catch (Exception e){
-            System.out.println(e + "exception");
-        }
-        return false; // will never execute but needed for no syntax error
-    }
-
 //    public void registerUser() {
 //        String studentNumber = registerStudentNumber.getText();
 //        String firstName = registerFirstName.getText();
@@ -71,71 +57,26 @@ public class registerPageController extends sceneLoaderController {
 //        }
 //    }
 
-    private boolean inputValidation(
-            String studentNumber,
-            String firstName,
-            String lastName,
-            String email,
-            String password,
-            String confirmedPassword
-    ){
-        try {
-            // Check for empty fields
-            if (Stream.of(studentNumber, firstName, lastName, email, password, confirmedPassword).anyMatch(String::isEmpty)) {
-                registerErrorMessagesText.setText("don't leave fields empty");
-                return false;
-            }
-
-            if (!password.equals(confirmedPassword)) {
-                registerErrorMessagesText.setText("passwords don't match");
-                return false;
-            }
-
-            if (password.length() < 8) {
-                registerErrorMessagesText.setText("password must be at least 8 characters long");
-                return false;
-            }
-
-            // check if email has an '@' with characters on either side
-            if (!email.matches(".+@.+")) {
-                registerErrorMessagesText.setText("invalid email");
-            }
-
-            // check if student number solely comprised of 8 numeric digits
-            if (!studentNumber.matches("^[0-9]{8}$")) {
-                registerErrorMessagesText.setText("invalid student number");
-                return false;
-            }
-
-            // check if record already exists within db
-            if (checkDuplicateStudentNumbers(studentNumber)) {
-                registerErrorMessagesText.setText("student number is already registered");
-                return false;
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        // Passed all checks (so far), return True
-        return true;
-    }
-
-    public void registerUser(){
-        String studentNumber = registerStudentNumber.getText();
+    public void registerUser() {
+        String studentNumber = normaliseStudentNo(registerStudentNumber.getText());
         String firstName = registerFirstName.getText();
         String lastName = registerLastName.getText();
         String email = registerEmail.getText();
         String password = registerPassword.getText();
         String confirmedPassword = confirmRegisterPassword.getText();
 
-        if (inputValidation(studentNumber,firstName,lastName,email,password,confirmedPassword)){
-            try {
-                UserSignup userToSignUp = new UserSignup(studentNumber,firstName,lastName,email, "", password);
-                userSignupDAO.insertUser(userToSignUp);
-                changeScene("/FXML/Login-Page.fxml");
-            } catch (Exception e) {
-                javafx.application.Platform.exit(); // exception exits platform
-            }
+        String errorMessage = inputValidation(studentNumber,firstName,lastName,email,password,confirmedPassword);
+        if (errorMessage != null){
+            registerErrorMessagesText.setText(errorMessage);
+            return;
+        }
+
+        try {
+            UserSignup userToSignUp = new UserSignup(studentNumber,firstName,lastName,email, "", password);
+            userSignupDAO.insertUser(userToSignUp);
+            changeScene("/FXML/Login-Page.fxml");
+        } catch (Exception e) {
+            javafx.application.Platform.exit(); // exception exits platform
         }
     }
 

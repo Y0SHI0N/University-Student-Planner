@@ -42,7 +42,7 @@ public class profilePageController extends sceneLoaderController {
     public void setProfileImage(Circle background, Text initials,UserSignup user){
         //set profileImg placeholder
         //get a random seed from the userNumber so the color is different for each user
-        Random random = new Random(Long.parseLong(user.getStudentNumber().replaceAll("[^0-9]]","")));
+        Random random = new Random(Long.parseLong(user.getStudentNumber().replaceAll("[^0-9]","")));
         int[] colors={random.nextInt(1,255),random.nextInt(1,255),random.nextInt(1,255)};
         //if all three are too high make one lower so the background doesn't hide the text
         int brightColors=0;
@@ -124,14 +124,14 @@ public class profilePageController extends sceneLoaderController {
 
     public Boolean validateChanges(){
         String[] fields = {firstNameField.getText(),lastNameField.getText(),EmailField.getText(),phoneNumberField.getText()};
-        //check no fields are empty
-        for (String value : fields){
-            if (value.isEmpty()){
-                notice.setText("don't leave fields empty");
-                notice.setFill(Color.RED);
-                notice.setVisible(true);
-                return false;
-            }
+        //use regular input validation
+        String errorMessage=inputValidation(currentUserNumber,firstNameField.getText(),lastNameField.getText(),EmailField.getText()
+                ,userSignup.getLoginPassword(),userSignup.getLoginPassword());
+        if (errorMessage != null) {
+            notice.setText(errorMessage);
+            notice.setVisible(true);
+            notice.setFill(Color.RED);
+            return false;
         }
         //check fields have been changed
         String[] currentValues = {userSignup.getFirstName(),userSignup.getLastName()
@@ -142,8 +142,6 @@ public class profilePageController extends sceneLoaderController {
             notice.setFill(Color.RED);
             return false;
         }
-
-
         return true;
     }
 

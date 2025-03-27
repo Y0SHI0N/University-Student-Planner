@@ -38,6 +38,21 @@ public class profilePageController extends sceneLoaderController {
     @FXML private Text profileText;
     private UserSignup userSignup;
 
+    //making this a function so it can be reused in other pages
+    public void setProfileImage(Circle background, Text initials,UserSignup user){
+        //set profileImg placeholder
+        //get a random seed from the userNumber so the color is different for each user
+        Random random = new Random(Long.parseLong(user.getStudentNumber().replaceAll("[^0-9]]","")));
+        int[] colors={random.nextInt(1,255),random.nextInt(1,255),random.nextInt(1,255)};
+        //if all three are too high make one lower so the background doesn't hide the text
+        int brightColors=0;
+        for (int color :colors){if (color > 220){brightColors+=1;}}
+        if (brightColors == 3){colors[random.nextInt(1,4)]=random.nextInt(1,200);}
+        profileBackGround.setFill(Color.rgb(colors[0],colors[1],colors[2]));
+        profileText.setText(user.getFirstName().substring(0,1).toUpperCase()
+                +user.getLastName().substring(0,1).toUpperCase());
+    }
+
     public void initialize(){
         try {
             //get the info on the current user
@@ -58,18 +73,8 @@ public class profilePageController extends sceneLoaderController {
             lastName.setText("Last Name: "+userSignup.getLastName());
             Email.setText("Email: "+userSignup.getEmail());
             phoneNumber.setText("Phone number: "+userSignup.getPhoneNumber());
-            //set profileImg placeholder
-            //get a random seed from the currentUserNumber so the color is different for each user
-            Random random = new Random(Long.parseLong(currentUserNumber.replaceAll("[^0-9]]","")));
-            int[] colors={random.nextInt(1,255),random.nextInt(1,255),random.nextInt(1,255)};
-            //if all three are too high make one lower so the background doesn't hide the text
-            int brightColors=0;
-            for (int color :colors){if (color > 220){brightColors+=1;}}
-            if (brightColors == 3){colors[random.nextInt(1,4)]=random.nextInt(1,200);}
-            profileBackGround.setFill(Color.rgb(colors[0],colors[1],colors[2]));
-            profileText.setText(resultSet.getString("FirstName").substring(0,1).toUpperCase()
-                    +resultSet.getString("LastName").substring(0,1).toUpperCase());
 
+            setProfileImage(profileBackGround,profileText,userSignup);
         }catch(Exception e){
             System.out.println(e + "exception");
         }
@@ -157,8 +162,7 @@ public class profilePageController extends sceneLoaderController {
                 lastName.setText(userSignup.getLastName());
                 Email.setText(userSignup.getEmail());
                 phoneNumber.setText(userSignup.getPhoneNumber());
-                profileText.setText(userSignup.getFirstName().substring(0,1).toUpperCase()
-                        +userSignup.getLastName().substring(0,1).toUpperCase());
+                setProfileImage(profileBackGround,profileText,userSignup);
 
                 notice.setText("changes saved successfully");
                 notice.setVisible(true);

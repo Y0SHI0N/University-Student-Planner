@@ -158,10 +158,10 @@ public class profilePageController extends sceneLoaderController {
                 userSignupDAO.updateUser(userSignup);
 
                 hideForm();
-                firstName.setText(userSignup.getFirstName());
-                lastName.setText(userSignup.getLastName());
-                Email.setText(userSignup.getEmail());
-                phoneNumber.setText(userSignup.getPhoneNumber());
+                firstName.setText("First name: "+userSignup.getFirstName());
+                lastName.setText("Last Name: "+userSignup.getLastName());
+                Email.setText("Email: "+userSignup.getEmail());
+                phoneNumber.setText("Phone number: "+userSignup.getPhoneNumber());
                 setProfileImage(profileBackGround,profileText,userSignup);
 
                 notice.setText("changes saved successfully");

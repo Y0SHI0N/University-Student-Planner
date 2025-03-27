@@ -30,7 +30,7 @@ public class loginPageController extends sceneLoaderController {
         try {
             String verifyLoginQuery = "SELECT count(1) FROM User_Signup_Data where StudentNumber = ? AND LoginPassword = ?";
             PreparedStatement statement = userSignupDAO.getDBConnection().prepareStatement(verifyLoginQuery);
-            statement.setString(1, loginTextField.getText());
+            statement.setString(1, normaliseStudentNo(loginTextField.getText()));
             statement.setString(2, loginPasswordField.getText());
             ResultSet resultSet = statement.executeQuery();
             while(resultSet.next()){

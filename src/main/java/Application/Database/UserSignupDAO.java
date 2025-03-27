@@ -50,4 +50,16 @@ public class UserSignupDAO extends BaseDAO{
             System.err.println("Insert failed: " + e.getMessage());
         }
     }
+
+    public void updateUser(UserSignup user) throws SQLException {
+        PreparedStatement updateUserSignUp= connection.prepareStatement(
+        "UPDATE User_Signup_Data SET Firstname=?, LastName=?, Email=?, PhoneNumber=? WHERE StudentNumber=?");
+        updateUserSignUp.setString(1,user.getFirstName());
+        updateUserSignUp.setString(2,user.getLastName());
+        updateUserSignUp.setString(3,user.getEmail());
+        updateUserSignUp.setString(4,user.getPhoneNumber());
+        updateUserSignUp.setString(5,user.getStudentNumber());
+        updateUserSignUp.execute();
+
+    }
 }

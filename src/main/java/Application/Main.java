@@ -22,6 +22,7 @@ public class Main extends Application {
     protected FXMLLoader goalsPage;
     protected FXMLLoader mapPage;
     protected FXMLLoader calendarPage;
+    protected static String currentUserNumber; //used to track the user currently logged in
 
     public void changeScene(String fxmlFilePath) throws IOException{
         try{

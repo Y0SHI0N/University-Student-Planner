@@ -33,9 +33,12 @@ public class loginPageController extends sceneLoaderController {
             statement.setString(1, normaliseStudentNo(loginTextField.getText()));
             statement.setString(2, loginPasswordField.getText());
             ResultSet resultSet = statement.executeQuery();
+
             while(resultSet.next()){
                 if(resultSet.getInt(1) == 1){
-                    switchToHomePage(); // when the user is correctly logged in it will load the users home page
+                    // when the user is correctly logged in it will load the users home page and set the currentUserNumber
+                    currentUserNumber=normaliseStudentNo(loginTextField.getText());
+                    switchToHomePage();
                 }else{
                     loginLabel.setText("Invalid login. Please try again!");
                 }

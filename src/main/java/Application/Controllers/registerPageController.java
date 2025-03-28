@@ -70,6 +70,12 @@ public class registerPageController extends sceneLoaderController {
             registerErrorMessagesText.setText(errorMessage);
             return;
         }
+        // check if record already exists within db
+        System.out.println(checkDuplicateStudentNumbers(studentNumber));
+        if (checkDuplicateStudentNumbers(studentNumber)) {
+            registerErrorMessagesText.setText("student number is already registered");
+            return;
+        }
 
         try {
             UserSignup userToSignUp = new UserSignup(studentNumber,firstName,lastName,email, "", password);

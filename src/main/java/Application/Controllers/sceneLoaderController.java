@@ -13,7 +13,7 @@ public class sceneLoaderController extends Main {
 //    protected UserCollectedDAO userDAO; // uncomment when implemented
 //    protected TimetableDAO userDAO;
 
-    private boolean checkDuplicateStudentNumbers(String studentNumber) {
+    protected boolean checkDuplicateStudentNumbers(String studentNumber) {
         String checkUnique = "SELECT count(1) FROM User_Signup_Data where StudentNumber = '" + studentNumber + "';";
         try {
             Statement statement = userSignupDAO.getDBConnection().createStatement();
@@ -60,10 +60,6 @@ public class sceneLoaderController extends Main {
                 return "invalid student number";
             }
 
-            // check if record already exists within db
-            if (checkDuplicateStudentNumbers(studentNumber)) {
-                return "student number is already registered";
-            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

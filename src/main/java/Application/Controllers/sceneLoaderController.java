@@ -39,25 +39,29 @@ public class sceneLoaderController extends Main {
         try {
             // Check for empty fields
             if (Stream.of(studentNumber, firstName, lastName, email, password, confirmedPassword).anyMatch(String::isEmpty)) {
-                return "don't leave fields empty";
+                return "don't leave fields empty.";
             }
 
             if (!password.equals(confirmedPassword)) {
-                return "passwords don't match";
+                return "passwords don't match.";
             }
 
             if (password.length() < 8) {
-                return "password must be at least 8 characters long";
+                return "password must be at least 8 characters long.";
             }
 
             // check if email has an '@' with characters on either side
             if (!email.matches(".+@.+")) {
-                return "invalid email";
+                return "invalid email.";
+            }
+
+            if (checkDuplicateStudentNumbers(studentNumber) == true){
+                return "student number already registered.";
             }
 
             // check if student number solely comprised of 'n' followed by 8 numeric characters
             if (!studentNumber.matches("^n[0-9]{8}$")) {
-                return "invalid student number";
+                return "invalid student number.";
             }
 
         } catch (Exception e) {

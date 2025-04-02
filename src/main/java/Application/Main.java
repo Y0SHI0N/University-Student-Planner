@@ -80,12 +80,12 @@ public class Main extends Application {
 
     public void loadAllFXMLFiles(){
         try{
-        loginPage = new FXMLLoader(getClass().getResource("/FXML/Login-Page.fxml"));
-        registerPage = new FXMLLoader(getClass().getResource("/FXML/Register-Page.fxml"));
-        homePage = new FXMLLoader(getClass().getResource("/FXML/Home-Page.fxml"));
-        goalsPage = new FXMLLoader(getClass().getResource("/FXML/Goals-Page.fxml"));
-        mapPage = new FXMLLoader(getClass().getResource("/FXML/Map-Page.fxml"));
-        calendarPage = new FXMLLoader(getClass().getResource("/FXML/Calendar-Page.fxml"));
+            loginPage = new FXMLLoader(getClass().getResource("/FXML/Login-Page.fxml"));
+            registerPage = new FXMLLoader(getClass().getResource("/FXML/Register-Page.fxml"));
+            homePage = new FXMLLoader(getClass().getResource("/FXML/Home-Page.fxml"));
+            goalsPage = new FXMLLoader(getClass().getResource("/FXML/Goals-Page.fxml"));
+            mapPage = new FXMLLoader(getClass().getResource("/FXML/Map-Page.fxml"));
+            calendarPage = new FXMLLoader(getClass().getResource("/FXML/Calendar-Page.fxml"));
 
         } catch (Exception e) {
             System.out.println(e);

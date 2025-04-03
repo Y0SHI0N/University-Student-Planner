@@ -20,7 +20,7 @@ public class UserSignupDAO extends BaseDAO{
             stmt.execute(sql);
 
             // create default admin user
-            UserSignup adminUser = new UserSignup("admin","admin","admin","admin","","1");
+            UserSignup adminUser = new UserSignup("n12345678","admin","admin","admin@db","0123456789","password");
             insertUser(adminUser);
 
         } catch (SQLException e) {

@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -24,7 +25,7 @@ public class Main extends Application {
     protected FXMLLoader calendarPage;
     protected static String currentUserNumber; //used to track the user currently logged in
 
-    public void changeScene(String fxmlFilePath) throws IOException{
+    public void changeScene(String fxmlFilePath) throws IOException {
         try{
             FXMLLoader fxmlFile = new FXMLLoader(getClass().getResource(fxmlFilePath));
             root = fxmlFile.load();

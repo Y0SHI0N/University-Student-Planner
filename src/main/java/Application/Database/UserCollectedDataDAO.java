@@ -21,7 +21,7 @@ public class UserCollectedDataDAO extends BaseDAO{
             stmt.execute(sql);
 
             // create default admin user
-            UserCollectedData adminUserData = new UserCollectedData("n11970677", LocalDateTime.now(), 7,7,"5", "8", 0.8, 1.0, "someUnits" );
+            UserCollectedData adminUserData = new UserCollectedData("n12345678", LocalDateTime.now(), 7,7,"5", "8", 0.8, 1.0, "someUnits" );
             insertData(adminUserData);
 
         } catch (SQLException e) {

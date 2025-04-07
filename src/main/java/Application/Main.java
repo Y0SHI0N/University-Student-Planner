@@ -28,6 +28,7 @@ public class Main extends Application {
     protected FXMLLoader calendarPage;
     protected static String currentUserNumber; //used to track the user currently logged in
     protected final UserSignupDAO userSignupDAO = DatabaseConnection.getUserSignupDAO();
+    protected final UserCollectedDataDAO userCollectedDataDAO = DatabaseConnection.getUserCollectedDataDAO();
 
     public void changeScene(String fxmlFilePath) throws IOException {
         try{

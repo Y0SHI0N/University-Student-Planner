@@ -1,17 +1,21 @@
 package Application.Database;
 
+import java.time.LocalDateTime;
+
 public class UserCollectedData {
     private String studentNumber;
+    private LocalDateTime dateModified;
     private int gpa;
     private int gpaGoal;
     private String hoursStudied;
     private String hoursStudiedGoal;
-    private float attendanceRate;
-    private float attendanceRateGoal;
+    private double attendanceRate;
+    private double attendanceRateGoal;
     private String unitsEnrolled;
 
-    public UserCollectedData(String studentNumber, int gpa, int gpaGoal, String hoursStudied, String hoursStudiedGoal, float attendanceRate, float attendanceRateGoal, String unitsEnrolled) {
+    public UserCollectedData(String studentNumber, LocalDateTime dateModified, int gpa, int gpaGoal, String hoursStudied, String hoursStudiedGoal, double attendanceRate, double attendanceRateGoal, String unitsEnrolled) {
         this.studentNumber = studentNumber;
+        this.dateModified = dateModified;
         this.gpa = gpa;
         this.gpaGoal = gpaGoal;
         this.hoursStudied = hoursStudied;
@@ -23,6 +27,9 @@ public class UserCollectedData {
 
     public String getStudentNumber() { return studentNumber; }
     public void setStudentNumber(String studentNumber) { this.studentNumber = studentNumber; }
+
+    public LocalDateTime getDateModified() { return dateModified; }
+    public void setDateModified(LocalDateTime dateModified) { this.dateModified = dateModified; }
 
     public int getGpa() { return gpa; }
     public void setGpa(int gpa) { this.gpa = gpa; }
@@ -36,11 +43,11 @@ public class UserCollectedData {
     public String getHoursStudiedGoal() { return hoursStudiedGoal; }
     public void setHoursStudiedGoal(String hoursStudiedGoal) { this.hoursStudiedGoal = hoursStudiedGoal; }
 
-    public float getAttendanceRate() { return attendanceRate; }
-    public void setAttendanceRate(float attendanceRate) { this.attendanceRate = attendanceRate; }
+    public double getAttendanceRate() { return attendanceRate; }
+    public void setAttendanceRate(double attendanceRate) { this.attendanceRate = attendanceRate; }
 
-    public float getAttendanceRateGoal() { return attendanceRateGoal; }
-    public void setAttendanceRateGoal(float attendanceRateGoal) { this.attendanceRateGoal = attendanceRateGoal; }
+    public double getAttendanceRateGoal() { return attendanceRateGoal; }
+    public void setAttendanceRateGoal(double attendanceRateGoal) { this.attendanceRateGoal = attendanceRateGoal; }
 
     public String getUnitsEnrolled() { return unitsEnrolled; }
     public void setUnitsEnrolled(String unitsEnrolled) { this.unitsEnrolled = unitsEnrolled; }
@@ -49,12 +56,13 @@ public class UserCollectedData {
     public String toString() {
         return "UserCollectedData{" +
                 "studentNumber='" + studentNumber + '\'' +
-                ", gpa=" + gpa +
-                ", gpaGoal=" + gpaGoal +
+                ", dateModified='" + dateModified + '\'' +
+                ", gpa=" + gpa + '\'' +
+                ", gpaGoal=" + gpaGoal + '\'' +
                 ", hoursStudied='" + hoursStudied + '\'' +
                 ", hoursStudiedGoal='" + hoursStudiedGoal + '\'' +
-                ", attendanceRate=" + attendanceRate +
-                ", attendanceRateGoal=" + attendanceRateGoal +
+                ", attendanceRate=" + attendanceRate + '\'' +
+                ", attendanceRateGoal=" + attendanceRateGoal + '\'' +
                 ", unitsEnrolled='" + unitsEnrolled + '\'' +
                 '}';
     }

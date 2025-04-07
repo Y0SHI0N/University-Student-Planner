@@ -9,13 +9,14 @@
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<?import javafx.scene.text.Font?>
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Controllers.goalsPageController">
    <children>
       <MenuButton ellipsisString="" layoutX="535.0" layoutY="1.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="65.0" text="Options" wrapText="true">
@@ -50,27 +51,27 @@
       </MenuButton>
       <ButtonBar layoutY="361.0" prefHeight="40.0" prefWidth="600.0">
          <buttons>
-            <Button mnemonicParsing="false" style="-fx-background-color: #87CEEB;" text="Home" textAlignment="CENTER" onMouseClicked="#switchToHomePage">
+            <Button mnemonicParsing="false" onMouseClicked="#switchToHomePage" style="-fx-background-color: #87CEEB;" text="Home" textAlignment="CENTER">
                <cursor>
                   <Cursor fx:constant="OPEN_HAND" />
                </cursor>
             </Button>
-            <Button mnemonicParsing="false" style="-fx-background-color: #003C72;" text="Goals" textFill="WHITE" onMouseClicked="#switchToGoalsPage">
+            <Button mnemonicParsing="false" onMouseClicked="#switchToGoalsPage" style="-fx-background-color: #003C72;" text="Goals" textFill="WHITE">
                <cursor>
                   <Cursor fx:constant="OPEN_HAND" />
                </cursor>
             </Button>
-            <Button mnemonicParsing="false" style="-fx-background-color: #87CEEB;" text="Map" onMouseClicked="#switchToMapPage">
+            <Button mnemonicParsing="false" onMouseClicked="#switchToMapPage" style="-fx-background-color: #87CEEB;" text="Map">
                <cursor>
                   <Cursor fx:constant="OPEN_HAND" />
                </cursor>
             </Button>
-            <Button mnemonicParsing="false" style="-fx-background-color: #87CEEB;" text="Calendar" onMouseClicked="#switchToCalendarPage">
+            <Button mnemonicParsing="false" onMouseClicked="#switchToCalendarPage" style="-fx-background-color: #87CEEB;" text="Calendar">
                <cursor>
                   <Cursor fx:constant="OPEN_HAND" />
                </cursor>
             </Button>
-            <Button mnemonicParsing="false" style="-fx-background-color: #87CEEB;" text="Profile" onMouseClicked="#switchToProfilePage">
+            <Button mnemonicParsing="false" onMouseClicked="#switchToProfilePage" style="-fx-background-color: #87CEEB;" text="Profile">
                <cursor>
                   <Cursor fx:constant="OPEN_HAND" />
                </cursor>
@@ -85,7 +86,7 @@
            <Image url="@../Img/QUT-Logo.jpg" />
        </image>
        </ImageView>
-      <VBox layoutX="65.0" layoutY="53.0" prefHeight="16.0" prefWidth="100.0" style="-fx-border-color: black;">
+      <VBox layoutX="65.0" layoutY="36.0" prefHeight="16.0" prefWidth="100.0" style="-fx-border-color: black;">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Hours Studied KPI">
                <VBox.margin>
@@ -94,7 +95,7 @@
             </Text>
          </children>
       </VBox>
-      <VBox layoutX="277.0" layoutY="52.0" prefHeight="19.0" prefWidth="40.0" style="-fx-border-color: black;">
+      <VBox layoutX="277.0" layoutY="35.0" prefHeight="19.0" prefWidth="40.0" style="-fx-border-color: black;">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="GPA KPI" textAlignment="CENTER">
                <VBox.margin>
@@ -103,7 +104,7 @@
             </Text>
          </children>
       </VBox>
-      <VBox layoutX="440.0" layoutY="52.0" prefHeight="16.0" prefWidth="100.0" style="-fx-border-color: black;">
+      <VBox layoutX="440.0" layoutY="37.0" prefHeight="16.0" prefWidth="100.0" style="-fx-border-color: black;">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Attendance Rate KPI">
                <VBox.margin>
@@ -112,10 +113,8 @@
             </Text>
          </children>
       </VBox>
-      <Button layoutX="91.0" layoutY="283.0" mnemonicParsing="false" text="Update Goal" />
-      <Button layoutX="263.0" layoutY="283.0" mnemonicParsing="false" text="Update Goal" />
-      <Button layoutX="458.0" layoutY="283.0" mnemonicParsing="false" text="Update Goal" />
-      <VBox layoutX="75.0" layoutY="256.0" prefHeight="16.0" prefWidth="100.0" style="-fx-border-color: black;">
+      <Button layoutX="127.0" layoutY="245.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="135.0" text="Edit Goal" />
+      <VBox layoutX="61.0" layoutY="216.0" prefHeight="16.0" prefWidth="100.0" style="-fx-border-color: black;">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Hours Studied Goal">
                <VBox.margin>
@@ -124,7 +123,7 @@
             </Text>
          </children>
       </VBox>
-      <VBox layoutX="263.0" layoutY="255.0" prefHeight="19.0" prefWidth="40.0" style="-fx-border-color: black;">
+      <VBox layoutX="263.0" layoutY="216.0" prefHeight="19.0" prefWidth="40.0" style="-fx-border-color: black;">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="GPA KPI Goal" textAlignment="CENTER">
                <VBox.margin>
@@ -133,7 +132,7 @@
             </Text>
          </children>
       </VBox>
-      <VBox layoutX="426.0" layoutY="255.0" prefHeight="16.0" prefWidth="100.0" style="-fx-border-color: black;">
+      <VBox layoutX="426.0" layoutY="216.0" prefHeight="16.0" prefWidth="100.0" style="-fx-border-color: black;">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Attendance Rate KPI Goal">
                <VBox.margin>
@@ -142,7 +141,7 @@
             </Text>
          </children>
       </VBox>
-      <LineChart layoutX="391.0" layoutY="80.0" prefHeight="150.0" prefWidth="178.0">
+      <LineChart layoutX="399.0" layoutY="66.0" prefHeight="150.0" prefWidth="178.0">
         <xAxis>
           <CategoryAxis side="BOTTOM" />
         </xAxis>
@@ -150,7 +149,7 @@
           <NumberAxis side="LEFT" />
         </yAxis>
       </LineChart>
-      <LineChart layoutX="203.0" layoutY="80.0" prefHeight="150.0" prefWidth="178.0">
+      <LineChart layoutX="200.0" layoutY="66.0" prefHeight="150.0" prefWidth="178.0">
          <xAxis>
             <CategoryAxis side="BOTTOM" />
          </xAxis>
@@ -158,7 +157,7 @@
             <NumberAxis side="LEFT" />
          </yAxis>
       </LineChart>
-      <LineChart layoutX="5.0" layoutY="80.0" prefHeight="150.0" prefWidth="170.0">
+      <LineChart layoutY="66.0" prefHeight="150.0" prefWidth="170.0">
          <xAxis>
             <CategoryAxis side="BOTTOM" />
          </xAxis>
@@ -166,5 +165,7 @@
             <NumberAxis side="LEFT" />
          </yAxis>
       </LineChart>
+      <Button layoutX="345.0" layoutY="245.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="135.0" text="Update Data" />
+      <TextArea layoutX="27.0" layoutY="278.0" prefHeight="67.0" prefWidth="551.0" promptText="AI generated Suggested Goals with justification" />
    </children>
 </AnchorPane>

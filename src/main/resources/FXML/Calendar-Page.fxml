@@ -16,6 +16,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Controllers.calendarPageController">
     <children>
         <MenuButton ellipsisString="" layoutX="535.0" layoutY="1.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="65.0" text="Options" wrapText="true">
@@ -70,29 +73,39 @@
                 <Image url="@../Img/QUT-Logo.jpg" />
             </image>
         </ImageView>
-      <Button layoutX="237.0" layoutY="60.0" mnemonicParsing="false" text="Add Assignment" />
-      <MenuButton layoutX="427.0" layoutY="60.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="104.0" text="Add Event">
+
+
+      <MenuButton layoutX="463.0" layoutY="40.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="104.0" text="Add Event">
         <items>
           <MenuItem mnemonicParsing="false" text="Add Study period" />
           <MenuItem mnemonicParsing="false" text="Add Food Break" />
             <MenuItem mnemonicParsing="false" text="Add Work schedule" />
+            <MenuItem mnemonicParsing="false" text="Add Assignment" />
         </items>
       </MenuButton>
-      <TextField layoutX="238.0" layoutY="26.0" prefHeight="25.0" prefWidth="294.0" promptText="Search for events" />
-      <TextArea layoutX="237.0" layoutY="91.0" prefHeight="257.0" prefWidth="294.0" text="Monthly style Calendar" />
-      <VBox layoutX="33.0" layoutY="60.0" prefHeight="204.0" prefWidth="178.0">
-         <children>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="134.0" prefWidth="178.0">
-               <children>
-                  <Text layoutX="46.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Upcoming Events">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Text>
-                  <ListView fx:id="upcomingEventsList" layoutY="26.0" prefHeight="174.0" prefWidth="176.0" />
-               </children>
-            </AnchorPane>
-         </children>
-      </VBox>
+
+      <TextField layoutX="33.0" layoutY="40.0" prefHeight="25.0" prefWidth="100.0" promptText="Search for events"/>
+
+      <GridPane layoutX="33.0" layoutY="75.0" minHeight="280.0" minWidth="532.0" style="-fx-background-color:lightgrey;"
+      gridLinesVisible="true">
+          <columnConstraints>
+              <ColumnConstraints minWidth="76.0"/>
+              <ColumnConstraints minWidth="76.0"/>
+              <ColumnConstraints minWidth="76.0"/>
+              <ColumnConstraints minWidth="76.0"/>
+              <ColumnConstraints minWidth="76.0"/>
+              <ColumnConstraints minWidth="76.0"/>
+              <ColumnConstraints minWidth="76.0"/>
+          </columnConstraints>
+
+              <Text text="Monday" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+              <Text text="Tuesday" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+              <Text text="Wednesday" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+              <Text text="Thursday" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+              <Text text="Friday" GridPane.columnIndex="4" GridPane.rowIndex="0" />
+              <Text text="Saturday" GridPane.columnIndex="5" GridPane.rowIndex="0" />
+              <Text text="Sunday" GridPane.columnIndex="6" GridPane.rowIndex="0" />
+      </GridPane>
+
     </children>
 </AnchorPane>

@@ -1,10 +1,12 @@
 package Application.Database;
 
 import java.time.LocalDateTime;
+import java.util.Date;
+import java.time.LocalDate;
 
 public class UserCollectedData {
     private String studentNumber;
-    private LocalDateTime dateModified;
+    private String dateModified;
     private int gpa;
     private int gpaGoal;
     private String hoursStudied;
@@ -13,7 +15,7 @@ public class UserCollectedData {
     private double attendanceRateGoal;
     private String unitsEnrolled;
 
-    public UserCollectedData(String studentNumber, LocalDateTime dateModified, int gpa, int gpaGoal, String hoursStudied, String hoursStudiedGoal, double attendanceRate, double attendanceRateGoal, String unitsEnrolled) {
+    public UserCollectedData(String studentNumber, String dateModified, int gpa, int gpaGoal, String hoursStudied, String hoursStudiedGoal, double attendanceRate, double attendanceRateGoal, String unitsEnrolled) {
         this.studentNumber = studentNumber;
         this.dateModified = dateModified;
         this.gpa = gpa;
@@ -28,8 +30,8 @@ public class UserCollectedData {
     public String getStudentNumber() { return studentNumber; }
     public void setStudentNumber(String studentNumber) { this.studentNumber = studentNumber; }
 
-    public LocalDateTime getDateModified() { return dateModified; }
-    public void setDateModified(LocalDateTime dateModified) { this.dateModified = dateModified; }
+    public String getDateModified() { return dateModified; }
+    public void setDateModified(String dateModified) { this.dateModified = dateModified; }
 
     public int getGpa() { return gpa; }
     public void setGpa(int gpa) { this.gpa = gpa; }

@@ -13,7 +13,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -86,62 +86,8 @@
            <Image url="@../Img/QUT-Logo.jpg" />
        </image>
        </ImageView>
-      <VBox layoutX="65.0" layoutY="36.0" prefHeight="16.0" prefWidth="100.0" style="-fx-border-color: black;">
-         <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Hours Studied KPI">
-               <VBox.margin>
-                  <Insets left="5.0" right="5.0" />
-               </VBox.margin>
-            </Text>
-         </children>
-      </VBox>
-      <VBox layoutX="277.0" layoutY="35.0" prefHeight="19.0" prefWidth="40.0" style="-fx-border-color: black;">
-         <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="GPA KPI" textAlignment="CENTER">
-               <VBox.margin>
-                  <Insets left="5.0" right="5.0" />
-               </VBox.margin>
-            </Text>
-         </children>
-      </VBox>
-      <VBox layoutX="440.0" layoutY="37.0" prefHeight="16.0" prefWidth="100.0" style="-fx-border-color: black;">
-         <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Attendance Rate KPI">
-               <VBox.margin>
-                  <Insets left="5.0" right="5.0" />
-               </VBox.margin>
-            </Text>
-         </children>
-      </VBox>
-      <Button layoutX="127.0" layoutY="245.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="135.0" text="Edit Goal" />
-      <VBox layoutX="61.0" layoutY="216.0" prefHeight="16.0" prefWidth="100.0" style="-fx-border-color: black;">
-         <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Hours Studied Goal">
-               <VBox.margin>
-                  <Insets left="5.0" right="5.0" />
-               </VBox.margin>
-            </Text>
-         </children>
-      </VBox>
-      <VBox layoutX="263.0" layoutY="216.0" prefHeight="19.0" prefWidth="40.0" style="-fx-border-color: black;">
-         <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="GPA KPI Goal" textAlignment="CENTER">
-               <VBox.margin>
-                  <Insets left="5.0" right="5.0" />
-               </VBox.margin>
-            </Text>
-         </children>
-      </VBox>
-      <VBox layoutX="426.0" layoutY="216.0" prefHeight="16.0" prefWidth="100.0" style="-fx-border-color: black;">
-         <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Attendance Rate KPI Goal">
-               <VBox.margin>
-                  <Insets left="5.0" right="5.0" />
-               </VBox.margin>
-            </Text>
-         </children>
-      </VBox>
-      <LineChart layoutX="399.0" layoutY="66.0" prefHeight="150.0" prefWidth="178.0">
+      <Button fx:id="editGoalButton" layoutX="127.0" layoutY="245.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="135.0" text="Edit Goal" />
+      <LineChart layoutX="400.0" layoutY="14.0" prefHeight="150.0" prefWidth="178.0">
         <xAxis>
           <CategoryAxis side="BOTTOM" />
         </xAxis>
@@ -149,7 +95,7 @@
           <NumberAxis side="LEFT" />
         </yAxis>
       </LineChart>
-      <LineChart layoutX="200.0" layoutY="66.0" prefHeight="150.0" prefWidth="178.0">
+      <LineChart layoutX="203.0" layoutY="14.0" prefHeight="150.0" prefWidth="178.0">
          <xAxis>
             <CategoryAxis side="BOTTOM" />
          </xAxis>
@@ -157,7 +103,7 @@
             <NumberAxis side="LEFT" />
          </yAxis>
       </LineChart>
-      <LineChart layoutY="66.0" prefHeight="150.0" prefWidth="170.0">
+      <LineChart layoutY="14.0" prefHeight="150.0" prefWidth="170.0">
          <xAxis>
             <CategoryAxis side="BOTTOM" />
          </xAxis>
@@ -165,7 +111,19 @@
             <NumberAxis side="LEFT" />
          </yAxis>
       </LineChart>
-      <Button layoutX="345.0" layoutY="245.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="135.0" text="Update Data" />
+      <Button fx:id="updateUserDataButton" layoutX="345.0" layoutY="245.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="135.0" text="Update Data" />
       <TextArea layoutX="27.0" layoutY="278.0" prefHeight="67.0" prefWidth="551.0" promptText="AI generated Suggested Goals with justification" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#003c72" height="40.0" layoutX="253.0" layoutY="153.0" stroke="BLACK" strokeType="INSIDE" width="148.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#003c72" height="40.0" layoutX="43.0" layoutY="153.0" stroke="BLACK" strokeType="INSIDE" width="148.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#003c72" height="40.0" layoutX="440.0" layoutY="153.0" stroke="BLACK" strokeType="INSIDE" width="148.0" />
+      <Text fx:id="hoursStudiedKPI" fill="WHITE" layoutX="43.0" layoutY="169.0" strokeType="OUTSIDE" strokeWidth="0.0" text="no Data Recorded" wrappingWidth="148.0" />
+      <Text fx:id="GPAKPI" fill="WHITE" layoutX="253.0" layoutY="169.0" strokeType="OUTSIDE" strokeWidth="0.0" text="no Data Recorded" wrappingWidth="148.0" />
+      <Text fx:id="attendanceKPI" fill="WHITE" layoutX="440.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0" text="no Data Recorded" wrappingWidth="148.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="SKYBLUE" height="40.0" layoutX="43.0" layoutY="201.0" stroke="BLACK" strokeType="INSIDE" width="148.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="SKYBLUE" height="40.0" layoutX="253.0" layoutY="201.0" stroke="BLACK" strokeType="INSIDE" width="148.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="SKYBLUE" height="40.0" layoutX="440.0" layoutY="201.0" stroke="BLACK" strokeType="INSIDE" width="148.0" />
+      <Text fx:id="hoursStudiedGoal" layoutX="43.0" layoutY="214.0" strokeType="OUTSIDE" strokeWidth="0.0" text="no Data Recorded" wrappingWidth="148.0" />
+      <Text fx:id="GPAGoal" layoutX="253.0" layoutY="214.0" strokeType="OUTSIDE" strokeWidth="0.0" text="no Data Recorded" wrappingWidth="148.0" />
+      <Text fx:id="attendanceRateGoal" layoutX="440.0" layoutY="214.0" strokeType="OUTSIDE" strokeWidth="0.0" text="no Data Recorded" wrappingWidth="148.0" />
    </children>
 </AnchorPane>

@@ -10,18 +10,18 @@ public class UserCollectedDataDAO extends BaseDAO{
         String sql = "CREATE TABLE IF NOT EXISTS User_Collected_Data (" +
                 "StudentNumber TEXT PRIMARY KEY, " +
                 "dateModified TIME PRIMARY KEY," +
-                "GPA INT," +
-                "GPAGoal INT," +
+                "GPA INT DEFAULT 0," +
+                "GPAGoal INT DEFAULT 0," +
                 "HoursStudied VARCHAR," +
                 "HoursStudiedGoal VARCHAR," +
-                "AttendanceRate FLOAT," +
-                "AttendanceRateGoal FLOAT," +
+                "AttendanceRate FLOAT DEFAULT 0," +
+                "AttendanceRateGoal FLOAT DEFAULT 0," +
                 "UnitsEnrolled VARCHAR,";
         try (Statement stmt = connection.createStatement()) {
             stmt.execute(sql);
 
             // create default admin user
-            UserCollectedData adminUserData = new UserCollectedData("n12345678", LocalDateTime.now(), 7,7,"5", "8", 0.8, 1.0, "someUnits" );
+            UserCollectedData adminUserData = new UserCollectedData("n12345678", LocalDateTime.now().toString(), 7,7,"5", "8", 0.8, 1.0, "someUnits" );
             insertData(adminUserData);
 
         } catch (SQLException e) {

@@ -10,6 +10,7 @@ public class UserTimetableDAO extends BaseDAO {
 
     private void createTable() {
         String sql = "CREATE TABLE IF NOT EXISTS User_Timetable_Data (" +
+                "EventName VARCHAR NOT NULL, " +
                 "StudentNumber VARCHAR NOT NULL, " +
                 "EventType VARCHAR NOT NULL, " +
                 "EventStartDatetime DATETIME NOT NULL, "+

@@ -1,6 +1,7 @@
 package Application.Database;
 
 public class UserTimetable {
+    private String eventName;
     private String studentNumber;
     private String eventType;
     private String eventStartDate;
@@ -8,7 +9,8 @@ public class UserTimetable {
     private String eventLocation;
     private int eventAttendance;
 
-    public UserTimetable(String studentNumber, String eventType, String eventStartDate, String eventEndDate, String eventLocation, int eventAttendance) {
+    public UserTimetable(String eventName,String studentNumber, String eventType, String eventStartDate, String eventEndDate, String eventLocation, int eventAttendance) {
+        this.eventName = eventName;
         this.studentNumber = studentNumber;
         this.eventType = eventType;
         this.eventStartDate = eventStartDate;
@@ -16,7 +18,8 @@ public class UserTimetable {
         this.eventLocation = eventLocation;
         this.eventAttendance = eventAttendance;
     }
-
+    public String getEventName() { return eventName; }
+    public void setEventName(String evenNumber) { this.eventName = eventName; }
     public String getStudentNumber() { return studentNumber; }
     public void setStudentNumber(String studentNumber) { this.studentNumber = studentNumber; }
     public String getEventType() { return eventType; }
@@ -33,6 +36,7 @@ public class UserTimetable {
     @Override
     public String toString() {
         return "UserTimetable{" +
+                ", eventName='" + eventName + '\'' +
                 "studentNumber='" + studentNumber + '\'' +
                 ", eventType='" + eventType + '\'' +
                 ", eventStartDate='" + eventStartDate + '\'' +

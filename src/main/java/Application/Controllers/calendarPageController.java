@@ -17,57 +17,76 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class calendarPageController extends sceneLoaderController {
+    ArrayList<UserTimetable> events=new ArrayList<UserTimetable>();
     @FXML private GridPane calendar;
+
+    public void displayMonth(java.time.Month month){
+        //add days to calendar
+        Integer week = 1;
+        Integer dayOfMonth=1;
+        Integer dayOfWeek=LocalDate.of(LocalDate.now().getYear(),month,1).getDayOfWeek().getValue();
+        for (int i=1; i <= LocalDate.now().getMonth().length(LocalDate.now().getYear()%4==0) ;i++){
+            StackPane day = new StackPane();
+            calendar.add(day, dayOfWeek-1, week);
+            Text date = new Text(dayOfMonth.toString());
+            day.getChildren().add(date);
+
+            //this count is used to determine how low text will be placed so it does not overlap
+            ArrayList<Text> eventTexts = new ArrayList<Text>();
+            for (UserTimetable event : events){
+                Integer startDay=Integer.parseInt(event.getEventStartDate().substring(8,10));
+                Integer startMonth=Integer.parseInt(event.getEventStartDate().substring(5,7));
+                if (startMonth==LocalDate.now().getMonth().getValue() && startDay==dayOfMonth){
+                    Text eventText = new Text(event.getEventName());
+                    day.getChildren().add(eventText);
+
+                    eventTexts.add(eventText);
+
+                    //only change the rowHeight if it's not already big enough
+                    if ((eventTexts.size()+1)*20 > calendar.getRowConstraints().get(week).getMinHeight()) {
+                        calendar.getRowConstraints().get(week).setMinHeight(
+                                calendar.getRowConstraints().get(week).getMinHeight() + 20);
+                    }
+                }
+            }
+            if (eventTexts.size() >0){
+                date.setTranslateY((-calendar.getRowConstraints().get(week).getMinHeight()/2) +9);
+                Integer textCount=0;
+                for (Text text: eventTexts){
+                    text.setTranslateY(textCount * 20);
+                    textCount+=1;
+                }
+                            }
+
+
+            dayOfWeek+=1;
+            if (dayOfWeek> 7){dayOfWeek=1;
+                week+=1;
+                calendar.getRowConstraints().add(new RowConstraints());
+                calendar.getRowConstraints().get(week).setMinHeight(20);
+            }
+            dayOfMonth+=1;
+        }
+
+    }
 
     public void initialize(){
         try {
-            ArrayList<UserTimetable> events=new ArrayList<UserTimetable>();
             //get events
             String profileInfoQuery = "SELECT * FROM User_Timetable_Data where StudentNumber = ?";
             PreparedStatement statement = userSignupDAO.getDBConnection().prepareStatement(profileInfoQuery);
             statement.setString(1,currentUserNumber);
             ResultSet resultSet = statement.executeQuery();
             while(resultSet.next()) {
-                events.add(new UserTimetable(currentUserNumber
+                events.add(new UserTimetable(resultSet.getString("EventName")
+                        ,currentUserNumber
                         ,resultSet.getString("EventType")
                         ,resultSet.getString("EventStartDatetime")
                         ,resultSet.getString("EventEndDatetime")
                         ,resultSet.getString("EventLocation")
                         ,resultSet.getInt("Event_Attendance")));
             }
-            //add days to calendar
-            Integer week = 1;
-            Integer dayOfMonth=1;
-            Integer dayOfWeek=LocalDate.of(LocalDate.now().getYear(),LocalDate.now().getMonth(),1).getDayOfWeek().getValue();
-            for (int i=1; i <= LocalDate.now().getMonth().length(LocalDate.now().getYear()%4==0) ;i++){
-                StackPane day = new StackPane();
-                day.setStyle("-fx-background-color: lightgrey");
-                calendar.add(day, dayOfWeek-1, week);
-                Text date = new Text(dayOfMonth.toString());
-                day.getChildren().add(date);
-
-                for (UserTimetable event : events){
-                    Integer startDay=Integer.parseInt(event.getEventStartDate().substring(8,10));
-                    Integer startMonth=Integer.parseInt(event.getEventStartDate().substring(5,7));
-                    if (startMonth==LocalDate.now().getMonth().getValue() && startDay==dayOfMonth){
-                        Text eventText = new Text("test");
-                        day.getChildren().add(eventText);
-                        date.setTranslateY(-8.0);
-                        eventText.setTranslateY(+8.0);
-                        System.out.println(calendar.getRowConstraints());
-                        calendar.getRowConstraints().set(week,new RowConstraints(40));  //.set(,new RowConstraints(40));
-
-                    }
-                }
-
-                dayOfWeek+=1;
-                if (dayOfWeek> 7){dayOfWeek=1;
-                    week+=1;
-                    calendar.getRowConstraints().add(new RowConstraints(20));
-                }
-                dayOfMonth+=1;
-            }
-
+            displayMonth(LocalDate.now().getMonth());
         }catch(Exception e){
             System.out.println(e + "exception");
         }

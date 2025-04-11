@@ -1,19 +1,17 @@
 package Application.Controllers;
 
-import Application.Database.DatabaseConnection;
-import Application.Database.UserSignup;
 import Application.Database.UserTimetable;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.layout.StackPane;
-import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import javafx.scene.shape.Rectangle;
@@ -21,8 +19,9 @@ import javafx.scene.shape.Rectangle;
 public class calendarPageController extends sceneLoaderController {
     ArrayList<UserTimetable> events=new ArrayList<UserTimetable>();
     @FXML private GridPane calendar;
+    @FXML private ComboBox monthSelect;
 
-    public void displayMonth(java.time.Month month){
+    public void displayMonth(Integer month){
         //add days to calendar
         Integer week = 1;
         Integer dayOfMonth=1;
@@ -115,10 +114,30 @@ public class calendarPageController extends sceneLoaderController {
                         ,resultSet.getString("EventLocation")
                         ,resultSet.getInt("Event_Attendance")));
             }
-            displayMonth(LocalDate.now().getMonth());
+
+            monthSelect.setItems(FXCollections.observableArrayList("January","February","March","April","May","June"
+                                                        ,"July","August","September","October","November","December"));
+
+            displayMonth(LocalDate.now().getMonth().getValue());
         }catch(Exception e){
             System.out.println(e + "exception");
         }
     }
 
+    public void selectMonth() {
+        switch (monthSelect.getValue().toString()){
+            case "January": displayMonth(1); break;
+            case "February": displayMonth(2); break;
+            case "March": displayMonth(3); break;
+            case "April": displayMonth(4); break;
+            case "May": displayMonth(5); break;
+            case "June": displayMonth(6); break;
+            case "July": displayMonth(7); break;
+            case "August": displayMonth(8); break;
+            case "September": displayMonth(9); break;
+            case "October": displayMonth(10); break;
+            case "November": displayMonth(11); break;
+            case "December": displayMonth(12); break;
+        }
+    }
 }

@@ -20,6 +20,9 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.control.ComboBox?>
+<?import java.lang.String?>
+<?import javafx.scene.text.TextFlow?>
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Controllers.calendarPageController">
     <children>
         <MenuButton ellipsisString="" layoutX="535.0" layoutY="1.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="65.0" text="Options" wrapText="true">
@@ -85,7 +88,10 @@
         </items>
       </MenuButton>
 
-      <TextField layoutX="33.0" layoutY="40.0" prefHeight="25.0" prefWidth="100.0" promptText="Search for events"/>
+        <ComboBox layoutX="33.0" layoutY="40.0" fx:id="monthSelect" prefWidth="160.0" promptText="Month" onAction="#selectMonth">
+
+        </ComboBox>
+
 
       <GridPane layoutX="33.0" layoutY="75.0" minWidth="532.0" gridLinesVisible="true" fx:id="calendar">
           <columnConstraints>

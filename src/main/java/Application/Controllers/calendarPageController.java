@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.layout.StackPane;
 import java.sql.Connection;
@@ -15,6 +16,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import javafx.scene.shape.Rectangle;
 
 public class calendarPageController extends sceneLoaderController {
     ArrayList<UserTimetable> events=new ArrayList<UserTimetable>();
@@ -32,31 +34,58 @@ public class calendarPageController extends sceneLoaderController {
             day.getChildren().add(date);
 
             //this count is used to determine how low text will be placed so it does not overlap
-            ArrayList<Text> eventTexts = new ArrayList<Text>();
+            ArrayList<StackPane> eventBlocks = new ArrayList<StackPane>();
             for (UserTimetable event : events){
                 Integer startDay=Integer.parseInt(event.getEventStartDate().substring(8,10));
                 Integer startMonth=Integer.parseInt(event.getEventStartDate().substring(5,7));
-                if (startMonth==LocalDate.now().getMonth().getValue() && startDay==dayOfMonth){
-                    Text eventText = new Text(event.getEventName());
-                    day.getChildren().add(eventText);
+                Integer endDay=Integer.parseInt(event.getEventEndDate().substring(8,10));
+                Integer endMonth=Integer.parseInt(event.getEventEndDate().substring(5,7));
 
-                    eventTexts.add(eventText);
+                if (startMonth==LocalDate.now().getMonth().getValue() && startDay==dayOfMonth
+                    || endMonth==LocalDate.now().getMonth().getValue() && endDay==dayOfMonth){
+
+                    StackPane eventBlock=new StackPane();
+                    Rectangle background=new Rectangle();
+                    switch (event.getEventType()){
+                        case "Study period":
+                            background.setFill(Color.BLUE);
+                            break;
+                        case "Work schedule":
+                            background.setFill(Color.GREEN);
+                            break;
+                        case "Food break":
+                            background.setFill(Color.ORANGE);
+                            break;
+                        case "Assignment":
+                            background.setFill(Color.RED);
+                            break;
+                    }
+                    background.setHeight(20);
+                    background.setWidth(76);
+                    eventBlock.getChildren().add(background);
+
+                    Text eventText = new Text(event.getEventName());
+                    eventText.setFill(Color.WHITE);
+                    eventBlock.getChildren().add(eventText);
+                    day.getChildren().add(eventBlock);
+                    eventBlocks.add(eventBlock);
 
                     //only change the rowHeight if it's not already big enough
-                    if ((eventTexts.size()+1)*20 > calendar.getRowConstraints().get(week).getMinHeight()) {
+                    if ((eventBlocks.size()+1)*20 > calendar.getRowConstraints().get(week).getMinHeight()) {
                         calendar.getRowConstraints().get(week).setMinHeight(
                                 calendar.getRowConstraints().get(week).getMinHeight() + 20);
                     }
                 }
             }
-            if (eventTexts.size() >0){
+            if (eventBlocks.size() >0){
                 date.setTranslateY((-calendar.getRowConstraints().get(week).getMinHeight()/2) +9);
-                Integer textCount=0;
-                for (Text text: eventTexts){
-                    text.setTranslateY(textCount * 20);
+                Integer textCount=1;
+                for (StackPane eventBlock: eventBlocks){
+                    eventBlock.setTranslateY(((-calendar.getRowConstraints().get(week).getMinHeight()/2) +9)
+                            +(textCount * 20));
                     textCount+=1;
                 }
-                            }
+            }
 
 
             dayOfWeek+=1;

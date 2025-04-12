@@ -3,19 +3,24 @@ package Application.Controllers;
 import Application.Database.UserTimetable;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.RowConstraints;
+import javafx.scene.control.MenuButton;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import javafx.scene.layout.StackPane;
+import javafx.scene.control.Tooltip;
+
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
+
+import javax.swing.*;
+import javax.tools.Tool;
 
 public class calendarPageController extends sceneLoaderController {
     ArrayList<UserTimetable> events=new ArrayList<UserTimetable>();
@@ -81,6 +86,30 @@ public class calendarPageController extends sceneLoaderController {
                     Text eventText = new Text(event.getEventName());
                     eventText.setFill(Color.WHITE);
                     eventBlock.getChildren().add(eventText);
+
+                    String location="";
+                    if (event.getEventLocation()!=null && event.getEventLocation()!=""){
+                        location="\nLocation: "+event.getEventLocation();
+                    }
+                    String attendance;
+                    if (event.getEventAttendance()==0){
+                        attendance="\nAttendance: no";
+                    }
+                    else{
+                        attendance="\nAttendance: yes";
+                    }
+
+                    Tooltip details=new Tooltip("Name: "+event.getEventName()
+                            +"\nType: "+event.getEventType()
+                            +"\nStart Datetime: "+event.getEventStartDate()
+                            +"\nEnd Datetime: "+event.getEventEndDate()
+                            +attendance+location);
+                    details.setMinWidth(100);
+                    details.setHideDelay(Duration.ZERO);
+                    details.setShowDelay(Duration.ZERO);
+                    Tooltip.install(eventBlock,details);
+                    eventBlock.setMaxHeight(20);
+
                     day.getChildren().add(eventBlock);
                     eventBlocks.add(eventBlock);
 
@@ -134,6 +163,7 @@ public class calendarPageController extends sceneLoaderController {
                                                         ,"July","August","September","October","November","December"));
 
             displayMonth(LocalDate.now().getMonth().getValue());
+
         }catch(Exception e){
             System.out.println(e + "exception");
         }

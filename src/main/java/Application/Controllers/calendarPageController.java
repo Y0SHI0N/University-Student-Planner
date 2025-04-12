@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -22,11 +23,25 @@ public class calendarPageController extends sceneLoaderController {
     @FXML private ComboBox monthSelect;
 
     public void displayMonth(Integer month){
+        //clear the days from the calendar
+        ArrayList<javafx.scene.Node> children=new ArrayList<javafx.scene.Node>(calendar.getChildren());
+        for (javafx.scene.Node i: children){
+            if (i.getTypeSelector().equals("StackPane")){
+                calendar.getChildren().remove(i);
+            }
+        }
+        //reset rowConstraints
+        calendar.getRowConstraints().clear();
+        calendar.getRowConstraints().add(new RowConstraints());
+        calendar.getRowConstraints().get(0).setMinHeight(20);
+        calendar.getRowConstraints().add(new RowConstraints());
+        calendar.getRowConstraints().get(1).setMinHeight(20);
+
         //add days to calendar
         Integer week = 1;
         Integer dayOfMonth=1;
         Integer dayOfWeek=LocalDate.of(LocalDate.now().getYear(),month,1).getDayOfWeek().getValue();
-        for (int i=1; i <= LocalDate.now().getMonth().length(LocalDate.now().getYear()%4==0) ;i++){
+        for (int i=1; i <= java.time.Month.of(month).length(LocalDate.now().getYear()%4==0) ;i++){
             StackPane day = new StackPane();
             calendar.add(day, dayOfWeek-1, week);
             Text date = new Text(dayOfMonth.toString());
@@ -40,8 +55,8 @@ public class calendarPageController extends sceneLoaderController {
                 Integer endDay=Integer.parseInt(event.getEventEndDate().substring(8,10));
                 Integer endMonth=Integer.parseInt(event.getEventEndDate().substring(5,7));
 
-                if (startMonth==LocalDate.now().getMonth().getValue() && startDay==dayOfMonth
-                    || endMonth==LocalDate.now().getMonth().getValue() && endDay==dayOfMonth){
+                if (startMonth==month && startDay==dayOfMonth
+                    || endMonth==month && endDay==dayOfMonth){
 
                     StackPane eventBlock=new StackPane();
                     Rectangle background=new Rectangle();

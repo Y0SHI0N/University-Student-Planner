@@ -23,6 +23,8 @@
 <?import javafx.scene.control.ComboBox?>
 <?import java.lang.String?>
 <?import javafx.scene.text.TextFlow?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.layout.StackPane?>
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Controllers.calendarPageController">
     <children>
         <MenuButton ellipsisString="" layoutX="535.0" layoutY="1.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="65.0" text="Options" wrapText="true">
@@ -88,9 +90,23 @@
         </items>
       </MenuButton>
 
-        <ComboBox layoutX="33.0" layoutY="40.0" fx:id="monthSelect" prefWidth="160.0" promptText="Month" onAction="#selectMonth">
+      <StackPane layoutX="35" layoutY="45.0" fx:id="monthDecrementButton" onMouseClicked="#decrementMonth">
+          <Circle radius="12" fill="#003C72"/>
+          <Text translateY="-2" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="←">
+              <font><Font size="20.0" /></font>
+          </Text>
+      </StackPane>
 
-        </ComboBox>
+      <Text layoutX="70" layoutY="65.0" fill="black" strokeType="OUTSIDE" text="YEAR MONTH" fx:id="monthText">
+          <Font size="20.0" />
+      </Text>
+
+      <StackPane layoutX="165" layoutY="45.0" fx:id="monthIncrementButton" onMouseClicked="#incrementMonth">
+          <Circle radius="12" fill="#003C72"/>
+          <Text translateY="-2" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="→">
+              <font><Font size="20.0" /></font>
+          </Text>
+      </StackPane>
 
 
 

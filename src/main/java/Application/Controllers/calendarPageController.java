@@ -24,10 +24,17 @@ import javax.tools.Tool;
 
 public class calendarPageController extends sceneLoaderController {
     ArrayList<UserTimetable> events=new ArrayList<UserTimetable>();
+    private Integer month;
+    private Integer year;
     @FXML private GridPane calendar;
-    @FXML private ComboBox monthSelect;
+    @FXML private StackPane monthDecrementButton;
+    @FXML private StackPane monthIncrementButton;
+    @FXML private Text monthText;
 
-    public void displayMonth(Integer month){
+    public void displayMonth(){
+        //update month text
+        monthText.setText(year+" "+java.time.Month.of(month));
+
         //clear the days from the calendar
         ArrayList<javafx.scene.Node> children=new ArrayList<javafx.scene.Node>(calendar.getChildren());
         for (javafx.scene.Node i: children){
@@ -45,7 +52,7 @@ public class calendarPageController extends sceneLoaderController {
         //add days to calendar
         Integer week = 1;
         Integer dayOfMonth=1;
-        Integer dayOfWeek=LocalDate.of(LocalDate.now().getYear(),month,1).getDayOfWeek().getValue();
+        Integer dayOfWeek=LocalDate.of(year,month,1).getDayOfWeek().getValue();
         for (int i=1; i <= java.time.Month.of(month).length(LocalDate.now().getYear()%4==0) ;i++){
             StackPane day = new StackPane();
             calendar.add(day, dayOfWeek-1, week);
@@ -57,11 +64,13 @@ public class calendarPageController extends sceneLoaderController {
             for (UserTimetable event : events){
                 Integer startDay=Integer.parseInt(event.getEventStartDate().substring(8,10));
                 Integer startMonth=Integer.parseInt(event.getEventStartDate().substring(5,7));
+                Integer startYear=Integer.parseInt(event.getEventStartDate().substring(0,4));
                 Integer endDay=Integer.parseInt(event.getEventEndDate().substring(8,10));
                 Integer endMonth=Integer.parseInt(event.getEventEndDate().substring(5,7));
+                Integer endYear=Integer.parseInt(event.getEventEndDate().substring(0,4));
 
-                if (startMonth==month && startDay==dayOfMonth
-                    || endMonth==month && endDay==dayOfMonth){
+                if (startMonth.equals(month) && startDay.equals(dayOfMonth) && startYear.equals(year)
+                    || endMonth.equals(month) && endDay.equals(dayOfMonth) && endYear.equals(year)){
 
                     StackPane eventBlock=new StackPane();
                     Rectangle background=new Rectangle();
@@ -159,30 +168,37 @@ public class calendarPageController extends sceneLoaderController {
                         ,resultSet.getInt("Event_Attendance")));
             }
 
-            monthSelect.setItems(FXCollections.observableArrayList("January","February","March","April","May","June"
-                                                        ,"July","August","September","October","November","December"));
-
-            displayMonth(LocalDate.now().getMonth().getValue());
+            year=LocalDate.now().getYear();
+            month=LocalDate.now().getMonth().getValue();
+            displayMonth();
 
         }catch(Exception e){
             System.out.println(e + "exception");
         }
     }
 
-    public void selectMonth() {
-        switch (monthSelect.getValue().toString()){
-            case "January": displayMonth(1); break;
-            case "February": displayMonth(2); break;
-            case "March": displayMonth(3); break;
-            case "April": displayMonth(4); break;
-            case "May": displayMonth(5); break;
-            case "June": displayMonth(6); break;
-            case "July": displayMonth(7); break;
-            case "August": displayMonth(8); break;
-            case "September": displayMonth(9); break;
-            case "October": displayMonth(10); break;
-            case "November": displayMonth(11); break;
-            case "December": displayMonth(12); break;
+    public void decrementMonth(){
+        if (month == 1){
+            month=12;
+            year-=1;
         }
+        else{
+            month-=1;
+        }
+        displayMonth();
     }
+
+    public void incrementMonth(){
+        if (month == 12){
+            month=1;
+            year+=1;
+        }
+        else{
+            month+=1;
+        }
+        displayMonth();
+    }
+
+
+
 }

@@ -68,7 +68,7 @@ public class mapPageController extends sceneLoaderController {
         int heat_hue_value = Math.clamp(room_number * hue_step_value, 0, 255);
         // The heat hue value works as an inverse relationship with both red and blue hues.
         // The deeper the red, the less the blue and vice versa. Initally starts with max blue and zero red
-        return (Color.rgb(heat_hue_value, 0, Math.abs(heat_hue_value - 255), 0.5));
+        return (Color.rgb(Math.abs(heat_hue_value - 255), 0, heat_hue_value, 0.5));
     }
 
     public void drawBuilding(Building building, GraphicsContext graphics, int room_count) {

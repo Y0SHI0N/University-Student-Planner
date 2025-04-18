@@ -70,48 +70,48 @@
                 <Image url="@../Img/QUT-Logo.jpg" />
             </image>
         </ImageView>
-      <StackPane layoutX="250.0" layoutY="5.0">
-      <Circle fill="DODGERBLUE" radius="55.0" strokeType="INSIDE"
-              fx:id="profileBackGround"/>
-      <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Profile img"
-      fx:id="profileText">
-          <font>
-              <Font size="55.0" />
-          </font>
-      </Text>
-      </StackPane>
+        <StackPane layoutX="250.0" layoutY="5.0">
+            <Circle fill="DODGERBLUE" radius="55.0" strokeType="INSIDE"
+                    fx:id="profileBackGround"/>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Profile img"
+                  fx:id="profileText">
+                <font>
+                    <Font size="55.0" />
+                </font>
+            </Text>
+        </StackPane>
 
-      <Label layoutX="142.0" layoutY="150.0" prefHeight="26.0" prefWidth="300.0" fx:id="firstName" onMouseClicked="#editButtonOnClick">
-          <cursor><Cursor fx:constant="HAND" /></cursor>
+        <Label layoutX="142.0" layoutY="150.0" prefHeight="26.0" prefWidth="300.0" fx:id="firstName" onMouseClicked="#editButtonOnClick">
+            <cursor><Cursor fx:constant="HAND" /></cursor>
             <font><Font size="18.0"/></font></Label>
-      <Label layoutX="142.0" layoutY="180.0" prefHeight="26.0" prefWidth="300.0" fx:id="lastName" onMouseClicked="#editButtonOnClick">
-          <cursor><Cursor fx:constant="HAND" /></cursor>
+        <Label layoutX="142.0" layoutY="180.0" prefHeight="26.0" prefWidth="300.0" fx:id="lastName" onMouseClicked="#editButtonOnClick">
+            <cursor><Cursor fx:constant="HAND" /></cursor>
             <font><Font size="18.0"/></font></Label>
-      <Label layoutX="142.0" layoutY="210.0" prefHeight="26.0" prefWidth="300.0" fx:id="Email" onMouseClicked="#editButtonOnClick">
-          <cursor><Cursor fx:constant="HAND" /></cursor>
+        <Label layoutX="142.0" layoutY="210.0" prefHeight="26.0" prefWidth="300.0" fx:id="Email" onMouseClicked="#editButtonOnClick">
+            <cursor><Cursor fx:constant="HAND" /></cursor>
             <font><Font size="18.0"/></font></Label>
-      <Label layoutX="142.0" layoutY="240.0" prefHeight="26.0" prefWidth="300.0" fx:id="phoneNumber" onMouseClicked="#editButtonOnClick">
-          <cursor><Cursor fx:constant="HAND" /></cursor>
+        <Label layoutX="142.0" layoutY="240.0" prefHeight="26.0" prefWidth="300.0" fx:id="phoneNumber" onMouseClicked="#editButtonOnClick">
+            <cursor><Cursor fx:constant="HAND" /></cursor>
             <font><Font size="18.0"/></font></Label>
 
-      <TextField layoutX="142.0" layoutY="145.0" prefHeight="20.0" prefWidth="270.0" fx:id="firstNameField"
-                 visible="false" promptText="First name"> <font><Font size="15.0"/></font></TextField>
-      <TextField layoutX="142.0" layoutY="185.0" prefHeight="20.0" prefWidth="270.0" fx:id="lastNameField"
-                 visible="false" promptText="Last name"> <font><Font size="15.0"/></font></TextField>
-      <TextField layoutX="142.0" layoutY="225.0" prefHeight="20.0" prefWidth="270.0" fx:id="EmailField"
-                 visible="false" promptText="Email"> <font><Font size="15.0"/></font></TextField>
-      <TextField layoutX="142.0" layoutY="265.0" prefHeight="20.0" prefWidth="270.0" fx:id="phoneNumberField"
-                 visible="false" promptText="Phone number"> <font><Font size="15.0"/></font></TextField>
+        <TextField layoutX="142.0" layoutY="145.0" prefHeight="20.0" prefWidth="270.0" fx:id="firstNameField"
+                   visible="false" promptText="First name"> <font><Font size="15.0"/></font></TextField>
+        <TextField layoutX="142.0" layoutY="185.0" prefHeight="20.0" prefWidth="270.0" fx:id="lastNameField"
+                   visible="false" promptText="Last name"> <font><Font size="15.0"/></font></TextField>
+        <TextField layoutX="142.0" layoutY="225.0" prefHeight="20.0" prefWidth="270.0" fx:id="EmailField"
+                   visible="false" promptText="Email"> <font><Font size="15.0"/></font></TextField>
+        <TextField layoutX="142.0" layoutY="265.0" prefHeight="20.0" prefWidth="270.0" fx:id="phoneNumberField"
+                   visible="false" promptText="Phone number"> <font><Font size="15.0"/></font></TextField>
 
-      <Button layoutX="142.0" layoutY="115.0" mnemonicParsing="false" text="Edit"
-              onMouseClicked="#editButtonOnClick" fx:id="editButton" />
+        <Button layoutX="142.0" layoutY="115.0" mnemonicParsing="false" text="Edit"
+                onMouseClicked="#editButtonOnClick" fx:id="editButton" />
 
-      <Button layoutX="142.0" layoutY="305.0" mnemonicParsing="false" text="Cancel"
-              onMouseClicked="#cancelButtonOnClick" fx:id="cancelButton" visible="false" />
-      <Button layoutX="358.0" layoutY="305.0" mnemonicParsing="false" text="Save changes"
-              onMouseClicked="#updateButtonOnClick" fx:id="updateButton" visible="false" />
+        <Button layoutX="142.0" layoutY="305.0" mnemonicParsing="false" text="Cancel"
+                onMouseClicked="#cancelButtonOnClick" fx:id="cancelButton" visible="false" />
+        <Button layoutX="358.0" layoutY="305.0" mnemonicParsing="false" text="Save changes"
+                onMouseClicked="#updateButtonOnClick" fx:id="updateButton" visible="false" />
 
-      <Text layoutX="190" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" fx:id="notice" visible="false">
-          <font><Font size="18.0"/></font></Text>
+        <Text layoutX="190" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" fx:id="notice" visible="false">
+            <font><Font size="18.0"/></font></Text>
     </children>
 </AnchorPane>

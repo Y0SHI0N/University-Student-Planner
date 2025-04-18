@@ -1,6 +1,7 @@
 package Application.Controllers;
 
 import Application.Database.UserSignup;
+import Application.Validation;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -58,16 +59,34 @@ public class registerPageController extends sceneLoaderController {
 //    }
 
     public void registerUser() {
-        String studentNumber = normaliseStudentNo(registerStudentNumber.getText());
+        String studentNumber = Validation.normaliseStudentNo(registerStudentNumber.getText());
         String firstName = registerFirstName.getText();
         String lastName = registerLastName.getText();
         String email = registerEmail.getText();
         String password = registerPassword.getText();
         String confirmedPassword = confirmRegisterPassword.getText();
 
-        String errorMessage = inputValidation(studentNumber,firstName,lastName,email,password,confirmedPassword);
-        if (errorMessage != null){
-            registerErrorMessagesText.setText(errorMessage);
+        String blankError = Validation.anyBlank(studentNumber,firstName,lastName,email,password,confirmedPassword);
+        if (blankError != null) {
+            registerErrorMessagesText.setText(blankError);
+            return;
+        }
+
+        String studentNoError = Validation.validateStudentNumber(studentNumber);
+        if (studentNoError != null) {
+            registerErrorMessagesText.setText(studentNoError);
+            return;
+        }
+
+        String emailError = Validation.validateEmail(email);
+        if (emailError != null) {
+            registerErrorMessagesText.setText(emailError);
+            return;
+        }
+
+        String passwordError = Validation.validatePassword(password, confirmedPassword);
+        if (passwordError != null) {
+            registerErrorMessagesText.setText(passwordError);
             return;
         }
 

@@ -1,6 +1,7 @@
 package Application.Controllers;
 
 import Application.Database.DatabaseConnection;
+import Application.Validation;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -18,7 +19,7 @@ public class loginPageController extends sceneLoaderController {
     @FXML private PasswordField loginPasswordField;
 
     public void loginButtonOnClick(MouseEvent click){
-        if(loginTextField.getText().isBlank() == false && loginPasswordField.getText().isBlank() == false){
+        if(!loginTextField.getText().isBlank() && !loginPasswordField.getText().isBlank()){
             validateLogin();
         }
         else{
@@ -30,15 +31,16 @@ public class loginPageController extends sceneLoaderController {
         try {
             String verifyLoginQuery = "SELECT count(1) FROM User_Signup_Data where StudentNumber = ? AND LoginPassword = ?";
             PreparedStatement statement = userSignupDAO.getDBConnection().prepareStatement(verifyLoginQuery);
-            statement.setString(1, normaliseStudentNo(loginTextField.getText()));
+            statement.setString(1, Validation.normaliseStudentNo(loginTextField.getText()));
             statement.setString(2, loginPasswordField.getText());
             ResultSet resultSet = statement.executeQuery();
 
             while(resultSet.next()){
                 if(resultSet.getInt(1) == 1){
                     // when the user is correctly logged in it will load the users home page and set the currentUserNumber
-                    currentUserNumber=normaliseStudentNo(loginTextField.getText());
-                    switchToHomePage();
+                    currentUserNumber=Validation.normaliseStudentNo(loginTextField.getText());
+                    //switchToHomePage();
+                    switchToGoalsPage();
                 }else{
                     loginLabel.setText("Invalid login. Please try again!");
                 }

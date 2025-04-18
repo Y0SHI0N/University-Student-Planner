@@ -3,6 +3,7 @@ package Application.Controllers;
 import Application.Database.DatabaseConnection;
 import Application.Database.UserSignup;
 import Application.Database.UserSignupDAO;
+import Application.Validation;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -123,32 +124,38 @@ public class profilePageController extends sceneLoaderController {
     }
 
     public Boolean validateChanges(){
-        String[] fields = {firstNameField.getText(),lastNameField.getText(),EmailField.getText(),phoneNumberField.getText()};
+        String firstName = firstNameField.getText();
+        String lastName = lastNameField.getText();
+        String email = EmailField.getText();
+        String phoneNumber = phoneNumberField.getText();
+
         //check no fields are empty
-        for (String value : fields){
-            if (value.isEmpty()){
-                notice.setText("don't leave fields empty.");
-                notice.setVisible(true);
-                notice.setFill(Color.RED);
-                return false;
-            }
-        }
-        //check fields have been changed
-        String[] currentValues = {userSignup.getFirstName(),userSignup.getLastName()
-                ,userSignup.getEmail(),userSignup.getPhoneNumber()};
-        if (Arrays.equals(fields,currentValues)) {
-            notice.setText("no fields have been changed.");
+        String blankError = Validation.anyBlank(firstName, lastName, email, phoneNumber);
+        if (blankError != null) {
+            notice.setText(blankError);
             notice.setVisible(true);
             notice.setFill(Color.RED);
             return false;
         }
+
         //check for correct email format
-        if (!EmailField.getText().matches(".+@.+")) {
-            notice.setText("invalid email.");
+        String emailError = Validation.validateEmail(EmailField.getText());
+        if (emailError != null) {
+            notice.setText(emailError);
             notice.setVisible(true);
             notice.setFill(Color.RED);
             return false;
         }
+
+        //check for correct phone number format
+        String phoneNumberError = Validation.validatePhoneNumber(phoneNumberField.getText());
+        if (phoneNumberError != null) {
+            notice.setText(phoneNumberError);
+            notice.setVisible(true);
+            notice.setFill(Color.RED);
+            return false;
+        }
+
         return true;
     }
 
@@ -180,6 +187,6 @@ public class profilePageController extends sceneLoaderController {
             }
         }
     }
-    
+
 
 }

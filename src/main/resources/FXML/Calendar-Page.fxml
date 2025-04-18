@@ -25,7 +25,8 @@
 <?import javafx.scene.text.TextFlow?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.layout.StackPane?>
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Controllers.calendarPageController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Controllers.calendarPageController"
+fx:id="pane">
     <children>
         <MenuButton ellipsisString="" layoutX="535.0" layoutY="1.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="65.0" text="Options" wrapText="true">
             <items>
@@ -81,14 +82,8 @@
         </ImageView>
 
 
-      <MenuButton layoutX="463.0" layoutY="40.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="104.0" text="Add Event">
-        <items>
-          <MenuItem mnemonicParsing="false" text="Add Study period" />
-          <MenuItem mnemonicParsing="false" text="Add Food Break" />
-            <MenuItem mnemonicParsing="false" text="Add Work schedule" />
-            <MenuItem mnemonicParsing="false" text="Add Assignment" />
-        </items>
-      </MenuButton>
+      <Button layoutX="463.0" layoutY="40.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="104.0" text="Add Event"
+              onMouseClicked="#showAddEventForm"/>
 
       <StackPane layoutX="35" layoutY="45.0" fx:id="monthDecrementButton" onMouseClicked="#decrementMonth">
           <Circle radius="12" fill="#003C72"/>
@@ -144,8 +139,6 @@
               <ColumnConstraints minWidth="76.0"/>
               <ColumnConstraints minWidth="76.0"/>
           </columnConstraints>
-
-
       </GridPane>
 
     </children>

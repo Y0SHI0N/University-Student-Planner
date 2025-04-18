@@ -2,14 +2,13 @@ package Application.Controllers;
 
 import Application.Database.UserTimetable;
 import javafx.collections.FXCollections;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.MenuButton;
+import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import javafx.scene.control.Tooltip;
 
 
 import java.sql.PreparedStatement;
@@ -30,6 +29,8 @@ public class calendarPageController extends sceneLoaderController {
     @FXML private StackPane monthDecrementButton;
     @FXML private StackPane monthIncrementButton;
     @FXML private Text monthText;
+
+    @FXML private AnchorPane pane;
 
     public void displayMonth(){
         //update month text
@@ -182,9 +183,7 @@ public class calendarPageController extends sceneLoaderController {
             month=12;
             year-=1;
         }
-        else{
-            month-=1;
-        }
+        else{month-=1;}
         displayMonth();
     }
 
@@ -193,12 +192,53 @@ public class calendarPageController extends sceneLoaderController {
             month=1;
             year+=1;
         }
-        else{
-            month+=1;
-        }
+        else{month+=1;}
         displayMonth();
     }
 
+    public void showAddEventForm(){
+        //setup background and pane
+        StackPane form = new StackPane();
+        Rectangle background = new Rectangle();
+        background.setWidth(1000);
+        background.setHeight(1000);
+        background.setFill(new Color(0,0,0,0.8));
+        form.getChildren().add(background);
 
+        Rectangle frame =new Rectangle();
+        frame.setWidth(300);
+        frame.setHeight(350);
+        frame.setFill(Color.WHITE);
+        frame.setTranslateY(-300);
+        frame.setTranslateX(-200);
+
+        form.getChildren().add(frame);
+        //add buttons
+        Button cancel = new Button();
+        cancel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {pane.getChildren().remove(form);}});
+        cancel.setText("Cancel");
+        cancel.setMinHeight(20); cancel.setMinWidth(100);
+        cancel.setTranslateY(-440); cancel.setTranslateX(-290);
+        form.getChildren().add(cancel);
+
+        Text nameLabel = new Text();
+        nameLabel.setTranslateY(-390); nameLabel.setTranslateX(-280);
+        nameLabel.setText("Event name:");
+        form.getChildren().add(nameLabel);
+        TextField nameField = new TextField();
+        nameField.setPrefHeight(20); nameField.setMaxWidth(150); nameField.setTranslateY(-390); nameField.setTranslateX(-160);
+        nameField.setPromptText("Event name");
+        form.getChildren().add(nameField);
+
+        Text typeLabel = new Text();
+        typeLabel.setTranslateY(-360); typeLabel.setTranslateX(-280);
+        typeLabel.setText("Event type:");
+        form.getChildren().add(typeLabel);
+
+
+        pane.getChildren().add(form);
+    }
 
 }

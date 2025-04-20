@@ -151,39 +151,33 @@
           <Rectangle fill="white" width="300" height="350" />
           <Button minHeight="20" minWidth="100" translateY="-150" translateX="-90" text="Cancel" onMouseClicked="#cancelAddEvent"/>
           <Text translateX="-90" translateY="-100" text="Event name:"/>
-          <TextField translateX="40" translateY="-100" maxHeight="20" maxWidth="150" promptText="Event name"/>
+          <TextField translateX="40" translateY="-100" maxHeight="20" maxWidth="150" promptText="Event name" fx:id="addEventNameField"/>
           <Text translateX="-90" translateY="-70" text="Event type:"/>
-          <ComboBox translateX="40" translateY="-70" maxHeight="20" maxWidth="150"><items><FXCollections fx:factory="observableArrayList">
+          <ComboBox translateX="40" translateY="-70" maxHeight="20" maxWidth="150" fx:id="addEventTypeSelect"><items><FXCollections fx:factory="observableArrayList">
                       <String fx:value="Study period"></String>
                       <String fx:value="Work schedule"></String>
                       <String fx:value="Food break"></String>
                       <String fx:value="Assignment"></String>
           </FXCollections></items></ComboBox>
           <Text translateX="-90" translateY="-40" text="Start date:"/>
-          <DatePicker minHeight="20" minWidth="100" translateY="-40" translateX="40"></DatePicker>
+          <DatePicker minHeight="20" minWidth="100" translateY="-40" translateX="40" fx:id="addEventStartDate" />
           <Text translateX="-90" translateY="-10" text="Start hour:"/>
-          <Spinner max="24" min="0" minHeight="20" maxWidth="50" translateY="-10" translateX="-35"/>
+          <Spinner max="24" min="0" minHeight="20" maxWidth="50" translateY="-10" translateX="-35" fx:id="addEventStartHour"/>
           <Text translateX="35" translateY="-10" text="Start minute:"/>
-          <Spinner max="60" min="0" minHeight="20" maxWidth="50" translateY="-10" translateX="95"/>
+          <Spinner max="60" min="0" minHeight="20" maxWidth="50" translateY="-10" translateX="95" fx:id="addEventStartMinute"/>
 
           <Text translateX="-90" translateY="20" text="End date:"/>
-          <DatePicker minHeight="20" minWidth="100" translateY="20" translateX="40"></DatePicker>
+          <DatePicker minHeight="20" minWidth="100" translateY="20" translateX="40" fx:id="addEventEndDate" />
           <Text translateX="-90" translateY="50" text="End hour:"/>
-          <Spinner max="24" min="0" minHeight="20" maxWidth="50" translateY="50" translateX="-35"/>
+          <Spinner max="24" min="0" minHeight="20" maxWidth="50" translateY="50" translateX="-35" fx:id="addEventEndHour"/>
           <Text translateX="35" translateY="50" text="End minute:"/>
-          <Spinner max="60" min="0" minHeight="20" maxWidth="50" translateY="50" translateX="95"/>
+          <Spinner max="60" min="0" minHeight="20" maxWidth="50" translateY="50" translateX="95" fx:id="addEventEndMinute"/>
 
           <Text translateX="-90" translateY="80" text="Event location"/>
-          <TextField translateX="40" translateY="80" maxHeight="20" maxWidth="150" promptText="Room code e.g.(S410)"/>
+          <TextField translateX="40" translateY="80" maxHeight="20" maxWidth="150" promptText="Room code e.g.(S410)" fx:id="addEventLocation"/>
           <Button minHeight="20" minWidth="100" translateY="130" text="Add event"/>
 
       </StackPane>
-
-
-
-
-
-
 
     </children>
 </AnchorPane>

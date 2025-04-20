@@ -35,6 +35,15 @@ public class calendarPageController extends sceneLoaderController {
     @FXML private Text monthText;
     @FXML private StackPane addEvent;
     @FXML private Rectangle background;
+    @FXML private TextField addEventNameField;
+    @FXML private ComboBox addEventTypeSelect;
+    @FXML private DatePicker addEventStartDate;
+    @FXML private Spinner addEventStartHour;
+    @FXML private Spinner addEventStartMinute;
+    @FXML private DatePicker addEventEndDate;
+    @FXML private Spinner addEventEndHour;
+    @FXML private Spinner addEventEndMinute;
+    @FXML private TextField addEventLocation;
 
     public void displayMonth(){
         //update month text
@@ -202,8 +211,20 @@ public class calendarPageController extends sceneLoaderController {
     }
 
     public void showAddEventForm(){
+        //reset form
+        addEventNameField.setText("");
+        addEventTypeSelect.setValue("");
+        addEventStartDate.setValue(null);
+        addEventStartHour.decrement(24);
+       addEventStartMinute.decrement(60);
+        addEventEndDate.setValue(null);
+        addEventEndHour.decrement(24);
+        addEventEndMinute.decrement(60);
+        addEventLocation.setText("");
+
         addEvent.setVisible(true);
         background.setVisible(true);
+
     }
     public void cancelAddEvent(){
         addEvent.setVisible(false);

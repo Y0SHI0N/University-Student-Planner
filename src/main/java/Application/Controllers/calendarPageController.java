@@ -71,6 +71,11 @@ public class calendarPageController extends sceneLoaderController {
             StackPane day = new StackPane();
             calendar.add(day, dayOfWeek-1, week);
             Text date = new Text(dayOfMonth.toString());
+            //if this is the current day change it's color to highlight it
+            if (year.equals(LocalDate.now().getYear()) && month.equals(LocalDate.now().getMonth().getValue())
+                    && dayOfMonth.equals(LocalDate.now().getDayOfMonth()) ){
+                day.setStyle("-fx-background-color:LIGHTSKYBLUE");
+            }
             day.getChildren().add(date);
 
             //this count is used to determine how low text will be placed so it does not overlap
@@ -226,9 +231,67 @@ public class calendarPageController extends sceneLoaderController {
         background.setVisible(true);
 
     }
+
     public void cancelAddEvent(){
         addEvent.setVisible(false);
         background.setVisible(false);
     }
 
+    //this function does all input checks except checking for duplicates so it can be used for adding and editing events
+    public String checkEventInputs(){
+        //check all necessary fields are filled out, doesn't check hour or minute since spinners can't be set to black
+        if (addEventNameField.getText().equals("") || addEventTypeSelect.getValue().equals("") ||
+                addEventStartDate.getValue()==null || addEventEndDate.getValue()==null ||
+                addEventLocation.getText().equals("")){
+            return "Necessary fields missing";
+        }
+        //check the format of location
+        if (addEventLocation.getText().substring(0,1).matches("\\D*") ||
+                addEventLocation.getText().substring(1).matches("\\d*")){
+            return "Location format incorrect";
+        }
+
+        return null;
+    }
+
+
+    public void addEvent(){
+        String check = checkEventInputs();
+        if (check != null){
+            //check if this event is a duplicate
+            String profileInfoQuery = "SELECT * FROM User_Timetable_Data where StudentNumber = ?";
+            try {
+                //get start and end dateTime
+                String eventStartDateTime = addEventStartDate.getValue().toString()+" ";
+                if (Integer.parseInt(addEventStartHour.getValue().toString()) < 10){eventStartDateTime+=addEventStartHour.getValue().toString() + "0:";}
+                else{eventStartDateTime+=addEventStartHour.getValue().toString() + ":";}
+                if (Integer.parseInt(addEventStartMinute.getValue().toString()) < 10){eventStartDateTime+=addEventStartMinute.getValue().toString() + "0:00";}
+                else{eventStartDateTime+=addEventStartMinute.getValue().toString() + ":00";}
+                String eventEndDateTime = addEventEndDate.getValue().toString()+" ";
+                if (Integer.parseInt(addEventEndHour.getValue().toString()) < 10){eventEndDateTime+=addEventEndHour.getValue().toString() + "0:";}
+                else{eventEndDateTime+=addEventEndHour.getValue().toString() + ":";}
+                if (Integer.parseInt(addEventEndMinute.getValue().toString()) < 10){eventEndDateTime+=addEventEndMinute.getValue().toString() + "0:00";}
+                else{eventEndDateTime+=addEventEndMinute.getValue().toString() + ":00";}
+
+                String duplicateEvent="SELECT count(1) FROM User_Timetable_Data where StudentNumber = ? AND EventName = ? AND "+
+                        "EventType = ? AND EventStartDatetime = ? AND EventEndDatetime = ? AND EventLocation = ?";
+                PreparedStatement statement = userSignupDAO.getDBConnection().prepareStatement(duplicateEvent);
+                statement.setString(1, currentUserNumber);
+                statement.setString(2, addEventNameField.getText());
+                statement.setString(3, addEventTypeSelect.getValue().toString());
+                statement.setString(4, eventStartDateTime);
+                statement.setString(5, eventEndDateTime);
+                statement.setString(6, addEventLocation.getText());
+
+
+                System.out.println(statement.executeQuery().getInt(1));
+
+            }catch(Exception e){
+                System.out.println(e + "exception");
+            }
+        }
+        else{
+            //input validation has an issue display it
+        }
+    }
 }

@@ -145,7 +145,7 @@
           </columnConstraints>
       </GridPane>
 
-        <Rectangle fill="rgba(0,0,0,0.8)" width="600" height="400" fx:id="background" visible="false"/>
+        <Rectangle fill="rgba(0,0,0,0.8)" width="600" height="400" fx:id="background" visible="true"/>
 
       <StackPane fx:id="addEvent" layoutX="150" layoutY="20" visible="false">
           <Rectangle fill="white" width="300" height="350" />
@@ -175,7 +175,9 @@
 
           <Text translateX="-90" translateY="80" text="Event location"/>
           <TextField translateX="40" translateY="80" maxHeight="20" maxWidth="150" promptText="Room code e.g.(S410)" fx:id="addEventLocation"/>
-          <Button minHeight="20" minWidth="100" translateY="130" text="Add event"/>
+          <Button minHeight="20" minWidth="100" translateY="130" text="Add event" onMouseClicked="#addEvent"/>
+
+          <Text translateY="120" text="aaa" fill="red"/>
 
       </StackPane>
 

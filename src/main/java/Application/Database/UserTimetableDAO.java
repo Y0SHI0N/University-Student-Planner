@@ -23,4 +23,27 @@ public class UserTimetableDAO extends BaseDAO {
             e.printStackTrace();
         }
     }
+
+    //the bellow function is pretty much just copy and pasted from the UserSignupDAO
+    public void insertEvent(UserTimetable event){
+        String sql = "INSERT OR IGNORE INTO User_Timetable_Data (EventName, StudentNumber, EventType, EventStartDatetime, EventEndDatetime, EventLocation) VALUES (?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            // Define indexes of required (non-nullable) fields
+            int[] requiredFields = {1, 2, 3, 4, 5, 6}; // EventName, StudentNumber, EventType, EventStartDatetime, EventEndDatetime, EventLocation
+
+            // Use the improved StatementPrep() with validation
+            DatabaseConnection.StatementPrep(stmt, requiredFields,
+                    event.getEventName(),
+                    event.getStudentNumber(),
+                    event.getEventType(),
+                    event.getEventStartDate(),
+                    event.getEventEndDate(),
+                    event.getEventLocation()    );
+
+            stmt.executeUpdate();
+            System.out.println("Event inserted successfully!");
+        } catch (SQLException e) {
+            System.err.println("Insert failed: " + e.getMessage());
+        }
+    }
 }

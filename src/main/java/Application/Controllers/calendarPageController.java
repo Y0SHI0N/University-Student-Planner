@@ -1,6 +1,7 @@
 package Application.Controllers;
 
 import Application.Database.UserTimetable;
+import Application.Database.UserTimetableDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -44,6 +45,7 @@ public class calendarPageController extends sceneLoaderController {
     @FXML private Spinner addEventEndHour;
     @FXML private Spinner addEventEndMinute;
     @FXML private TextField addEventLocation;
+    @FXML private Text addEventNotice;
 
     public void displayMonth(){
         //update month text
@@ -116,7 +118,7 @@ public class calendarPageController extends sceneLoaderController {
                     eventBlock.getChildren().add(eventText);
 
                     String location="";
-                    if (event.getEventLocation()!=null && event.getEventLocation()!=""){
+                    if (event.getEventLocation()!=null && !event.getEventLocation().equals("")){
                         location="\nLocation: "+event.getEventLocation();
                     }
                     String attendance;
@@ -170,9 +172,9 @@ public class calendarPageController extends sceneLoaderController {
 
     }
 
-    public void initialize(){
+    public void getEvents(){
+        events=new ArrayList<UserTimetable>();
         try {
-            //get events
             String profileInfoQuery = "SELECT * FROM User_Timetable_Data where StudentNumber = ?";
             PreparedStatement statement = userSignupDAO.getDBConnection().prepareStatement(profileInfoQuery);
             statement.setString(1,currentUserNumber);
@@ -187,14 +189,17 @@ public class calendarPageController extends sceneLoaderController {
                         ,resultSet.getInt("Event_Attendance")));
             }
 
-            year=LocalDate.now().getYear();
-            month=LocalDate.now().getMonth().getValue();
-            displayMonth();
-
 
         }catch(Exception e){
             System.out.println(e + "exception");
         }
+    }
+
+    public void initialize(){
+        getEvents();
+        year=LocalDate.now().getYear();
+        month=LocalDate.now().getMonth().getValue();
+        displayMonth();
     }
 
     public void decrementMonth(){
@@ -226,6 +231,7 @@ public class calendarPageController extends sceneLoaderController {
         addEventEndHour.decrement(24);
         addEventEndMinute.decrement(60);
         addEventLocation.setText("");
+        addEventNotice.setVisible(false);
 
         addEvent.setVisible(true);
         background.setVisible(true);
@@ -241,23 +247,23 @@ public class calendarPageController extends sceneLoaderController {
     public String checkEventInputs(){
         //check all necessary fields are filled out, doesn't check hour or minute since spinners can't be set to black
         if (addEventNameField.getText().equals("") || addEventTypeSelect.getValue().equals("") ||
-                addEventStartDate.getValue()==null || addEventEndDate.getValue()==null ||
-                addEventLocation.getText().equals("")){
+                addEventStartDate.getValue()==null || addEventEndDate.getValue()==null ){
             return "Necessary fields missing";
         }
-        //check the format of location
-        if (addEventLocation.getText().substring(0,1).matches("\\D*") ||
-                addEventLocation.getText().substring(1).matches("\\d*")){
-            return "Location format incorrect";
+        //check the format of location is correct (if a location is provided)
+        if (!addEventLocation.getText().equals("")) {
+            if (!addEventLocation.getText().substring(0, 1).matches("\\D*") ||
+                    !addEventLocation.getText().substring(1).matches("\\d*")) {
+                return "Location format incorrect";
+            }
         }
-
         return null;
     }
 
 
     public void addEvent(){
         String check = checkEventInputs();
-        if (check != null){
+        if (check == null){
             //check if this event is a duplicate
             String profileInfoQuery = "SELECT * FROM User_Timetable_Data where StudentNumber = ?";
             try {
@@ -274,17 +280,30 @@ public class calendarPageController extends sceneLoaderController {
                 else{eventEndDateTime+=addEventEndMinute.getValue().toString() + ":00";}
 
                 String duplicateEvent="SELECT count(1) FROM User_Timetable_Data where StudentNumber = ? AND EventName = ? AND "+
-                        "EventType = ? AND EventStartDatetime = ? AND EventEndDatetime = ? AND EventLocation = ?";
+                        "EventType = ? AND EventStartDatetime = ? AND EventEndDatetime = ?";
                 PreparedStatement statement = userSignupDAO.getDBConnection().prepareStatement(duplicateEvent);
                 statement.setString(1, currentUserNumber);
                 statement.setString(2, addEventNameField.getText());
                 statement.setString(3, addEventTypeSelect.getValue().toString());
                 statement.setString(4, eventStartDateTime);
-                statement.setString(5, eventEndDateTime);
-                statement.setString(6, addEventLocation.getText());
+                statement.setString(5, eventEndDateTime);//only checking the mandatory fields
 
 
-                System.out.println(statement.executeQuery().getInt(1));
+                if (statement.executeQuery().getInt(1) == 1){
+                    addEventNotice.setText("This event already exists");
+                    addEventNotice.setVisible(true);
+                }else{
+                    //make an event object
+                    UserTimetable newEvent = new UserTimetable(addEventNameField.getText(),currentUserNumber
+                            ,addEventTypeSelect.getValue().toString(),eventStartDateTime, eventEndDateTime
+                            , addEventLocation.getText(),0);
+                    userTimetableDAO.insertEvent(newEvent);
+                    //int isn't nullable in java, so I'm putting attendance as a zero here
+                    //,but I will leave it null when actually putting it in sql
+                    cancelAddEvent();
+                    getEvents();
+                    displayMonth();
+                }
 
             }catch(Exception e){
                 System.out.println(e + "exception");
@@ -292,6 +311,8 @@ public class calendarPageController extends sceneLoaderController {
         }
         else{
             //input validation has an issue display it
+            addEventNotice.setText(check);
+            addEventNotice.setVisible(true);
         }
     }
 }

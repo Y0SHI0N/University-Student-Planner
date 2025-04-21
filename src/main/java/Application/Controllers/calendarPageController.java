@@ -130,11 +130,23 @@ public class calendarPageController extends sceneLoaderController {
                             eventLocationField.setText(event.getEventLocation());
                             if (event.getEventAttendance()==1){attendance.selectToggle(attendanceButtonYes);
                             }else{attendance.selectToggle(attendanceButtonNo);}
-                            //set event handler for
+                            //set event handler for delete button
                             deleteEventButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent mouseEvent) {
                                     userTimetableDAO.deleteEvent(event);
+                                    closeForm();    getEvents();    displayMonth();
+                                }
+                            });
+                            //set event handler for edit button
+                            editEventButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                                @Override
+                                public void handle(MouseEvent mouseEvent) {
+                                    Integer shortAttendance;
+                                    if (attendance.getSelectedToggle()==attendanceButtonYes){shortAttendance=1;}else{shortAttendance=0;}
+                                    UserTimetable newEvent=new UserTimetable(nameField.getText(),currentUserNumber
+                                    ,typeSelect.getValue().toString(),getStartDatetime(),getEndDatetime(),eventLocationField.getText(),shortAttendance);
+                                    userTimetableDAO.updateEvent(event,newEvent);
                                     closeForm();    getEvents();    displayMonth();
                                 }
                             });
@@ -313,6 +325,23 @@ public class calendarPageController extends sceneLoaderController {
         return null;
     }
 
+    public String getStartDatetime(){
+        //get start and end dateTime
+        String eventStartDateTime = startDateSelect.getValue().toString()+" ";
+        if (Integer.parseInt(startHourSpinner.getValue().toString()) < 10){eventStartDateTime+=startHourSpinner.getValue().toString() + "0:";}
+        else{eventStartDateTime+=startHourSpinner.getValue().toString() + ":";}
+        if (Integer.parseInt(startMinuteSpinner.getValue().toString()) < 10){eventStartDateTime+=startMinuteSpinner.getValue().toString() + "0:00";}
+        else{eventStartDateTime+=startMinuteSpinner.getValue().toString() + ":00";}
+        return eventStartDateTime;
+    }
+    public String getEndDatetime(){
+        String eventEndDateTime = endDateSelect.getValue().toString()+" ";
+        if (Integer.parseInt(endHourSpinner.getValue().toString()) < 10){eventEndDateTime+=endHourSpinner.getValue().toString() + "0:";}
+        else{eventEndDateTime+=endHourSpinner.getValue().toString() + ":";}
+        if (Integer.parseInt(endMinuteSpinner.getValue().toString()) < 10){eventEndDateTime+=endMinuteSpinner.getValue().toString() + "0:00";}
+        else{eventEndDateTime+=endMinuteSpinner.getValue().toString() + ":00";}
+        return eventEndDateTime;
+    }
 
     public void addEvent(){
         String check = checkEventInputs();
@@ -320,17 +349,8 @@ public class calendarPageController extends sceneLoaderController {
             //check if this event is a duplicate
             String profileInfoQuery = "SELECT * FROM User_Timetable_Data where StudentNumber = ?";
             try {
-                //get start and end dateTime
-                String eventStartDateTime = startDateSelect.getValue().toString()+" ";
-                if (Integer.parseInt(startHourSpinner.getValue().toString()) < 10){eventStartDateTime+=startHourSpinner.getValue().toString() + "0:";}
-                else{eventStartDateTime+=startHourSpinner.getValue().toString() + ":";}
-                if (Integer.parseInt(startMinuteSpinner.getValue().toString()) < 10){eventStartDateTime+=startMinuteSpinner.getValue().toString() + "0:00";}
-                else{eventStartDateTime+=startMinuteSpinner.getValue().toString() + ":00";}
-                String eventEndDateTime = endDateSelect.getValue().toString()+" ";
-                if (Integer.parseInt(endHourSpinner.getValue().toString()) < 10){eventEndDateTime+=endHourSpinner.getValue().toString() + "0:";}
-                else{eventEndDateTime+=endHourSpinner.getValue().toString() + ":";}
-                if (Integer.parseInt(endMinuteSpinner.getValue().toString()) < 10){eventEndDateTime+=endMinuteSpinner.getValue().toString() + "0:00";}
-                else{eventEndDateTime+=endMinuteSpinner.getValue().toString() + ":00";}
+                String eventStartDateTime=getStartDatetime();
+                String eventEndDateTime=getStartDatetime();
 
                 String duplicateEvent="SELECT count(1) FROM User_Timetable_Data where StudentNumber = ? AND EventName = ? AND "+
                         "EventType = ? AND EventStartDatetime = ? AND EventEndDatetime = ?";

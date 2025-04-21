@@ -69,5 +69,34 @@ public class UserTimetableDAO extends BaseDAO {
         }
     }
 
+    public void updateEvent(UserTimetable currentEvent, UserTimetable updatedEvent){
+        try {
+            String sql = "UPDATE User_Timetable_Data SET EventName = ?, EventType = ?, EventStartDatetime = ?, EventEndDatetime = ?," +
+                    " EventLocation = ?, Event_Attendance = ? WHERE EventName = ? AND StudentNumber = ? AND EventType = ?" +
+                    " AND EventStartDatetime = ? AND EventEndDatetime = ? AND EventLocation = ? AND Event_Attendance = ?";
+            PreparedStatement updateEvent= connection.prepareStatement(sql);
+            updateEvent.setString(1,updatedEvent.getEventName());
+            updateEvent.setString(2,updatedEvent.getEventType());
+            updateEvent.setString(3,updatedEvent.getEventStartDate());
+            updateEvent.setString(4,updatedEvent.getEventEndDate());
+            updateEvent.setString(5,updatedEvent.getEventLocation());
+            updateEvent.setInt(6,updatedEvent.getEventAttendance());
+            updateEvent.setString(7,currentEvent.getEventName());
+            updateEvent.setString(8,currentEvent.getStudentNumber());
+            updateEvent.setString(9,currentEvent.getEventType());
+            updateEvent.setString(10,currentEvent.getEventStartDate());
+            updateEvent.setString(11,currentEvent.getEventEndDate());
+            updateEvent.setString(12,currentEvent.getEventLocation());
+            System.out.println("1");
+            updateEvent.setInt(13,currentEvent.getEventAttendance());
+            System.out.println("2");
+            updateEvent.execute();
+            System.out.println("Event updated successfully!");
+        } catch (SQLException e) {
+            System.err.println("Update failed: " + e.getMessage());
+        }
+
+    }
+
 
 }

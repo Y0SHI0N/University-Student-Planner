@@ -15,6 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
+<?import javafx.scene.control.ToggleGroup?>
 
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.GridPane?>
@@ -29,6 +30,8 @@
 <?import javafx.collections.FXCollections?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.Group?>
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Controllers.calendarPageController"
             fx:id="pane">
     <children>
@@ -147,39 +150,51 @@
 
         <Rectangle fill="rgba(0,0,0,0.8)" width="600" height="400" fx:id="background" visible="false"/>
 
-      <StackPane fx:id="addEvent" layoutX="150" layoutY="20" visible="false">
+      <StackPane fx:id="form" layoutX="150" layoutY="20" visible="false">
           <Rectangle fill="white" width="300" height="350" />
-          <Button minHeight="20" minWidth="100" translateY="-150" translateX="-90" text="Cancel" onMouseClicked="#cancelAddEvent"/>
-          <Text translateX="-90" translateY="-100" text="Event name:"/>
-          <TextField translateX="40" translateY="-100" maxHeight="20" maxWidth="150" promptText="Event name" fx:id="addEventNameField"/>
-          <Text translateX="-90" translateY="-70" text="Event type:"/>
-          <ComboBox translateX="40" translateY="-70" maxHeight="20" maxWidth="150" fx:id="addEventTypeSelect"><items><FXCollections fx:factory="observableArrayList">
+          <Button minHeight="20" minWidth="100" translateY="-150" translateX="-90" text="Cancel" onMouseClicked="#closeForm"/>
+          <Text translateX="-90" translateY="-120" text="Event name:"/>
+          <TextField translateX="40" translateY="-120" maxHeight="20" maxWidth="150" promptText="Event name" fx:id="nameField"/>
+          <Text translateX="-90" translateY="-90" text="Event type:"/>
+          <ComboBox translateX="40" translateY="-90" maxHeight="20" maxWidth="150" fx:id="typeSelect"><items><FXCollections fx:factory="observableArrayList">
                       <String fx:value="Study period"></String>
                       <String fx:value="Work schedule"></String>
                       <String fx:value="Food break"></String>
                       <String fx:value="Assignment"></String>
           </FXCollections></items></ComboBox>
-          <Text translateX="-90" translateY="-40" text="Start date:"/>
-          <DatePicker minHeight="20" minWidth="100" translateY="-40" translateX="40" fx:id="addEventStartDate" />
-          <Text translateX="-90" translateY="-10" text="Start hour:"/>
-          <Spinner max="24" min="0" minHeight="20" maxWidth="50" translateY="-10" translateX="-35" fx:id="addEventStartHour"/>
-          <Text translateX="35" translateY="-10" text="Start minute:"/>
-          <Spinner max="60" min="0" minHeight="20" maxWidth="50" translateY="-10" translateX="95" fx:id="addEventStartMinute"/>
+          <Text translateX="-90" translateY="-60" text="Start date:"/>
+          <DatePicker minHeight="20" minWidth="100" translateY="-60" translateX="40" fx:id="startDateSelect" />
+          <Text translateX="-90" translateY="-30" text="Start hour:"/>
+          <Spinner max="24" min="0" minHeight="20" maxWidth="50" translateY="-30" translateX="-35" fx:id="startHourSpinner"/>
+          <Text translateX="35" translateY="-30" text="Start minute:"/>
+          <Spinner max="60" min="0" minHeight="20" maxWidth="50" translateY="-30" translateX="95" fx:id="startMinuteSpinner"/>
 
-          <Text translateX="-90" translateY="20" text="End date:"/>
-          <DatePicker minHeight="20" minWidth="100" translateY="20" translateX="40" fx:id="addEventEndDate" />
-          <Text translateX="-90" translateY="50" text="End hour:"/>
-          <Spinner max="24" min="0" minHeight="20" maxWidth="50" translateY="50" translateX="-35" fx:id="addEventEndHour"/>
-          <Text translateX="35" translateY="50" text="End minute:"/>
-          <Spinner max="60" min="0" minHeight="20" maxWidth="50" translateY="50" translateX="95" fx:id="addEventEndMinute"/>
+          <Text translateX="-90" translateY="0" text="End date:"/>
+          <DatePicker minHeight="20" minWidth="100" translateY="0" translateX="40" fx:id="endDateSelect" />
+          <Text translateX="-90" translateY="30" text="End hour:"/>
+          <Spinner max="24" min="0" minHeight="20" maxWidth="50" translateY="30" translateX="-35" fx:id="endHourSpinner"/>
+          <Text translateX="35" translateY="30" text="End minute:"/>
+          <Spinner max="60" min="0" minHeight="20" maxWidth="50" translateY="30" translateX="95" fx:id="endMinuteSpinner"/>
 
-          <Text translateX="-90" translateY="80" text="Event location"/>
-          <TextField translateX="40" translateY="80" maxHeight="20" maxWidth="170" promptText="Room code e.g.(S410)" fx:id="addEventLocation"/>
-          <Button minHeight="20" minWidth="100" translateY="145" text="Add event" onMouseClicked="#addEvent"/>
+          <Text translateX="-90" translateY="60" text="Event location"/>
+          <TextField translateX="40" translateY="60" maxHeight="20" maxWidth="170" promptText="Room code e.g.(S410)" fx:id="eventLocationField"/>
 
-          <Text translateY="110" text="sample" fill="red" visible="false" fx:id="addEventNotice"/>
+          <Text translateX="-90" translateY="90" text="Attendance:" visible="false" fx:id="attendanceLabel"/>
+          <fx:define><ToggleGroup fx:id="attendance"/></fx:define>
+          <RadioButton translateX="-30" translateY="90" text="Yes" toggleGroup="$attendance" visible="false" fx:id="attendanceButtonYes"/>
+          <RadioButton translateX="20" translateY="90" text="No" toggleGroup="$attendance" visible="false" fx:id="attendanceButtonNo"/>
+
+          <Button minHeight="20" minWidth="100" translateY="150" text="Add event" onMouseClicked="#addEvent" visible="false" fx:id="addEventButton"/>
+
+          <Button minHeight="20" minWidth="100" translateY="150" translateX="-90" text="Update details" fx:id="editEventButton" visible="false"/>
+          <Button minHeight="20" minWidth="100" translateY="150" translateX="90" text="Delete event" textFill="red" fx:id="deleteEventButton" visible="false"/>
+
+          <Text translateY="120" text="sample" fill="red" visible="false" fx:id="formNotice"/>
 
       </StackPane>
+
+
+
 
     </children>
 </AnchorPane>

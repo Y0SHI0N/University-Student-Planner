@@ -26,10 +26,10 @@ public class UserTimetableDAO extends BaseDAO {
 
     //the bellow function is pretty much just copy and pasted from the UserSignupDAO
     public void insertEvent(UserTimetable event){
-        String sql = "INSERT OR IGNORE INTO User_Timetable_Data (EventName, StudentNumber, EventType, EventStartDatetime, EventEndDatetime, EventLocation) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT OR IGNORE INTO User_Timetable_Data (EventName, StudentNumber, EventType, EventStartDatetime, EventEndDatetime, EventLocation, Event_Attendance) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             // Define indexes of required (non-nullable) fields
-            int[] requiredFields = {1, 2, 3, 4, 5, 6}; // EventName, StudentNumber, EventType, EventStartDatetime, EventEndDatetime, EventLocation
+            int[] requiredFields = {1, 2, 3, 4, 5, 6, 7}; // EventName, StudentNumber, EventType, EventStartDatetime, EventEndDatetime, EventLocation, EventAttendance
 
             // Use the improved StatementPrep() with validation
             DatabaseConnection.StatementPrep(stmt, requiredFields,
@@ -38,7 +38,8 @@ public class UserTimetableDAO extends BaseDAO {
                     event.getEventType(),
                     event.getEventStartDate(),
                     event.getEventEndDate(),
-                    event.getEventLocation()    );
+                    event.getEventLocation(),
+                    event.getEventAttendance()    );
 
             stmt.executeUpdate();
             System.out.println("Event inserted successfully!");
@@ -46,4 +47,27 @@ public class UserTimetableDAO extends BaseDAO {
             System.err.println("Insert failed: " + e.getMessage());
         }
     }
+
+    public void deleteEvent(UserTimetable event){
+        String sql = "DELETE FROM User_Timetable_Date WHERE EventName = ?, StudentNumber = ?, EventType = ?, EventStartDatetime = ?, EventEndDatetime = ?, EventLocation = ?, Event_Attendance = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            int[] requiredFields = {1, 2, 3, 4, 5, 6, 7};
+            // Use the improved StatementPrep() with validation
+            DatabaseConnection.StatementPrep(stmt, requiredFields,
+                    event.getEventName(),
+                    event.getStudentNumber(),
+                    event.getEventType(),
+                    event.getEventStartDate(),
+                    event.getEventEndDate(),
+                    event.getEventLocation(),
+                    event.getEventAttendance()    );
+
+            stmt.executeUpdate();
+            System.out.println("Event deleted successfully!");
+        } catch (SQLException e) {
+            System.err.println("Deletion failed: " + e.getMessage());
+        }
+    }
+
+
 }

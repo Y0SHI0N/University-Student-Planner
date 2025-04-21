@@ -11,7 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-
+import javafx.scene.control.RadioButton;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -34,18 +34,26 @@ public class calendarPageController extends sceneLoaderController {
     @FXML private StackPane monthDecrementButton;
     @FXML private StackPane monthIncrementButton;
     @FXML private Text monthText;
-    @FXML private StackPane addEvent;
+    @FXML private StackPane form;
     @FXML private Rectangle background;
-    @FXML private TextField addEventNameField;
-    @FXML private ComboBox addEventTypeSelect;
-    @FXML private DatePicker addEventStartDate;
-    @FXML private Spinner addEventStartHour;
-    @FXML private Spinner addEventStartMinute;
-    @FXML private DatePicker addEventEndDate;
-    @FXML private Spinner addEventEndHour;
-    @FXML private Spinner addEventEndMinute;
-    @FXML private TextField addEventLocation;
-    @FXML private Text addEventNotice;
+    @FXML private TextField nameField;
+    @FXML private ComboBox typeSelect;
+    @FXML private DatePicker startDateSelect;
+    @FXML private Spinner startHourSpinner;
+    @FXML private Spinner startMinuteSpinner;
+    @FXML private DatePicker endDateSelect;
+    @FXML private Spinner endHourSpinner;
+    @FXML private Spinner endMinuteSpinner;
+    @FXML private TextField eventLocationField;
+    @FXML private Text formNotice;
+    @FXML private Text attendanceLabel;
+    @FXML private RadioButton attendanceButtonYes;
+    @FXML private RadioButton attendanceButtonNo;
+    @FXML private ToggleGroup attendance;
+    @FXML private Button addEventButton;
+    @FXML private Button editEventButton;
+    @FXML private Button deleteEventButton;
+
 
     public void displayMonth(){
         //update month text
@@ -94,6 +102,44 @@ public class calendarPageController extends sceneLoaderController {
                     || endMonth.equals(month) && endDay.equals(dayOfMonth) && endYear.equals(year)){
 
                     StackPane eventBlock=new StackPane();
+                    eventBlock.setStyle("-fx-cursor:hand;");
+                    //set up function to load edit form
+                    eventBlock.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent mouseEvent) {
+                            form.setVisible(true);
+                            background.setVisible(true);
+                            attendanceLabel.setVisible(true);
+                            attendanceButtonYes.setVisible(true);
+                            attendanceButtonNo.setVisible(true);
+                            editEventButton.setVisible(true);
+                            deleteEventButton.setVisible(true);
+                            //set fields to current values
+                            nameField.setText(event.getEventName());
+                            typeSelect.setValue(event.getEventType());
+                            startDateSelect.setValue(LocalDate.parse(event.getEventStartDate().substring(0,10)));
+                            startHourSpinner.decrement(24);
+                            startHourSpinner.increment(Integer.parseInt(event.getEventStartDate().substring(11,13)));
+                            startMinuteSpinner.decrement(60);
+                            startMinuteSpinner.increment(Integer.parseInt(event.getEventStartDate().substring(14,16)));
+                            endDateSelect.setValue(LocalDate.parse(event.getEventEndDate().substring(0,10)));
+                            endHourSpinner.decrement(24);
+                            endHourSpinner.increment(Integer.parseInt(event.getEventEndDate().substring(11,13)));
+                            endMinuteSpinner.decrement(60);
+                            endMinuteSpinner.increment(Integer.parseInt(event.getEventEndDate().substring(14,16)));
+                            eventLocationField.setText(event.getEventLocation());
+                            if (event.getEventAttendance()==1){attendance.selectToggle(attendanceButtonYes);
+                            }else{attendance.selectToggle(attendanceButtonNo);}
+                            //set event handler for
+                            deleteEventButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                                @Override
+                                public void handle(MouseEvent mouseEvent) {
+                                    UserTimetableDAO.insertEvent(event);
+                                }
+                            });
+                        }
+                    });
+
                     Rectangle background=new Rectangle();
                     switch (event.getEventType()){
                         case "Study period":
@@ -122,11 +168,11 @@ public class calendarPageController extends sceneLoaderController {
                         location="\nLocation: "+event.getEventLocation();
                     }
                     String attendance;
-                    if (event.getEventAttendance()==0){
-                        attendance="\nAttendance: no";
+                    if (event.getEventAttendance()==1){
+                        attendance="\nAttendance: yes";
                     }
                     else{
-                        attendance="\nAttendance: yes";
+                        attendance="\nAttendance: no";
                     }
 
                     Tooltip details=new Tooltip("Name: "+event.getEventName()
@@ -222,38 +268,44 @@ public class calendarPageController extends sceneLoaderController {
 
     public void showAddEventForm(){
         //reset form
-        addEventNameField.setText("");
-        addEventTypeSelect.setValue("");
-        addEventStartDate.setValue(null);
-        addEventStartHour.decrement(24);
-       addEventStartMinute.decrement(60);
-        addEventEndDate.setValue(null);
-        addEventEndHour.decrement(24);
-        addEventEndMinute.decrement(60);
-        addEventLocation.setText("");
-        addEventNotice.setVisible(false);
+        nameField.setText("");
+        typeSelect.setValue("");
+        startDateSelect.setValue(null);
+        startHourSpinner.decrement(24);
+        startMinuteSpinner.decrement(60);
+        endDateSelect.setValue(null);
+        endHourSpinner.decrement(24);
+        endMinuteSpinner.decrement(60);
+        eventLocationField.setText("");
 
-        addEvent.setVisible(true);
+        form.setVisible(true);
         background.setVisible(true);
-
+        addEventButton.setVisible(true);
     }
 
-    public void cancelAddEvent(){
-        addEvent.setVisible(false);
+    public void closeForm(){
+        form.setVisible(false);
         background.setVisible(false);
+        formNotice.setVisible(false);
+        attendanceLabel.setVisible(false);
+        attendanceButtonYes.setVisible(false);
+        attendanceButtonNo.setVisible(false);
+        addEventButton.setVisible(false);
+        editEventButton.setVisible(false);
+        deleteEventButton.setVisible(false);
     }
 
     //this function does all input checks except checking for duplicates so it can be used for adding and editing events
     public String checkEventInputs(){
         //check all necessary fields are filled out, doesn't check hour or minute since spinners can't be set to black
-        if (addEventNameField.getText().equals("") || addEventTypeSelect.getValue().equals("") ||
-                addEventStartDate.getValue()==null || addEventEndDate.getValue()==null ){
+        if (nameField.getText().equals("") || typeSelect.getValue().equals("") ||
+                startDateSelect.getValue()==null || endDateSelect.getValue()==null ){
             return "Necessary fields missing";
         }
         //check the format of location is correct (if a location is provided)
-        if (!addEventLocation.getText().equals("")) {
-            if (!addEventLocation.getText().substring(0, 1).matches("\\D*") ||
-                    !addEventLocation.getText().substring(1).matches("\\d*")) {
+        if (!eventLocationField.getText().equals("")) {
+            if (!eventLocationField.getText().substring(0, 1).matches("\\D*") ||
+                    !eventLocationField.getText().substring(1).matches("\\d*")) {
                 return "Location format incorrect";
             }
         }
@@ -268,39 +320,37 @@ public class calendarPageController extends sceneLoaderController {
             String profileInfoQuery = "SELECT * FROM User_Timetable_Data where StudentNumber = ?";
             try {
                 //get start and end dateTime
-                String eventStartDateTime = addEventStartDate.getValue().toString()+" ";
-                if (Integer.parseInt(addEventStartHour.getValue().toString()) < 10){eventStartDateTime+=addEventStartHour.getValue().toString() + "0:";}
-                else{eventStartDateTime+=addEventStartHour.getValue().toString() + ":";}
-                if (Integer.parseInt(addEventStartMinute.getValue().toString()) < 10){eventStartDateTime+=addEventStartMinute.getValue().toString() + "0:00";}
-                else{eventStartDateTime+=addEventStartMinute.getValue().toString() + ":00";}
-                String eventEndDateTime = addEventEndDate.getValue().toString()+" ";
-                if (Integer.parseInt(addEventEndHour.getValue().toString()) < 10){eventEndDateTime+=addEventEndHour.getValue().toString() + "0:";}
-                else{eventEndDateTime+=addEventEndHour.getValue().toString() + ":";}
-                if (Integer.parseInt(addEventEndMinute.getValue().toString()) < 10){eventEndDateTime+=addEventEndMinute.getValue().toString() + "0:00";}
-                else{eventEndDateTime+=addEventEndMinute.getValue().toString() + ":00";}
+                String eventStartDateTime = startDateSelect.getValue().toString()+" ";
+                if (Integer.parseInt(startHourSpinner.getValue().toString()) < 10){eventStartDateTime+=startHourSpinner.getValue().toString() + "0:";}
+                else{eventStartDateTime+=startHourSpinner.getValue().toString() + ":";}
+                if (Integer.parseInt(startMinuteSpinner.getValue().toString()) < 10){eventStartDateTime+=startMinuteSpinner.getValue().toString() + "0:00";}
+                else{eventStartDateTime+=startMinuteSpinner.getValue().toString() + ":00";}
+                String eventEndDateTime = endDateSelect.getValue().toString()+" ";
+                if (Integer.parseInt(endHourSpinner.getValue().toString()) < 10){eventEndDateTime+=endHourSpinner.getValue().toString() + "0:";}
+                else{eventEndDateTime+=endHourSpinner.getValue().toString() + ":";}
+                if (Integer.parseInt(endMinuteSpinner.getValue().toString()) < 10){eventEndDateTime+=endMinuteSpinner.getValue().toString() + "0:00";}
+                else{eventEndDateTime+=endMinuteSpinner.getValue().toString() + ":00";}
 
                 String duplicateEvent="SELECT count(1) FROM User_Timetable_Data where StudentNumber = ? AND EventName = ? AND "+
                         "EventType = ? AND EventStartDatetime = ? AND EventEndDatetime = ?";
                 PreparedStatement statement = userSignupDAO.getDBConnection().prepareStatement(duplicateEvent);
                 statement.setString(1, currentUserNumber);
-                statement.setString(2, addEventNameField.getText());
-                statement.setString(3, addEventTypeSelect.getValue().toString());
+                statement.setString(2, nameField.getText());
+                statement.setString(3, typeSelect.getValue().toString());
                 statement.setString(4, eventStartDateTime);
                 statement.setString(5, eventEndDateTime);//only checking the mandatory fields
 
 
                 if (statement.executeQuery().getInt(1) == 1){
-                    addEventNotice.setText("This event already exists");
-                    addEventNotice.setVisible(true);
+                    formNotice.setText("This event already exists");
+                    formNotice.setVisible(true);
                 }else{
                     //make an event object
-                    UserTimetable newEvent = new UserTimetable(addEventNameField.getText(),currentUserNumber
-                            ,addEventTypeSelect.getValue().toString(),eventStartDateTime, eventEndDateTime
-                            , addEventLocation.getText(),0);
+                    UserTimetable newEvent = new UserTimetable(nameField.getText(),currentUserNumber
+                            ,typeSelect.getValue().toString(),eventStartDateTime, eventEndDateTime
+                            , eventLocationField.getText(),0);
                     userTimetableDAO.insertEvent(newEvent);
-                    //int isn't nullable in java, so I'm putting attendance as a zero here
-                    //,but I will leave it null when actually putting it in sql
-                    cancelAddEvent();
+                    closeForm();
                     getEvents();
                     displayMonth();
                 }
@@ -311,8 +361,8 @@ public class calendarPageController extends sceneLoaderController {
         }
         else{
             //input validation has an issue display it
-            addEventNotice.setText(check);
-            addEventNotice.setVisible(true);
+            formNotice.setText(check);
+            formNotice.setVisible(true);
         }
     }
 }

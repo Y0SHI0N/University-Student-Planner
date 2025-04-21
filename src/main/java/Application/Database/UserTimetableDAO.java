@@ -87,9 +87,7 @@ public class UserTimetableDAO extends BaseDAO {
             updateEvent.setString(10,currentEvent.getEventStartDate());
             updateEvent.setString(11,currentEvent.getEventEndDate());
             updateEvent.setString(12,currentEvent.getEventLocation());
-            System.out.println("1");
             updateEvent.setInt(13,currentEvent.getEventAttendance());
-            System.out.println("2");
             updateEvent.execute();
             System.out.println("Event updated successfully!");
         } catch (SQLException e) {

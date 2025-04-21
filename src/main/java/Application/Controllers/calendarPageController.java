@@ -6,6 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -172,8 +173,14 @@ public class calendarPageController extends sceneLoaderController {
                     background.setWidth(76);
                     eventBlock.getChildren().add(background);
 
-                    Text eventText = new Text(event.getEventName());
+                    //check length of text and if it's to long cut it of so it does not overfill space
+                    Text eventText = new Text();
+                    if (event.getEventName().length() < 13){
+                        eventText.setText(event.getEventName());
+                    }else{eventText.setText(event.getEventName().substring(0,10)+"...");}
+
                     eventText.setFill(Color.WHITE);
+                    eventText.setWrappingWidth(76);
                     eventBlock.getChildren().add(eventText);
 
                     String location="";
@@ -334,6 +341,7 @@ public class calendarPageController extends sceneLoaderController {
         else{eventStartDateTime+=startMinuteSpinner.getValue().toString() + ":00";}
         return eventStartDateTime;
     }
+
     public String getEndDatetime(){
         String eventEndDateTime = endDateSelect.getValue().toString()+" ";
         if (Integer.parseInt(endHourSpinner.getValue().toString()) < 10){eventEndDateTime+=endHourSpinner.getValue().toString() + "0:";}

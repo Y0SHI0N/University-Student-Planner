@@ -134,7 +134,8 @@ public class calendarPageController extends sceneLoaderController {
                             deleteEventButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent mouseEvent) {
-                                    UserTimetableDAO.insertEvent(event);
+                                    userTimetableDAO.deleteEvent(event);
+                                    closeForm();    getEvents();    displayMonth();
                                 }
                             });
                         }

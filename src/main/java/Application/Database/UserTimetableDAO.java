@@ -49,7 +49,7 @@ public class UserTimetableDAO extends BaseDAO {
     }
 
     public void deleteEvent(UserTimetable event){
-        String sql = "DELETE FROM User_Timetable_Date WHERE EventName = ?, StudentNumber = ?, EventType = ?, EventStartDatetime = ?, EventEndDatetime = ?, EventLocation = ?, Event_Attendance = ?";
+        String sql = "DELETE FROM User_Timetable_Data WHERE EventName = ? AND StudentNumber = ? AND EventType = ? AND EventStartDatetime = ? AND EventEndDatetime = ? AND EventLocation = ? AND Event_Attendance = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             int[] requiredFields = {1, 2, 3, 4, 5, 6, 7};
             // Use the improved StatementPrep() with validation

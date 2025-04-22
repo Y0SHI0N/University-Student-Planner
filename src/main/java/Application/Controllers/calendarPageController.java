@@ -16,6 +16,7 @@ import javafx.scene.control.RadioButton;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import javafx.scene.shape.Rectangle;
@@ -135,7 +136,7 @@ public class calendarPageController extends sceneLoaderController {
                             deleteEventButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent mouseEvent) {
-                                    userTimetableDAO.deleteEvent(event);
+                                    userTimetableDAO.deleteEvent(event.getEventID());
                                     closeForm();    getEvents();    displayMonth();
                                 }
                             });
@@ -145,9 +146,9 @@ public class calendarPageController extends sceneLoaderController {
                                 public void handle(MouseEvent mouseEvent) {
                                     Integer shortAttendance;
                                     if (attendance.getSelectedToggle()==attendanceButtonYes){shortAttendance=1;}else{shortAttendance=0;}
-                                    UserTimetable newEvent=new UserTimetable(nameField.getText(),currentUserNumber
-                                    ,typeSelect.getValue().toString(),getStartDatetime(),getEndDatetime(),eventLocationField.getText(),shortAttendance);
-                                    userTimetableDAO.updateEvent(event,newEvent);
+                                    UserTimetable updatedEvent=new UserTimetable(event.getEventID(), nameField.getText(),currentUserNumber
+                                            ,typeSelect.getValue().toString(),getStartDatetime(),getEndDatetime(),eventLocationField.getText(),shortAttendance);
+                                    userTimetableDAO.updateEvent(event.getEventID(),updatedEvent);
                                     closeForm();    getEvents();    displayMonth();
                                 }
                             });
@@ -246,13 +247,14 @@ public class calendarPageController extends sceneLoaderController {
             statement.setString(1,currentUserNumber);
             ResultSet resultSet = statement.executeQuery();
             while(resultSet.next()) {
-                events.add(new UserTimetable(resultSet.getString("EventName")
+                events.add(new UserTimetable(resultSet.getInt("EventID")
+                        ,resultSet.getString("EventName")
                         ,currentUserNumber
                         ,resultSet.getString("EventType")
                         ,resultSet.getString("EventStartDatetime")
                         ,resultSet.getString("EventEndDatetime")
                         ,resultSet.getString("EventLocation")
-                        ,resultSet.getInt("Event_Attendance")));
+                        ,resultSet.getInt("EventAttendance")));
             }
 
 
@@ -354,36 +356,21 @@ public class calendarPageController extends sceneLoaderController {
     public void addEvent(){
         String check = checkEventInputs();
         if (check == null){
-            //check if this event is a duplicate
-            String profileInfoQuery = "SELECT * FROM User_Timetable_Data where StudentNumber = ?";
+            String eventStartDateTime=getStartDatetime();
+            String eventEndDateTime=getEndDatetime();
             try {
-                String eventStartDateTime=getStartDatetime();
-                String eventEndDateTime=getStartDatetime();
-
-                String duplicateEvent="SELECT count(1) FROM User_Timetable_Data where StudentNumber = ? AND EventName = ? AND "+
-                        "EventType = ? AND EventStartDatetime = ? AND EventEndDatetime = ?";
-                PreparedStatement statement = userSignupDAO.getDBConnection().prepareStatement(duplicateEvent);
-                statement.setString(1, currentUserNumber);
-                statement.setString(2, nameField.getText());
-                statement.setString(3, typeSelect.getValue().toString());
-                statement.setString(4, eventStartDateTime);
-                statement.setString(5, eventEndDateTime);//only checking the mandatory fields
-
-
-                if (statement.executeQuery().getInt(1) == 1){
-                    formNotice.setText("This event already exists");
-                    formNotice.setVisible(true);
-                }else{
-                    //make an event object
-                    UserTimetable newEvent = new UserTimetable(nameField.getText(),currentUserNumber
-                            ,typeSelect.getValue().toString(),eventStartDateTime, eventEndDateTime
-                            , eventLocationField.getText(),0);
-                    userTimetableDAO.insertEvent(newEvent);
-                    closeForm();
-                    getEvents();
-                    displayMonth();
-                }
-
+                //get new ID
+                String IDsql= "SELECT MAX(EventID) FROM User_Timetable_Data";
+                PreparedStatement SQLstmt = userTimetableDAO.getDBConnection().prepareStatement(IDsql);
+                Integer newID= SQLstmt.executeQuery().getInt(1)+1;
+                //make an event object
+                UserTimetable newEvent = new UserTimetable(newID,nameField.getText(),currentUserNumber
+                        ,typeSelect.getValue().toString(),eventStartDateTime, eventEndDateTime
+                        , eventLocationField.getText(),0);
+                userTimetableDAO.insertEvent(newEvent);
+                closeForm();
+                getEvents();
+                displayMonth();
             }catch(Exception e){
                 System.out.println(e + "exception");
             }

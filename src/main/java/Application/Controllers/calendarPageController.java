@@ -75,7 +75,7 @@ public class calendarPageController extends sceneLoaderController {
         calendar.getRowConstraints().get(1).setMinHeight(20);
 
         //add days to calendar
-        Integer week = 1;
+        Integer week = 0;
         Integer dayOfMonth=1;
         Integer dayOfWeek=LocalDate.of(year,month,1).getDayOfWeek().getValue();
         for (int i=1; i <= java.time.Month.of(month).length(LocalDate.now().getYear()%4==0) ;i++){

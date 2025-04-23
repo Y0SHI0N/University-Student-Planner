@@ -157,35 +157,35 @@
           <Rectangle fill="white" width="300" height="350" />
           <Button minHeight="20" minWidth="100" translateY="-150" translateX="-90" text="Cancel" onMouseClicked="#closeForm"/>
           <Text translateX="-90" translateY="-120" text="Event name:"/>
-          <TextField translateX="40" translateY="-120" maxHeight="20" maxWidth="150" promptText="Event name" fx:id="nameField"/>
+          <TextField translateX="40" translateY="-120" maxHeight="20" maxWidth="150" promptText="Event name" fx:id="nameField" accessibleRoleDescription="event name"/>
           <Text translateX="-90" translateY="-90" text="Event type:"/>
-          <ComboBox translateX="40" translateY="-90" maxHeight="20" maxWidth="150" fx:id="typeSelect"><items><FXCollections fx:factory="observableArrayList">
+          <ComboBox translateX="40" translateY="-90" maxHeight="20" maxWidth="150" fx:id="typeSelect" accessibleRoleDescription="event type"><items><FXCollections fx:factory="observableArrayList">
                       <String fx:value="Study period"></String>
                       <String fx:value="Work schedule"></String>
                       <String fx:value="Food break"></String>
                       <String fx:value="Assignment"></String>
           </FXCollections></items></ComboBox>
           <Text translateX="-90" translateY="-60" text="Start date:"/>
-          <DatePicker minHeight="20" minWidth="100" translateY="-60" translateX="40" fx:id="startDateSelect" />
+          <DatePicker minHeight="20" minWidth="100" translateY="-60" translateX="40" fx:id="startDateSelect" accessibleRoleDescription="event start date"/>
           <Text translateX="-90" translateY="-30" text="Start hour:"/>
-          <Spinner max="24" min="0" minHeight="20" maxWidth="50" translateY="-30" translateX="-35" fx:id="startHourSpinner"/>
+          <Spinner max="24" min="0" minHeight="20" maxWidth="50" translateY="-30" translateX="-35" fx:id="startHourSpinner" accessibleRoleDescription="event start hour"/>
           <Text translateX="35" translateY="-30" text="Start minute:"/>
-          <Spinner max="60" min="0" minHeight="20" maxWidth="50" translateY="-30" translateX="95" fx:id="startMinuteSpinner"/>
+          <Spinner max="60" min="0" minHeight="20" maxWidth="50" translateY="-30" translateX="95" fx:id="startMinuteSpinner" accessibleRoleDescription="event start minute"/>
 
           <Text translateX="-90" translateY="0" text="End date:"/>
-          <DatePicker minHeight="20" minWidth="100" translateY="0" translateX="40" fx:id="endDateSelect" />
+          <DatePicker minHeight="20" minWidth="100" translateY="0" translateX="40" fx:id="endDateSelect" accessibleRoleDescription="event end date"/>
           <Text translateX="-90" translateY="30" text="End hour:"/>
-          <Spinner max="24" min="0" minHeight="20" maxWidth="50" translateY="30" translateX="-35" fx:id="endHourSpinner"/>
+          <Spinner max="24" min="0" minHeight="20" maxWidth="50" translateY="30" translateX="-35" fx:id="endHourSpinner" accessibleRoleDescription="event end hour"/>
           <Text translateX="35" translateY="30" text="End minute:"/>
-          <Spinner max="60" min="0" minHeight="20" maxWidth="50" translateY="30" translateX="95" fx:id="endMinuteSpinner"/>
+          <Spinner max="60" min="0" minHeight="20" maxWidth="50" translateY="30" translateX="95" fx:id="endMinuteSpinner" accessibleRoleDescription="event end minute"/>
 
           <Text translateX="-90" translateY="60" text="Event location"/>
-          <TextField translateX="40" translateY="60" maxHeight="20" maxWidth="170" promptText="Room code e.g.(S410)" fx:id="eventLocationField"/>
+          <TextField translateX="40" translateY="60" maxHeight="20" maxWidth="170" promptText="Room code e.g.(S410)" fx:id="eventLocationField" accessibleRoleDescription="event location"/>
 
           <Text translateX="-90" translateY="90" text="Attendance:" visible="false" fx:id="attendanceLabel"/>
           <fx:define><ToggleGroup fx:id="attendance"/></fx:define>
-          <RadioButton translateX="-30" translateY="90" text="Yes" toggleGroup="$attendance" visible="false" fx:id="attendanceButtonYes"/>
-          <RadioButton translateX="20" translateY="90" text="No" toggleGroup="$attendance" visible="false" fx:id="attendanceButtonNo"/>
+          <RadioButton translateX="-30" translateY="90" text="Yes" toggleGroup="$attendance" visible="false" fx:id="attendanceButtonYes" accessibleRoleDescription="attendance"/>
+          <RadioButton translateX="20" translateY="90" text="No" toggleGroup="$attendance" visible="false" fx:id="attendanceButtonNo" accessibleRoleDescription="attendance"/>
 
           <Button minHeight="20" minWidth="100" translateY="150" text="Add event" onMouseClicked="#addEvent" visible="false" fx:id="addEventButton"/>
 

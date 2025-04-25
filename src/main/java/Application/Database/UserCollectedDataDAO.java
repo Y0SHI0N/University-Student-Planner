@@ -6,17 +6,21 @@ import java.sql.Statement;
 import java.time.LocalDateTime;
 
 public class UserCollectedDataDAO extends BaseDAO{
+    public UserCollectedDataDAO(){
+        createTable();
+    }
     private void createTable() {
         String sql = "CREATE TABLE IF NOT EXISTS User_Collected_Data (" +
-                "StudentNumber TEXT PRIMARY KEY, " +
-                "dateModified TIME PRIMARY KEY," +
+                "StudentNumber TEXT, " +
+                "dateModified TIME," +
                 "GPA INT DEFAULT 0," +
                 "GPAGoal INT DEFAULT 0," +
                 "HoursStudied VARCHAR," +
                 "HoursStudiedGoal VARCHAR," +
                 "AttendanceRate FLOAT DEFAULT 0," +
                 "AttendanceRateGoal FLOAT DEFAULT 0," +
-                "UnitsEnrolled VARCHAR,";
+                "UnitsEnrolled VARCHAR," +
+                "PRIMARY KEY(StudentNumber, dateModified))";
         try (Statement stmt = connection.createStatement()) {
             stmt.execute(sql);
 
@@ -30,7 +34,7 @@ public class UserCollectedDataDAO extends BaseDAO{
     }
 
     public void insertData(UserCollectedData usersData){
-        String sql = "INSERT OR IGNORE INTO User_Collected_Data UserCollectedData(studentNumber, dateModified, gpa, gpaGoal, hoursStudied, hoursStudiedGoal, attendanceRate, attendanceRateGoal, unitsEnrolled) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO User_Collected_Data (studentNumber, dateModified, gpa, gpaGoal, hoursStudied, hoursStudiedGoal, attendanceRate, attendanceRateGoal, unitsEnrolled) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             // Define indexes of required (non-nullable) fields
             int[] requiredFields = {1, 2}; // StudentNumber, dateModified
@@ -49,7 +53,7 @@ public class UserCollectedDataDAO extends BaseDAO{
             );
 
             stmt.executeUpdate();
-            System.out.println("User inserted successfully!");
+            System.out.println("data added successfully!");
         } catch (SQLException e) {
             System.err.println("Insert failed: " + e.getMessage());
         }

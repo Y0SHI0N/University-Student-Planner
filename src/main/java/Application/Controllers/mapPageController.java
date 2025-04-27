@@ -7,6 +7,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
+import javax.swing.text.html.ListView;
 import java.awt.*;
 import java.io.Console;
 import java.sql.Array;
@@ -16,11 +17,14 @@ import java.sql.SQLException;
 
 public class mapPageController extends sceneLoaderController {
     @FXML private Canvas heatMap;
+    //@FXML private ListView busyLocationList;
+    //@FXML private ListView quietLocationList;
+
     // stores all vital information regarding a building's code, x/y location and classes (in that order)
     private final Building[] CampusBuildings = {
-            new Building('P', 255, 100, new Integer[]{302}),
-            new Building('S', 75, 165, new Integer[]{1, 201, 302}),
-            new Building('Z', 125, 165, new Integer[]{201, 203, 203})
+            new Building('P', 254, 100, new Integer[]{302}),
+            new Building('S', 78, 164, new Integer[]{1, 201, 302}),
+            new Building('Z', 128, 166, new Integer[]{201, 203, 203})
     };
 
     static class Building {
@@ -38,18 +42,14 @@ public class mapPageController extends sceneLoaderController {
     }
 
     public void renderHeatmap() {
-        try {
-            GraphicsContext graphics = heatMap.getGraphicsContext2D();
-            for (Building building : CampusBuildings) {
-                // The more rooms there are, the more layers of circle there are, with each warmer colors.
-                for (int room_count = building.bookedRooms.length; room_count > 0; room_count--) {
-                    // room stores the current room increment, essentially how many layers deep the for loop is
-                    // starts on the highest heat (at the core of the ring, and slowly draws it's way outwards)
-                    drawBuilding(building, graphics, room_count);
-                }
+        GraphicsContext graphics = heatMap.getGraphicsContext2D();
+        for (Building building : CampusBuildings) {
+            // The more rooms there are, the more layers of circle there are, with each warmer colors.
+            for (int room_count = building.bookedRooms.length; room_count > 0; room_count--) {
+                // room stores the current room increment, essentially how many layers deep the for loop is
+                // starts on the highest heat (at the core of the ring, and slowly draws it's way outwards)
+                drawBuilding(building, graphics, room_count);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
@@ -67,12 +67,23 @@ public class mapPageController extends sceneLoaderController {
         // set draw color to 'calculateHeat's output
         graphics.setFill(calculateHeat(building.bookedRooms.length));
         // 30 is the intial circle size, chosen due to it being roughly the size of a building
-        float circle_width = 30 + (20 * room_count);
+        float circle_width = 20 + (15 * room_count);
         // removing half of the circle width from the coords is to compensate for the offset of the circle being in the top right corner (thanks javafx)
         graphics.fillOval(building.xPos - (circle_width / 2), building.yPos - (circle_width / 2), circle_width, circle_width); // first pair edits the x/y coords while the second edits the x/y size
     }
 
+    public void sortRooms() {
+        // responsible for simply sorting and rendering classrooms
+        // just split all classes in half (round down, will always be in quiet if one class)
+        /// just use busyLocationList & quietLocationList
+    }
+
     public void initialize() {
+        try {
         renderHeatmap();
+        //sortRooms();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

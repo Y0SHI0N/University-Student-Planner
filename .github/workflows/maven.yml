@@ -33,6 +33,7 @@ jobs:
     - name: Run tests
       run: mvn test
 
+
     - name: Publish Test Report
       if: always()
       uses: dorny/test-reporter@v1

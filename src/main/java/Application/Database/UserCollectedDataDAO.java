@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class UserCollectedDataDAO extends BaseDAO{
     public UserCollectedDataDAO(){
@@ -15,19 +16,14 @@ public class UserCollectedDataDAO extends BaseDAO{
                 "dateModified TIME," +
                 "GPA INT DEFAULT 0," +
                 "GPAGoal INT DEFAULT 0," +
-                "HoursStudied VARCHAR," +
-                "HoursStudiedGoal VARCHAR," +
+                "HoursStudied FLOAT DEFAULT 0," +
+                "HoursStudiedGoal FLOAT DEFAULT 0," +
                 "AttendanceRate FLOAT DEFAULT 0," +
                 "AttendanceRateGoal FLOAT DEFAULT 0," +
                 "UnitsEnrolled VARCHAR," +
                 "PRIMARY KEY(StudentNumber, dateModified))";
         try (Statement stmt = connection.createStatement()) {
-            stmt.execute(sql);
-
-            // create default admin user
-            UserCollectedData adminUserData = new UserCollectedData("n12345678", LocalDateTime.now().toString(), 7,7,"5", "8", 0.8, 1.0, "someUnits" );
-            insertData(adminUserData);
-
+                stmt.execute(sql);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -57,20 +53,6 @@ public class UserCollectedDataDAO extends BaseDAO{
         } catch (SQLException e) {
             System.err.println("Insert failed: " + e.getMessage());
         }
-    }
-    public void updateUserData(UserCollectedData userData)throws SQLException {
-        PreparedStatement updateUserData= connection.prepareStatement(
-                "UPDATE User_Collected_Data SET dateModified=?, GPA=?, GPAGoal=?, HoursStudied=?, HoursStudiedGoal=?, AttendanceRate=?, AttendanceRateGoal=?, UnitsEnrolled=? WHERE StudentNumber=?");
-        updateUserData.setString(1,userData.getDateModified().toString());
-        updateUserData.setString(2,Integer.toString(userData.getGpa()));
-        updateUserData.setString(3,Integer.toString(userData.getGpaGoal()));
-        updateUserData.setString(4,userData.getHoursStudied());
-        updateUserData.setString(5,userData.getHoursStudiedGoal());
-        updateUserData.setString(6,Double.toString(userData.getAttendanceRate()));
-        updateUserData.setString(7,Double.toString(userData.getAttendanceRateGoal()));
-        updateUserData.setString(8,userData.getUnitsEnrolled());
-        updateUserData.setString(9,userData.getStudentNumber());
-        updateUserData.execute();
     }
 
 }

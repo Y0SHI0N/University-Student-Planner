@@ -13,6 +13,13 @@ public class DatabaseConnection {
         }
         return userSignupDAO;
     }
+    private static UserTimetableDAO userTimetableDAO;
+    public static UserTimetableDAO getUserTimetableDAO() {
+        if (userTimetableDAO == null) {
+            userTimetableDAO = new UserTimetableDAO();
+        }
+        return userTimetableDAO;
+    }
     private static UserCollectedDataDAO userCollectedDataDAO;
     public static UserCollectedDataDAO getUserCollectedDataDAO(){
         if (userCollectedDataDAO == null){
@@ -80,6 +87,4 @@ public class DatabaseConnection {
             }
         }
     }
-
-
 }

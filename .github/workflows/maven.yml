@@ -37,3 +37,12 @@ jobs:
 
     - name: Run tests
       run: mvn test
+
+
+    - name: Test Report
+      if: always()
+      uses: dorny/test-reporter@v2
+      with:
+        name: Maven Tests
+        path: target/surefire-reports/*.xml
+        reporter: java-junit

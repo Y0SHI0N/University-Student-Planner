@@ -3,32 +3,28 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 
 class DatabaseConnectionTest {
 
-    private Connection conn;
+    private Connection testconn;
 
     @BeforeEach
     void setUp() throws SQLException {
-        conn = DatabaseConnection.getInstance();
+        testconn = DriverManager.getConnection("jdbc:sqlite::memory:");
 
         // Create dummy table before each test
-        conn.createStatement().execute(
+        testconn.createStatement().execute(
                 "CREATE TABLE IF NOT EXISTS dummy_table (col1 TEXT, col2 TEXT)"
         );
     }
 
     @AfterEach
     void tearDown() throws SQLException {
-        if (conn != null && !conn.isClosed()) {
+        if (testconn != null && !testconn.isClosed()) {
             // Clean up dummy table after each test
-            conn.createStatement().execute("DROP TABLE IF EXISTS dummy_table");
+            testconn.createStatement().execute("DROP TABLE IF EXISTS dummy_table");
         }
         DatabaseConnection.closeConnection();
     }
@@ -69,10 +65,9 @@ class DatabaseConnectionTest {
 
     @Test
     void testStatementPrep_Success() throws SQLException {
-        Connection conn = DatabaseConnection.getInstance();
         String sql = "INSERT INTO dummy_table (col1, col2) VALUES (?, ?)";
 
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement stmt = testconn.prepareStatement(sql)) {
             DatabaseConnection.StatementPrep(stmt, new int[]{1,2}, "value1", "value2");
             // No exception = success
         }
@@ -80,11 +75,10 @@ class DatabaseConnectionTest {
 
     @Test
     void testStatementPrep_ThrowsExceptionOnMissingRequiredField() {
-        Connection conn = DatabaseConnection.getInstance();
         String sql = "INSERT INTO dummy_table (col1, col2) VALUES (?, ?)";
 
         assertThrows(SQLException.class, () -> {
-            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            try (PreparedStatement stmt = testconn.prepareStatement(sql)) {
                 DatabaseConnection.StatementPrep(stmt, new int[]{1,2}, "value1", null);
             }
         });

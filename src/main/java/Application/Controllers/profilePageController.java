@@ -149,6 +149,13 @@ public class profilePageController extends sceneLoaderController {
             notice.setFill(Color.RED);
             return false;
         }
+
+        //check for correct phone number format
+        if (!phoneNumberField.getText().matches("^[0-9]{1,10}$")) {
+            notice.setText("invalid phone number.");
+            notice.setVisible(true);
+            notice.setFill(Color.RED);
+        }
         return true;
     }
 

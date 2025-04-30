@@ -39,10 +39,10 @@ public class UserCollectedData {
     public void setGpaGoal(int gpaGoal) { this.gpaGoal = gpaGoal; }
 
     public String getHoursStudied() { return hoursStudied; }
-    public void setHoursStudied(String hoursStudied) { this.hoursStudied = hoursStudied; }
+    public void setHoursStudied(float hoursStudied) { this.hoursStudied = hoursStudied; }
 
     public String getHoursStudiedGoal() { return hoursStudiedGoal; }
-    public void setHoursStudiedGoal(String hoursStudiedGoal) { this.hoursStudiedGoal = hoursStudiedGoal; }
+    public void setHoursStudiedGoal(float hoursStudiedGoal) { this.hoursStudiedGoal = hoursStudiedGoal; }
 
     public float getAttendanceRate() { return attendanceRate; }
     public void setAttendanceRate(float attendanceRate) { this.attendanceRate = attendanceRate; }

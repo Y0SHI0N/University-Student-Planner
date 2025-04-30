@@ -32,6 +32,8 @@ public class UserCollectedData {
    public String getStudentNumber() { return studentNumber; }
     public void setStudentNumber(String studentNumber) { this.studentNumber = studentNumber; }
 
+    public String getDateModified() { return dateModified; }
+    
     public int getGpa() { return gpa; }
     public void setGpa(int gpa) { this.gpa = gpa; }
 

@@ -82,10 +82,10 @@ class UserCollectedDataTest {
                 () -> assertTrue(out.contains("2025-04-2025 05:10:30.333")),
                 () -> assertTrue(out.contains("5")),
                 () -> assertTrue(out.contains("6")),
-                () -> assertTrue(out.contains("5.5f")),
-                () -> assertTrue(out.contains("8.0f")),
-                () -> assertTrue(out.contains("0.80f")),
-                () -> assertTrue(out.contains("0.90f")),
+                () -> assertTrue(out.contains("5.5")),
+                () -> assertTrue(out.contains("8.0")),
+                () -> assertTrue(out.contains("0.80")),
+                () -> assertTrue(out.contains("0.90")),
                 () -> assertTrue(out.contains("CS101, MATH202"))
         );
     }

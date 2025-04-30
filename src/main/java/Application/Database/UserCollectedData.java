@@ -16,6 +16,7 @@ public class UserCollectedData {
     private float attendanceRateGoal;
     private String unitsEnrolled;
 
+    //UserCollectedData constructs a row in the database schema
     public UserCollectedData(String studentNumber, String dateModified, int gpa, int gpaGoal, float hoursStudied, float hoursStudiedGoal, float attendanceRate, float attendanceRateGoal, String unitsEnrolled) {
         this.studentNumber = studentNumber;
         this.dateModified = dateModified;

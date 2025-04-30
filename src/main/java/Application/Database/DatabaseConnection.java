@@ -13,6 +13,7 @@ public class DatabaseConnection {
         }
         return userSignupDAO;
     }
+
     private static UserTimetableDAO userTimetableDAO;
     public static UserTimetableDAO getUserTimetableDAO() {
         if (userTimetableDAO == null) {
@@ -20,6 +21,7 @@ public class DatabaseConnection {
         }
         return userTimetableDAO;
     }
+
     private static UserCollectedDataDAO userCollectedDataDAO;
     public static UserCollectedDataDAO getUserCollectedDataDAO(){
         if (userCollectedDataDAO == null){
@@ -28,8 +30,7 @@ public class DatabaseConnection {
         return userCollectedDataDAO;
     }
 
-//    private static UserCollectedDAO userDAO; // uncomment when implemented
-//    private static TimetableDAO userDAO;
+    //    private static UserCollectedDAO userDAO; // uncomment when implemented
 
 //  private constructor prevents external instantiation ensures that only one instance of
 //  DatabaseConnection exists throughout the application. (Singleton Pattern)

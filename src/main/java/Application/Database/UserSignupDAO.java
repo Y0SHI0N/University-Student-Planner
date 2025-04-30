@@ -8,6 +8,12 @@ public class UserSignupDAO extends BaseDAO{
         createTable();
     }
 
+    // New constructor for test connection
+    public UserSignupDAO(Connection connection) {
+        super(connection); // use injected connection
+        createTable();
+    }
+
     private void createTable() {
         String sql = "CREATE TABLE IF NOT EXISTS User_Signup_Data (" +
                 "StudentNumber TEXT PRIMARY KEY, " +

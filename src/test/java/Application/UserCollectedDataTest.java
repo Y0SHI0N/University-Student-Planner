@@ -73,12 +73,13 @@ class UserCollectedDataTest {
     @Test
     void testToStringIncludesAllValues() {
         UserCollectedData data = new UserCollectedData(
-                "n12345678", "2025-04-2025 05:10:30.333", 5, 6, 5.5f, 8.0f, 0.80f, 0.90f, "CS101, MATH202"
+                "n12345678", "2025-04-20 05:10:30.333", 5, 6, 5.5f, 8.0f, 0.80f, 0.90f, "CS101, MATH202"
         );
-
+        
         String out = data.toString();
         assertAll(
                 () -> assertTrue(out.contains("n12345678")),
+                () -> assertTrue(out.contains("2025-04-20 05:10:30.333")),
                 () -> assertTrue(out.contains("5")),
                 () -> assertTrue(out.contains("6")),
                 () -> assertTrue(out.contains("5.5")),

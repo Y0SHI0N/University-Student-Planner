@@ -98,10 +98,10 @@ public class goalsPageController extends sceneLoaderController {
 
     public void initialiseTextFields(UserCollectedData userCollectedData){
         // if statements check whether there is data collected for respective components to be shown
-        if(userCollectedData.getHoursStudied() != 0) {
+        if(userCollectedData.getHoursStudied() != 0f) {
         hoursStudiedKPI.setText("Studied: " + userCollectedData.getHoursStudied() + " hours");
         }
-        if(userCollectedData.getHoursStudiedGoal() != 0) {
+        if(userCollectedData.getHoursStudiedGoal() != 0f) {
             hoursStudiedGoal.setText("Study goal: " + userCollectedData.getHoursStudiedGoal());
         }
         if(userCollectedData.getGpa() != 0) {
@@ -110,10 +110,10 @@ public class goalsPageController extends sceneLoaderController {
         if(userCollectedData.getGpaGoal() != 0) {
             GPAGoal.setText("GPA goal: " + userCollectedData.getGpaGoal());
         }
-        if(userCollectedData.getAttendanceRate() != 0) {
+        if(userCollectedData.getAttendanceRate() != 0f) {
             attendanceKPI.setText("Acheived: " + userCollectedData.getAttendanceRate() + "% attendance");
         }
-        if(userCollectedData.getAttendanceRateGoal() != 0) {
+        if(userCollectedData.getAttendanceRateGoal() != 0f) {
             attendanceRateGoal.setText("Attendance goal: " + userCollectedData.getAttendanceRateGoal() + "%");
         }
     }

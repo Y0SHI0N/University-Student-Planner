@@ -54,21 +54,4 @@ public class UserCollectedData {
 
     public String getUnitsEnrolled() { return unitsEnrolled; }
     public void setUnitsEnrolled(String unitsEnrolled) { this.unitsEnrolled = unitsEnrolled; }
-
-    @Override
-    public String toString() {
-        return "UserCollectedData{" +
-                "studentNumber='" + studentNumber + '\'' +
-                ", dateModified='" + dateModified + '\'' +
-                ", gpa=" + gpa + '\'' +
-                ", gpaGoal=" + gpaGoal + '\'' +
-                ", hoursStudied='" + hoursStudied + '\'' +
-                ", hoursStudiedGoal='" + hoursStudiedGoal + '\'' +
-                ", attendanceRate=" + attendanceRate + '\'' +
-                ", attendanceRateGoal=" + attendanceRateGoal + '\'' +
-                ", unitsEnrolled='" + unitsEnrolled + '\'' +
-                '}';
-    }
-
-
 }

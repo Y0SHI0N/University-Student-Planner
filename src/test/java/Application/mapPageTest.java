@@ -52,7 +52,8 @@ class MapPageTest {
 
     @Test
     void campusBuildingsBookedRoomsExistsTest() {
-        mapPageController.Building campusBuildingsPresetBookedRooms = new mapPageController.Building('A', 100, 200, new Integer[]{300});
-        assertEquals(new Integer[]{300}, campusBuildingsPresetBookedRooms.getBookedRooms());
+        Integer[] bookedRooms = new Integer[]{300};
+        mapPageController.Building campusBuildingsPresetBookedRooms = new mapPageController.Building('A', 100, 200, bookedRooms);
+        assertEquals(bookedRooms, campusBuildingsPresetBookedRooms.getBookedRooms());
     }
 }

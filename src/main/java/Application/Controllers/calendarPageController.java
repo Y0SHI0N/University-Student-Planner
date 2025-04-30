@@ -265,8 +265,8 @@ public class calendarPageController extends sceneLoaderController {
 
     public void initialize(){
         getEvents();
-        year=LocalDate.now().getYear();
-        month=LocalDate.now().getMonth().getValue();
+        year = LocalDate.now().getYear();
+        month = LocalDate.now().getMonth().getValue();
         displayMonth();
     }
 

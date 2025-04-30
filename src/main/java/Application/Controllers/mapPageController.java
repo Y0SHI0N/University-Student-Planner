@@ -19,9 +19,9 @@ import java.util.*;
 import java.util.List;
 
 public class mapPageController extends sceneLoaderController {
-    @FXML public Canvas heatMap;
-    @FXML public ListView<Integer> busyLocationList;
-    @FXML public ListView<Integer> quietLocationList;
+    @FXML Canvas heatMap;
+    @FXML ListView<Integer> busyLocationList;
+    @FXML ListView<Integer> quietLocationList;
 
     // stores all vital information regarding a building's code, x/y location and classes (in that order)
     /// PLACEHOLDER DATA JUST SO THERE'S SOMETHING TO SHOW
@@ -39,29 +39,44 @@ public class mapPageController extends sceneLoaderController {
                     51
             );
 
-
-    public class Building {
+    public static class Building {
         Character blockLetter;
         Integer xPos;
         Integer yPos;
         Integer[] bookedRooms;
 
-        Building(Character BlockLetter, Integer xPos, Integer yPos, Integer[] bookedRooms) {
+        public Building(Character BlockLetter, Integer xPos, Integer yPos, Integer[] bookedRooms) {
             this.blockLetter = BlockLetter;
             this.xPos = xPos;
             this.yPos = yPos;
             this.bookedRooms = bookedRooms;
         }
+
+        public Character getBlockLetter() {
+            return this.blockLetter;
+        }
+
+        public Integer getXPos() {
+            return this.xPos;
+        }
+
+        public Integer getYPos() {
+            return this.yPos;
+        }
+
+        public Integer[] getBookedRooms() {
+            return this.bookedRooms;
+        }
     }
 
-    public class Circle {
+    public static class Circle {
         // initial circle width and ring expansion size, respectively
         Integer circleWidth;
         Integer circleStepValue;
         // hue increase amount per ring (keep in mind that the maximum hue for RGB colors is 255)
         Integer hueStepValue;
 
-        Circle(Integer circleWidth, Integer circleStepValue, Integer hueStepValue) {
+        public Circle(Integer circleWidth, Integer circleStepValue, Integer hueStepValue) {
             this.circleWidth = circleWidth;
             this.circleStepValue = circleStepValue;
             this.hueStepValue = hueStepValue;

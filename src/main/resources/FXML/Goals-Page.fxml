@@ -7,32 +7,21 @@
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<?import javafx.scene.text.Font?>
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Controllers.goalsPageController">
    <children>
-      <MenuButton ellipsisString="" layoutX="535.0" layoutY="1.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="65.0" text="Options" wrapText="true">
-         <items>
-            <MenuItem mnemonicParsing="false" text="View Profile" />
-            <MenuItem mnemonicParsing="false" text="Update Details" />
-            <MenuItem mnemonicParsing="false" text="Update Goals" />
-            <MenuItem mnemonicParsing="false" text="Log Out" />
-            <MenuItem mnemonicParsing="false" text="Close App" />
-         </items>
-         <cursor>
-            <Cursor fx:constant="OPEN_HAND" />
-         </cursor>
-         <font>
-            <Font size="10.0" />
-         </font>
-      </MenuButton>
+      <Label fx:id="editingErrorText" layoutX="177.0" layoutY="145.0" prefHeight="17.0" prefWidth="300.0" text=" " textFill="RED" />
       <MenuButton ellipsisString="" layoutX="535.0" layoutY="1.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="65.0" text="Options" wrapText="true">
          <items>
             <MenuItem mnemonicParsing="false" text="View Profile" />
@@ -50,27 +39,27 @@
       </MenuButton>
       <ButtonBar layoutY="361.0" prefHeight="40.0" prefWidth="600.0">
          <buttons>
-            <Button mnemonicParsing="false" style="-fx-background-color: #87CEEB;" text="Home" textAlignment="CENTER" onMouseClicked="#switchToHomePage">
+            <Button mnemonicParsing="false" onMouseClicked="#switchToHomePage" style="-fx-background-color: #87CEEB;" text="Home" textAlignment="CENTER">
                <cursor>
                   <Cursor fx:constant="OPEN_HAND" />
                </cursor>
             </Button>
-            <Button mnemonicParsing="false" style="-fx-background-color: #003C72;" text="Goals" textFill="WHITE" onMouseClicked="#switchToGoalsPage">
+            <Button mnemonicParsing="false" onMouseClicked="#switchToGoalsPage" style="-fx-background-color: #003C72;" text="Goals" textFill="WHITE">
                <cursor>
                   <Cursor fx:constant="OPEN_HAND" />
                </cursor>
             </Button>
-            <Button mnemonicParsing="false" style="-fx-background-color: #87CEEB;" text="Map" onMouseClicked="#switchToMapPage">
+            <Button mnemonicParsing="false" onMouseClicked="#switchToMapPage" style="-fx-background-color: #87CEEB;" text="Map">
                <cursor>
                   <Cursor fx:constant="OPEN_HAND" />
                </cursor>
             </Button>
-            <Button mnemonicParsing="false" style="-fx-background-color: #87CEEB;" text="Calendar" onMouseClicked="#switchToCalendarPage">
+            <Button mnemonicParsing="false" onMouseClicked="#switchToCalendarPage" style="-fx-background-color: #87CEEB;" text="Calendar">
                <cursor>
                   <Cursor fx:constant="OPEN_HAND" />
                </cursor>
             </Button>
-            <Button mnemonicParsing="false" style="-fx-background-color: #87CEEB;" text="Profile" onMouseClicked="#switchToProfilePage">
+            <Button mnemonicParsing="false" onMouseClicked="#switchToProfilePage" style="-fx-background-color: #87CEEB;" text="Profile">
                <cursor>
                   <Cursor fx:constant="OPEN_HAND" />
                </cursor>
@@ -85,86 +74,52 @@
            <Image url="@../Img/QUT-Logo.jpg" />
        </image>
        </ImageView>
-      <VBox layoutX="65.0" layoutY="53.0" prefHeight="16.0" prefWidth="100.0" style="-fx-border-color: black;">
-         <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Hours Studied KPI">
-               <VBox.margin>
-                  <Insets left="5.0" right="5.0" />
-               </VBox.margin>
-            </Text>
-         </children>
-      </VBox>
-      <VBox layoutX="277.0" layoutY="52.0" prefHeight="19.0" prefWidth="40.0" style="-fx-border-color: black;">
-         <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="GPA KPI" textAlignment="CENTER">
-               <VBox.margin>
-                  <Insets left="5.0" right="5.0" />
-               </VBox.margin>
-            </Text>
-         </children>
-      </VBox>
-      <VBox layoutX="440.0" layoutY="52.0" prefHeight="16.0" prefWidth="100.0" style="-fx-border-color: black;">
-         <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Attendance Rate KPI">
-               <VBox.margin>
-                  <Insets left="5.0" right="5.0" />
-               </VBox.margin>
-            </Text>
-         </children>
-      </VBox>
-      <Button layoutX="91.0" layoutY="283.0" mnemonicParsing="false" text="Update Goal" />
-      <Button layoutX="263.0" layoutY="283.0" mnemonicParsing="false" text="Update Goal" />
-      <Button layoutX="458.0" layoutY="283.0" mnemonicParsing="false" text="Update Goal" />
-      <VBox layoutX="75.0" layoutY="256.0" prefHeight="16.0" prefWidth="100.0" style="-fx-border-color: black;">
-         <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Hours Studied Goal">
-               <VBox.margin>
-                  <Insets left="5.0" right="5.0" />
-               </VBox.margin>
-            </Text>
-         </children>
-      </VBox>
-      <VBox layoutX="263.0" layoutY="255.0" prefHeight="19.0" prefWidth="40.0" style="-fx-border-color: black;">
-         <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="GPA KPI Goal" textAlignment="CENTER">
-               <VBox.margin>
-                  <Insets left="5.0" right="5.0" />
-               </VBox.margin>
-            </Text>
-         </children>
-      </VBox>
-      <VBox layoutX="426.0" layoutY="255.0" prefHeight="16.0" prefWidth="100.0" style="-fx-border-color: black;">
-         <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Attendance Rate KPI Goal">
-               <VBox.margin>
-                  <Insets left="5.0" right="5.0" />
-               </VBox.margin>
-            </Text>
-         </children>
-      </VBox>
-      <LineChart layoutX="391.0" layoutY="80.0" prefHeight="150.0" prefWidth="178.0">
+      <Button fx:id="editGoalButton" layoutX="127.0" layoutY="245.0" mnemonicParsing="false" onMouseClicked="#editGoals" prefHeight="26.0" prefWidth="135.0" text="Edit Goal" />
+      <LineChart fx:id="attendanceGraph" layoutX="400.0" layoutY="14.0" prefHeight="150.0" prefWidth="178.0">
         <xAxis>
-          <CategoryAxis side="BOTTOM" />
+          <CategoryAxis fx:id="attendanceXAxis" side="BOTTOM" />
         </xAxis>
         <yAxis>
-          <NumberAxis side="LEFT" />
+          <NumberAxis fx:id="attendanceYAxis" side="LEFT" />
         </yAxis>
       </LineChart>
-      <LineChart layoutX="203.0" layoutY="80.0" prefHeight="150.0" prefWidth="178.0">
+      <LineChart fx:id="GPAGraph" layoutX="203.0" layoutY="14.0" prefHeight="150.0" prefWidth="178.0">
          <xAxis>
-            <CategoryAxis side="BOTTOM" />
+            <CategoryAxis fx:id="GPAXAxis" side="BOTTOM" />
          </xAxis>
          <yAxis>
-            <NumberAxis side="LEFT" />
+            <NumberAxis fx:id="GPAYAxis" side="LEFT" />
          </yAxis>
       </LineChart>
-      <LineChart layoutX="5.0" layoutY="80.0" prefHeight="150.0" prefWidth="170.0">
+      <LineChart fx:id="hoursStudiedGraph" layoutY="14.0" prefHeight="150.0" prefWidth="170.0">
          <xAxis>
-            <CategoryAxis side="BOTTOM" />
+            <CategoryAxis fx:id="hoursStudiedXAxis" side="BOTTOM" />
          </xAxis>
          <yAxis>
-            <NumberAxis side="LEFT" />
+            <NumberAxis fx:id="hoursStudiedYAxis" side="LEFT" />
          </yAxis>
       </LineChart>
+      <Button fx:id="updateUserDataButton" layoutX="345.0" layoutY="245.0" mnemonicParsing="false" onMouseClicked="#updateData" prefHeight="26.0" prefWidth="135.0" text="Update Data" />
+      <TextArea fx:id="AIGeneratedGoalSuggestion" layoutX="27.0" layoutY="278.0" prefHeight="67.0" prefWidth="551.0" promptText="AI generated Suggested Goals with justification" />
+      <Rectangle fx:id="GPAKPIContainer" arcHeight="5.0" arcWidth="5.0" fill="#003c72" height="40.0" layoutX="253.0" layoutY="153.0" stroke="BLACK" strokeType="INSIDE" width="148.0" />
+      <Rectangle fx:id="hoursStudiedKPIContainer" arcHeight="5.0" arcWidth="5.0" fill="#003c72" height="40.0" layoutX="43.0" layoutY="153.0" stroke="BLACK" strokeType="INSIDE" width="148.0" />
+      <Rectangle fx:id="attendanceKPIContainer" arcHeight="5.0" arcWidth="5.0" fill="#003c72" height="40.0" layoutX="440.0" layoutY="153.0" stroke="BLACK" strokeType="INSIDE" width="148.0" />
+      <Text fx:id="hoursStudiedKPI" fill="WHITE" layoutX="54.0" layoutY="174.0" strokeType="OUTSIDE" strokeWidth="0.0" text="no Data Recorded" wrappingWidth="127.0" />
+      <Text fx:id="GPAKPI" fill="WHITE" layoutX="262.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="no Data Recorded" wrappingWidth="148.0" />
+      <Text fx:id="attendanceKPI" fill="WHITE" layoutX="454.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="no Data Recorded" wrappingWidth="135.0" />
+      <Rectangle fx:id="hoursStudiedGoalContainer" arcHeight="5.0" arcWidth="5.0" fill="SKYBLUE" height="40.0" layoutX="43.0" layoutY="201.0" stroke="BLACK" strokeType="INSIDE" width="148.0" />
+      <Rectangle fx:id="GPAGoalContainer" arcHeight="5.0" arcWidth="5.0" fill="SKYBLUE" height="40.0" layoutX="253.0" layoutY="201.0" stroke="BLACK" strokeType="INSIDE" width="148.0" />
+      <Rectangle fx:id="attendanceRateGoalContainer" arcHeight="5.0" arcWidth="5.0" fill="SKYBLUE" height="40.0" layoutX="440.0" layoutY="201.0" stroke="BLACK" strokeType="INSIDE" width="148.0" />
+      <Text fx:id="hoursStudiedGoal" layoutX="53.0" layoutY="225.0" strokeType="OUTSIDE" strokeWidth="0.0" text="no Data Recorded" wrappingWidth="148.0" />
+      <Text fx:id="GPAGoal" layoutX="262.0" layoutY="225.0" strokeType="OUTSIDE" strokeWidth="0.0" text="no Data Recorded" wrappingWidth="108.0" />
+      <Text fx:id="attendanceRateGoal" layoutX="454.0" layoutY="224.0" strokeType="OUTSIDE" strokeWidth="0.0" text="no Data Recorded" wrappingWidth="121.0" />
+      <TextField fx:id="editHoursStudiedKPI" layoutX="43.0" layoutY="175.0" prefHeight="40.0" prefWidth="149.0" promptText="Enter total hours studied" visible="false" />
+      <TextField fx:id="editGPAKPI" layoutX="253.0" layoutY="175.0" prefHeight="40.0" prefWidth="149.0" promptText="Enter current GPA" visible="false" />
+      <TextField fx:id="editAttendanceKPI" layoutX="440.0" layoutY="175.0" prefHeight="40.0" prefWidth="149.0" promptText="Enter Attendance rate" visible="false" />
+      <TextField fx:id="editAttendanceRateGoal" layoutX="440.0" layoutY="175.0" prefHeight="40.0" prefWidth="149.0" promptText="Set attendance rate goal" visible="false" />
+      <TextField fx:id="editGPAGoal" layoutX="253.0" layoutY="175.0" prefHeight="40.0" prefWidth="149.0" promptText="Set GPA goal" visible="false" />
+      <TextField fx:id="editHoursStudiedGoal" layoutX="43.0" layoutY="175.0" prefHeight="40.0" prefWidth="149.0" promptText="Set study goal" visible="false" />
+      <Button fx:id="cancelChangesButton" layoutX="127.0" layoutY="245.0" mnemonicParsing="false" onMouseClicked="#cancelChanges" prefHeight="26.0" prefWidth="135.0" text="Cancel Changes" visible="false" />
+      <Button fx:id="saveChangesButton" layoutX="345.0" layoutY="245.0" mnemonicParsing="false" onMouseClicked="#saveChanges" prefHeight="26.0" prefWidth="135.0" text="Save Changes" visible="false" />
    </children>
 </AnchorPane>

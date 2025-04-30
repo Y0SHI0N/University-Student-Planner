@@ -187,6 +187,6 @@ public class profilePageController extends sceneLoaderController {
             }
         }
     }
-    
+
 
 }

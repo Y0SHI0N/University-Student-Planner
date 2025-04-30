@@ -11,6 +11,7 @@ import java.util.stream.Stream;
 public class sceneLoaderController extends Main {
     protected final UserSignupDAO userSignupDAO = DatabaseConnection.getUserSignupDAO();
     protected final UserTimetableDAO userTimetableDAO = DatabaseConnection.getUserTimetableDAO();
+    protected final UserCollectedDataDAO userCollectedDataDAO = DatabaseConnection.getUserCollectedDataDAO();
 //    protected UserCollectedDAO userDAO; // uncomment when implemented
 
     protected boolean checkDuplicateStudentNumbers(String studentNumber) {

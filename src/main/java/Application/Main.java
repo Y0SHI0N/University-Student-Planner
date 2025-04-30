@@ -13,6 +13,9 @@ import javafx.stage.Window;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.stream.Stream;
 
 public class Main extends Application {
     private Parent root;
@@ -72,7 +75,7 @@ public class Main extends Application {
     public void closeActiveStage(){
         Platform.runLater(() -> {
             for (Window window : Stage.getWindows()) {
-                if (window instanceof Stage) { // doesn't close every window open
+                if (window instanceof Stage) {
                     ((Stage) window).close();
                 }
             }

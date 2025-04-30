@@ -22,6 +22,13 @@ public class DatabaseConnection {
         return userTimetableDAO;
     }
 
+    private static UserCollectedDataDAO userCollectedDataDAO;
+    public static UserCollectedDataDAO getUserCollectedDataDAO(){
+        if (userCollectedDataDAO == null){
+            userCollectedDataDAO = new UserCollectedDataDAO();
+        }
+        return userCollectedDataDAO;
+    }
 
     //    private static UserCollectedDAO userDAO; // uncomment when implemented
 
@@ -81,6 +88,4 @@ public class DatabaseConnection {
             }
         }
     }
-
-
 }

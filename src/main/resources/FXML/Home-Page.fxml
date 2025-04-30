@@ -82,9 +82,9 @@
                         <Text layoutX="28.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Monday" />
                     </children>
                 </AnchorPane>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="110.0" prefWidth="160.0">
                     <children>
-                        <Text layoutX="16.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="dot points on what events are happening" wrappingWidth="68.23944091796875" />
+                        <Text fx:id="MondayOvr" layoutX="4.0" layoutY="12.0" strokeType="OUTSIDE" strokeWidth="0.0" text="dot points on what events are happening" wrappingWidth="90" style="-fx-font-size: 10px;" />
                     </children>
                 </AnchorPane>
             </items>
@@ -96,7 +96,11 @@
                         <Text layoutX="28.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tuesday" />
                     </children>
                 </AnchorPane>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="110.0" prefWidth="160.0">
+                    <children>
+                        <Text fx:id="TuesdayOvr" layoutX="4.0" layoutY="12.0" strokeType="OUTSIDE" strokeWidth="0.0" text="dot points on what events are happening" wrappingWidth="90" style="-fx-font-size: 10px;" />
+                    </children>
+                </AnchorPane>
             </items>
         </SplitPane>
         <SplitPane dividerPositions="0.2599206349206349" layoutX="255.0" layoutY="140.0" orientation="VERTICAL" prefHeight="127.0" prefWidth="102.0">
@@ -106,7 +110,11 @@
                         <Text layoutX="19.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Wednesday" />
                     </children>
                 </AnchorPane>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="110.0" prefWidth="160.0">
+                    <children>
+                        <Text fx:id="WedOvr" layoutX="4.0" layoutY="12.0" strokeType="OUTSIDE" strokeWidth="0.0" text="dot points on what events are happening" wrappingWidth="90" style="-fx-font-size: 10px;" />
+                    </children>
+                </AnchorPane>
             </items>
         </SplitPane>
         <SplitPane dividerPositions="0.2599206349206349" layoutX="375.0" layoutY="139.0" orientation="VERTICAL" prefHeight="127.0" prefWidth="102.0">
@@ -116,23 +124,36 @@
                         <Text layoutX="26.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Thursday" />
                     </children>
                 </AnchorPane>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="110.0" prefWidth="160.0">
+                    <children>
+                        <Text fx:id="ThursOvr" layoutX="4.0" layoutY="12.0" strokeType="OUTSIDE" strokeWidth="0.0" text="dot points on what events are happening" wrappingWidth="90" style="-fx-font-size: 10px;" />
+                    </children>
+                </AnchorPane>
             </items>
         </SplitPane>
         <SplitPane dividerPositions="0.2599206349206349" layoutX="494.0" layoutY="139.0" orientation="VERTICAL" prefHeight="127.0" prefWidth="102.0">
             <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="110.0" prefWidth="160.0">
                     <children>
                         <Text layoutX="39.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Friday" />
                     </children>
                 </AnchorPane>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="110.0" prefWidth="160.0">
+                    <children>
+                        <Text fx:id="FriOvr" layoutX="4.0" layoutY="12.0" strokeType="OUTSIDE" strokeWidth="0.0" text="dot points on what events are happening" wrappingWidth="90" style="-fx-font-size: 10px;" />
+                    </children>
+                </AnchorPane>
             </items>
         </SplitPane>
-        <Text layoutX="81.0" layoutY="304.0" strokeType="OUTSIDE" strokeWidth="0.0" text="AI generated Weekly overview that tells a user what they did good at and suggests what to improve on basd on your goals, due assignments, and workload into account" wrappingWidth="464.8753662109375" />
+
+        <Text fx:id="motivationalAI" layoutX="81.0" layoutY="304.0" strokeType="OUTSIDE" strokeWidth="0.0"
+              text="AI generated Weekly overview that tells a user what they did good at and suggests what to improve on basd on your goals, due assignments, and workload into account"
+              wrappingWidth="464.8753662109375" style="-fx-font-size: 18px;"
+        />
         <TextArea fx:id="weeklyOverviewAI" layoutX="4.0" layoutY="2.0" prefHeight="127.0" prefWidth="294.0" text="You have no weekly overview yet" wrapText="true">
             <font>
                 <Font size="10.0" />
-            </font></TextArea>
+            </font>
+        </TextArea>
     </children>
 </AnchorPane>

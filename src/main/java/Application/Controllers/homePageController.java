@@ -6,26 +6,38 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
+import java.util.HashMap;
 
 
 import java.awt.*;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-class WeekDays{
-    protected String mon, tue, wed, thur, fri;
-}
 
 public class homePageController extends sceneLoaderController {
-    @FXML private Text weeklyOverviewAI;
-    @FXML private TextArea motivationalAI;
+    @FXML private TextArea weeklyOverviewAI;
+    @FXML private Text motivationalAI;
+    @FXML Text MondayOvr, TuesdayOvr, WedOvr, ThursOvr, FriOvr;
+    public HashMap<String,String> weekDayHashMap = new HashMap<String, String>();
 
     public AI_model model = new AI_model();
     @FXML
     public void initialize() {
         try {
+
+            weekDayHashMap.put("Monday", "");
+            weekDayHashMap.put("Tuesday", "");
+            weekDayHashMap.put("Wednesday", "");
+            weekDayHashMap.put("Thursday", "");
+            weekDayHashMap.put("Friday", "");
+
             model.initialiseAIModel();
+
+            weeklyOverviewAI.setEditable(false);
             getWeeklyOverview();
+
+            populateWidgets();
+
             getMotivationalQuote();
 
         } catch (Exception e) {
@@ -47,5 +59,25 @@ public class homePageController extends sceneLoaderController {
         model.promptAI(promptText);
         String response = model.promptAI(promptText);
         motivationalAI.setText(response);
+    }
+
+    public void populateWidgets(){
+        var weekdays = weekDayHashMap.keySet();
+        for (String weekday : weekdays) {
+            String promptText = "give me a dot point breakdown of what i need to do this week on and keep it strictly academic. Limit to 3 dot points, 3-4 words per dot points, use - to start a dot point. Do not use emoji, unnecessary special symbols, no header. Just straight concise dot points.";
+            String response = model.promptAI(promptText);
+
+            if (weekday.equals("Monday")) {
+                MondayOvr.setText(response);
+            } else if (weekday.equals("Tuesday")) {
+                TuesdayOvr.setText(response);
+            } else if (weekday.equals("Wednesday")) {
+                WedOvr.setText(response);
+            } else if (weekday.equals("Thursday")) {
+                ThursOvr.setText(response);
+            } else if (weekday.equals("Friday")) {
+                FriOvr.setText(response);
+            }
+        }
     }
 }

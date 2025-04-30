@@ -56,6 +56,36 @@ public class calendarPageController extends sceneLoaderController {
     @FXML private Button editEventButton;
     @FXML private Button deleteEventButton;
 
+    public static class calenderPageFunctions{
+        //this function does all input checks except checking for duplicates so it can be used for adding and editing events
+        public static String checkEventInputs(String nameInput, Object typeInput, LocalDate startDateInput
+                ,LocalDate endDateInput, String locationInput){
+            //check all necessary fields are filled out, doesn't check hour or minute since spinners can't be set to black
+            if (nameInput.equals("") || typeInput.equals("") ||
+                    startDateInput==null || endDateInput==null ){
+                return "Necessary fields missing";
+            }
+            //check the format of location is correct (if a location is provided)
+            if (!locationInput.equals("")) {
+                if (!locationInput.substring(0, 1).matches("\\D*") ||
+                        !locationInput.substring(1).matches("\\d*")) {
+                    return "Location format incorrect";
+                }
+            }
+            return null;
+        }
+
+        public static String formatDatetime(Object dateSelect, Object hour,Object minute){
+            String eventDateTime = dateSelect.toString()+" ";
+            if (Integer.parseInt(hour.toString()) < 10){eventDateTime+="0"+hour.toString();}
+            else{eventDateTime+=hour.toString();}
+            eventDateTime+=":";
+            if (Integer.parseInt(minute.toString()) < 10){eventDateTime+="0"+minute.toString();}
+            else{eventDateTime+=minute.toString();}
+            eventDateTime+=":00";
+            return eventDateTime;
+        }
+    }
 
     public void displayMonth(){
         //update month text
@@ -101,7 +131,7 @@ public class calendarPageController extends sceneLoaderController {
                 Integer endYear=Integer.parseInt(event.getEventEndDate().substring(0,4));
 
                 if (startMonth.equals(month) && startDay.equals(dayOfMonth) && startYear.equals(year)
-                    || endMonth.equals(month) && endDay.equals(dayOfMonth) && endYear.equals(year)){
+                        || endMonth.equals(month) && endDay.equals(dayOfMonth) && endYear.equals(year)){
 
                     StackPane eventBlock=new StackPane();
                     eventBlock.setStyle("-fx-cursor:hand;");
@@ -147,7 +177,10 @@ public class calendarPageController extends sceneLoaderController {
                                     Integer shortAttendance;
                                     if (attendance.getSelectedToggle()==attendanceButtonYes){shortAttendance=1;}else{shortAttendance=0;}
                                     UserTimetable updatedEvent=new UserTimetable(event.getEventID(), nameField.getText(),currentUserNumber
-                                            ,typeSelect.getValue().toString(),getStartDatetime(),getEndDatetime(),eventLocationField.getText(),shortAttendance);
+                                            ,typeSelect.getValue().toString()
+                                            ,calenderPageFunctions.formatDatetime(startDateSelect.getValue(),startHourSpinner.getValue(),startMinuteSpinner.getValue())
+                                            ,calenderPageFunctions.formatDatetime(endDateSelect.getValue(),endHourSpinner.getValue(),endMinuteSpinner.getValue())
+                                            ,eventLocationField.getText(),shortAttendance);
                                     userTimetableDAO.updateEvent(event.getEventID(),updatedEvent);
                                     closeForm();    getEvents();    displayMonth();
                                 }
@@ -317,47 +350,12 @@ public class calendarPageController extends sceneLoaderController {
         deleteEventButton.setVisible(false);
     }
 
-    //this function does all input checks except checking for duplicates so it can be used for adding and editing events
-    public String checkEventInputs(){
-        //check all necessary fields are filled out, doesn't check hour or minute since spinners can't be set to black
-        if (nameField.getText().equals("") || typeSelect.getValue().equals("") ||
-                startDateSelect.getValue()==null || endDateSelect.getValue()==null ){
-            return "Necessary fields missing";
-        }
-        //check the format of location is correct (if a location is provided)
-        if (!eventLocationField.getText().equals("")) {
-            if (!eventLocationField.getText().substring(0, 1).matches("\\D*") ||
-                    !eventLocationField.getText().substring(1).matches("\\d*")) {
-                return "Location format incorrect";
-            }
-        }
-        return null;
-    }
-
-    public String getStartDatetime(){
-        //get start and end dateTime
-        String eventStartDateTime = startDateSelect.getValue().toString()+" ";
-        if (Integer.parseInt(startHourSpinner.getValue().toString()) < 10){eventStartDateTime+=startHourSpinner.getValue().toString() + "0:";}
-        else{eventStartDateTime+=startHourSpinner.getValue().toString() + ":";}
-        if (Integer.parseInt(startMinuteSpinner.getValue().toString()) < 10){eventStartDateTime+=startMinuteSpinner.getValue().toString() + "0:00";}
-        else{eventStartDateTime+=startMinuteSpinner.getValue().toString() + ":00";}
-        return eventStartDateTime;
-    }
-
-    public String getEndDatetime(){
-        String eventEndDateTime = endDateSelect.getValue().toString()+" ";
-        if (Integer.parseInt(endHourSpinner.getValue().toString()) < 10){eventEndDateTime+=endHourSpinner.getValue().toString() + "0:";}
-        else{eventEndDateTime+=endHourSpinner.getValue().toString() + ":";}
-        if (Integer.parseInt(endMinuteSpinner.getValue().toString()) < 10){eventEndDateTime+=endMinuteSpinner.getValue().toString() + "0:00";}
-        else{eventEndDateTime+=endMinuteSpinner.getValue().toString() + ":00";}
-        return eventEndDateTime;
-    }
-
     public void addEvent(){
-        String check = checkEventInputs();
+        String check = calenderPageFunctions.checkEventInputs(nameField.getText(),typeSelect.getValue(),startDateSelect.getValue()
+                ,endDateSelect.getValue(),eventLocationField.getText());
         if (check == null){
-            String eventStartDateTime=getStartDatetime();
-            String eventEndDateTime=getEndDatetime();
+            String eventStartDateTime=calenderPageFunctions.formatDatetime(startDateSelect.getValue(),startHourSpinner.getValue(),startMinuteSpinner.getValue());
+            String eventEndDateTime=calenderPageFunctions.formatDatetime(endDateSelect.getValue(),endHourSpinner.getValue(),endMinuteSpinner.getValue());
             try {
                 //get new ID
                 String IDsql= "SELECT MAX(EventID) FROM User_Timetable_Data";

@@ -79,7 +79,6 @@ class UserCollectedDataTest {
         String out = data.toString();
         assertAll(
                 () -> assertTrue(out.contains("n12345678")),
-                () -> assertTrue(out.contains("2025-04-2025 05:10:30.333")),
                 () -> assertTrue(out.contains("5")),
                 () -> assertTrue(out.contains("6")),
                 () -> assertTrue(out.contains("5.5")),

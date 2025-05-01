@@ -1,2 +1,6 @@
 # Ignore build output
 target/
+student_planner.db
+
+# macOS auto-generated file
+.DS_Store

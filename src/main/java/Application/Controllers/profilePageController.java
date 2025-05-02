@@ -9,8 +9,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
@@ -35,12 +37,12 @@ public class profilePageController extends sceneLoaderController {
     @FXML private Button cancelButton;
     @FXML private Button updateButton;
     @FXML private Text notice;
-    @FXML private Circle profileBackGround;
-    @FXML private Text profileText;
+    @FXML private StackPane profilePlace;
     private UserSignup userSignup;
 
     //making this a function so it can be reused in other pages
-    public void setProfileImage(UserSignup user){
+    //when given a stackPane it will add a background and text to it
+    public static void setProfileImage(UserSignup user,StackPane pane,Float size){
         //set profileImg placeholder
         //get a random seed from the userNumber so the color is different for each user
         Random random = new Random(Long.parseLong(user.getStudentNumber().replaceAll("[^0-9]","")));
@@ -49,9 +51,25 @@ public class profilePageController extends sceneLoaderController {
         int brightColors=0;
         for (int color :colors){if (color > 220){brightColors+=1;}}
         if (brightColors == 3){colors[random.nextInt(1,4)]=random.nextInt(1,200);}
+        //add elements to pane
+        Circle profileBackGround=new Circle();
+        profileBackGround.setRadius(size);
+        profileBackGround.setStrokeType(StrokeType.INSIDE);
         profileBackGround.setFill(Color.rgb(colors[0],colors[1],colors[2]));
-        profileText.setText(user.getFirstName().substring(0,1).toUpperCase()
-                +user.getLastName().substring(0,1).toUpperCase());
+        System.out.println(colors[0]);
+        System.out.println(colors[1]);
+        System.out.println(colors[2]);
+
+        Text profileText=new Text();
+        profileText.setText(user.getFirstName().substring(0,1).toUpperCase()+user.getLastName().substring(0,1).toUpperCase());
+        profileText.setFill(Color.WHITE);
+        profileText.setStrokeType(StrokeType.OUTSIDE);
+        profileText.setStrokeWidth(0f);
+        Font font=new Font(size);
+        profileText.fontProperty().setValue(font);
+
+        pane.getChildren().add(profileBackGround);
+        pane.getChildren().add(profileText);
     }
 
     public void initialize(){
@@ -75,7 +93,7 @@ public class profilePageController extends sceneLoaderController {
             Email.setText("Email: "+userSignup.getEmail());
             phoneNumber.setText("Phone number: "+userSignup.getPhoneNumber());
 
-            setProfileImage(userSignup);
+            setProfileImage(userSignup,profilePlace,55f);
         }catch(Exception e){
             System.out.println(e + "exception");
         }
@@ -174,7 +192,7 @@ public class profilePageController extends sceneLoaderController {
                 lastName.setText("Last Name: "+userSignup.getLastName());
                 Email.setText("Email: "+userSignup.getEmail());
                 phoneNumber.setText("Phone number: "+userSignup.getPhoneNumber());
-                setProfileImage(userSignup);
+                setProfileImage(userSignup,profilePlace,55f);
 
                 notice.setText("changes saved successfully.");
                 notice.setVisible(true);

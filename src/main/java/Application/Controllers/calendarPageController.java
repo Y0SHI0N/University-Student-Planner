@@ -1,5 +1,6 @@
 package Application.Controllers;
 
+import Application.Database.UserSignupDAO;
 import Application.Database.UserTimetable;
 import Application.Database.UserTimetableDAO;
 import javafx.collections.FXCollections;
@@ -56,35 +57,59 @@ public class calendarPageController extends sceneLoaderController {
     @FXML private Button editEventButton;
     @FXML private Button deleteEventButton;
 
-    public static class calenderPageFunctions{
-        //this function does all input checks except checking for duplicates so it can be used for adding and editing events
-        public static String checkEventInputs(String nameInput, Object typeInput, LocalDate startDateInput
-                ,LocalDate endDateInput, String locationInput){
-            //check all necessary fields are filled out, doesn't check hour or minute since spinners can't be set to black
-            if (nameInput.equals("") || typeInput.equals("") ||
-                    startDateInput==null || endDateInput==null ){
-                return "Necessary fields missing";
-            }
-            //check the format of location is correct (if a location is provided)
-            if (!locationInput.equals("")) {
-                if (!locationInput.substring(0, 1).matches("\\D*") ||
-                        !locationInput.substring(1).matches("\\d*")) {
-                    return "Location format incorrect";
-                }
-            }
-            return null;
-        }
 
-        public static String formatDatetime(Object dateSelect, Object hour,Object minute){
-            String eventDateTime = dateSelect.toString()+" ";
-            if (Integer.parseInt(hour.toString()) < 10){eventDateTime+="0"+hour.toString();}
-            else{eventDateTime+=hour.toString();}
-            eventDateTime+=":";
-            if (Integer.parseInt(minute.toString()) < 10){eventDateTime+="0"+minute.toString();}
-            else{eventDateTime+=minute.toString();}
-            eventDateTime+=":00";
-            return eventDateTime;
+    //this function does all input checks except checking for duplicates so it can be used for adding and editing events
+    public static String checkEventInputs(String nameInput, Object typeInput, LocalDate startDateInput
+            ,LocalDate endDateInput, String locationInput){
+        //check all necessary fields are filled out, doesn't check hour or minute since spinners can't be set to black
+        if (nameInput.equals("") || typeInput.equals("") ||
+                startDateInput==null || endDateInput==null ){
+            return "Necessary fields missing";
         }
+        //check the format of location is correct (if a location is provided)
+        if (!locationInput.equals("")) {
+            //bellow conditions ensure that there is a letter for blocks at the start followed by a room number
+            if (!locationInput.substring(0, 1).matches("\\D*") ||
+                    !locationInput.substring(1).matches("\\d*")
+                    || locationInput.length()==1) {
+                return "Location format incorrect";
+            }
+        }
+        return null;
+    }
+
+    public static String formatDatetime(Object dateSelect, Object hour,Object minute){
+        String eventDateTime = dateSelect.toString()+" ";
+        if (Integer.parseInt(hour.toString()) < 10){eventDateTime+="0"+hour.toString();}
+        else{eventDateTime+=hour.toString();}
+        eventDateTime+=":";
+        if (Integer.parseInt(minute.toString()) < 10){eventDateTime+="0"+minute.toString();}
+        else{eventDateTime+=minute.toString();}
+        eventDateTime+=":00";
+        return eventDateTime;
+    }
+
+    public static ArrayList<UserTimetable> getEvents(UserTimetableDAO userTimetableDAO, String UserNumber){
+        ArrayList<UserTimetable> events=new ArrayList<UserTimetable>();
+        try {
+            String profileInfoQuery = "SELECT * FROM User_Timetable_Data where StudentNumber = ?";
+            PreparedStatement statement = userTimetableDAO.getDBConnection().prepareStatement(profileInfoQuery);
+            statement.setString(1,UserNumber);
+            ResultSet resultSet = statement.executeQuery();
+            while(resultSet.next()) {
+                events.add(new UserTimetable(resultSet.getInt("EventID")
+                        ,resultSet.getString("EventName")
+                        ,UserNumber
+                        ,resultSet.getString("EventType")
+                        ,resultSet.getString("EventStartDatetime")
+                        ,resultSet.getString("EventEndDatetime")
+                        ,resultSet.getString("EventLocation")
+                        ,resultSet.getInt("EventAttendance")));
+            }
+        }catch(Exception e){
+            System.out.println(e + "exception");
+        }
+        return events;
     }
 
     public void displayMonth(){
@@ -167,7 +192,7 @@ public class calendarPageController extends sceneLoaderController {
                                 @Override
                                 public void handle(MouseEvent mouseEvent) {
                                     userTimetableDAO.deleteEvent(event.getEventID());
-                                    closeForm();    getEvents();    displayMonth();
+                                    closeForm();    events=getEvents(userTimetableDAO,currentUserNumber);    displayMonth();
                                 }
                             });
                             //set event handler for edit button
@@ -178,11 +203,11 @@ public class calendarPageController extends sceneLoaderController {
                                     if (attendance.getSelectedToggle()==attendanceButtonYes){shortAttendance=1;}else{shortAttendance=0;}
                                     UserTimetable updatedEvent=new UserTimetable(event.getEventID(), nameField.getText(),currentUserNumber
                                             ,typeSelect.getValue().toString()
-                                            ,calenderPageFunctions.formatDatetime(startDateSelect.getValue(),startHourSpinner.getValue(),startMinuteSpinner.getValue())
-                                            ,calenderPageFunctions.formatDatetime(endDateSelect.getValue(),endHourSpinner.getValue(),endMinuteSpinner.getValue())
+                                            ,formatDatetime(startDateSelect.getValue(),startHourSpinner.getValue(),startMinuteSpinner.getValue())
+                                            ,formatDatetime(endDateSelect.getValue(),endHourSpinner.getValue(),endMinuteSpinner.getValue())
                                             ,eventLocationField.getText(),shortAttendance);
                                     userTimetableDAO.updateEvent(event.getEventID(),updatedEvent);
-                                    closeForm();    getEvents();    displayMonth();
+                                    closeForm();    events=getEvents(userTimetableDAO,currentUserNumber);    displayMonth();
                                 }
                             });
                         }
@@ -272,32 +297,8 @@ public class calendarPageController extends sceneLoaderController {
 
     }
 
-    public void getEvents(){
-        events=new ArrayList<UserTimetable>();
-        try {
-            String profileInfoQuery = "SELECT * FROM User_Timetable_Data where StudentNumber = ?";
-            PreparedStatement statement = userSignupDAO.getDBConnection().prepareStatement(profileInfoQuery);
-            statement.setString(1,currentUserNumber);
-            ResultSet resultSet = statement.executeQuery();
-            while(resultSet.next()) {
-                events.add(new UserTimetable(resultSet.getInt("EventID")
-                        ,resultSet.getString("EventName")
-                        ,currentUserNumber
-                        ,resultSet.getString("EventType")
-                        ,resultSet.getString("EventStartDatetime")
-                        ,resultSet.getString("EventEndDatetime")
-                        ,resultSet.getString("EventLocation")
-                        ,resultSet.getInt("EventAttendance")));
-            }
-
-
-        }catch(Exception e){
-            System.out.println(e + "exception");
-        }
-    }
-
     public void initialize(){
-        getEvents();
+        events=getEvents(userTimetableDAO,currentUserNumber);
         year = LocalDate.now().getYear();
         month = LocalDate.now().getMonth().getValue();
         displayMonth();
@@ -351,11 +352,11 @@ public class calendarPageController extends sceneLoaderController {
     }
 
     public void addEvent(){
-        String check = calenderPageFunctions.checkEventInputs(nameField.getText(),typeSelect.getValue(),startDateSelect.getValue()
+        String check = checkEventInputs(nameField.getText(),typeSelect.getValue(),startDateSelect.getValue()
                 ,endDateSelect.getValue(),eventLocationField.getText());
         if (check == null){
-            String eventStartDateTime=calenderPageFunctions.formatDatetime(startDateSelect.getValue(),startHourSpinner.getValue(),startMinuteSpinner.getValue());
-            String eventEndDateTime=calenderPageFunctions.formatDatetime(endDateSelect.getValue(),endHourSpinner.getValue(),endMinuteSpinner.getValue());
+            String eventStartDateTime=formatDatetime(startDateSelect.getValue(),startHourSpinner.getValue(),startMinuteSpinner.getValue());
+            String eventEndDateTime=formatDatetime(endDateSelect.getValue(),endHourSpinner.getValue(),endMinuteSpinner.getValue());
             try {
                 //get new ID
                 String IDsql= "SELECT MAX(EventID) FROM User_Timetable_Data";
@@ -367,7 +368,7 @@ public class calendarPageController extends sceneLoaderController {
                         , eventLocationField.getText(),0);
                 userTimetableDAO.insertEvent(newEvent);
                 closeForm();
-                getEvents();
+                events=getEvents(userTimetableDAO,currentUserNumber);
                 displayMonth();
             }catch(Exception e){
                 System.out.println(e + "exception");

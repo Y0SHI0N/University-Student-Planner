@@ -70,15 +70,8 @@
                 <Image url="@../Img/QUT-Logo.jpg" />
             </image>
         </ImageView>
-        <StackPane layoutX="250.0" layoutY="5.0">
-            <Circle fill="DODGERBLUE" radius="55.0" strokeType="INSIDE"
-                    fx:id="profileBackGround"/>
-            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Profile img"
-                  fx:id="profileText">
-                <font>
-                    <Font size="55.0" />
-                </font>
-            </Text>
+        <StackPane layoutX="250.0" layoutY="5.0" fx:id="profilePlace">
+
         </StackPane>
 
         <Label layoutX="142.0" layoutY="150.0" prefHeight="26.0" prefWidth="300.0" fx:id="firstName" onMouseClicked="#editButtonOnClick">

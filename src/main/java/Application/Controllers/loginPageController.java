@@ -39,8 +39,7 @@ public class loginPageController extends sceneLoaderController {
                 if(resultSet.getInt(1) == 1){
                     // when the user is correctly logged in it will load the users home page and set the currentUserNumber
                     currentUserNumber=Validation.normaliseStudentNo(loginTextField.getText());
-                    //switchToHomePage();
-                    switchToGoalsPage();
+                    switchToHomePage();
                 }else{
                     loginLabel.setText("Invalid login. Please try again!");
                 }

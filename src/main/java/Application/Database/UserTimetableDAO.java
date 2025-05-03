@@ -8,6 +8,11 @@ public class UserTimetableDAO extends BaseDAO {
         createTable();
     }
 
+    public UserTimetableDAO(Connection connection) {
+        super(connection);
+        createTable();
+    }
+
     private void createTable() {
         String sql = "CREATE TABLE IF NOT EXISTS User_Timetable_Data (" +
                 "EventID INT NOT NULL, " +

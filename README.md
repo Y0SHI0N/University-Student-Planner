@@ -28,15 +28,9 @@ To achieve its objectives, the application will leverage Jira, an industry-recog
    - [Workflow](#workflow)
    - [Contributing to the repository](#contributing-to-the-repo)
 3) [Planning](#planning)
-   - [User Stories](#user-stories)
-   - [UML Class Diagram](#uml-class-diagram)
    - [Database Structuring](#database-structuring)
    - [Project Requirements](#project-requirements)
-4) [Testing](#testing)
-   - [Demo Video](#demo-video)
-   - [UI/UX Navigation](#uiux-navigation)
-   - [Backend Logic Testing](#backend-logical-tests)
-6) [Appendix](#appendix)
+4) [Appendix](#appendix)
 ---
 # Getting Started
 
@@ -84,10 +78,6 @@ public void someMethodName() {
 5. Open a Pull Request
 ---
 # Planning
-## User Stories
-
-## UML class diagram
-![Alt text](/UML_Diagram.png)
 ## database structuring 
 ### User Signup Data
 | Column          | Type    | Description                                |
@@ -101,7 +91,8 @@ public void someMethodName() {
 ### User app usage Data
 | Column          | Type    | Description                                |
 |----------------|--------|--------------------------------------------|
-| `Student_Number`          | VARCHAR | Primary key, Allocated Student id     |
+| `Student_Number`          | VARCHAR | Part of **composite primary key**, Allocated Student id     |
+| `date_Modified`          | VARCHAR | Part of **composite primary key**, datetime of data entry     |
 | `GPA`          | INT | Users actual GPA KPI     |
 | `GPA_GOAL`   | INT    | Users GPA Goal                          |
 | `HOURS_STUDIED` | TIME    | Users actual study time KPI                   |
@@ -109,49 +100,39 @@ public void someMethodName() {
 | `ATTENDANCE_RATE` | FLOAT | Users actual attendance rate KPI stored as a float to be represented as a percentage |
 | `ATTENDANCE_RATE_GOAL`      | FLOAT    | Users attendance rate goal |
 | `UNITS_ENROLLED`      | VARCHAR    | a list of the users enrolled Units |
+> **Primary Key**: (`Student_Number`, `date_Modified`)
+
 ### User Timetable Data
 | Column          | Type    | Description                                |
 |----------------|--------|--------------------------------------------|
-| `Student_Number`          | VARCHAR | Primary key, Allocated Student id     |
+| `event_ID`          | INT | Part of **composite primary key**, Allocated event id     |
+| `event_Name`          | VARCHAR | Primary key, Allocated events name     |
+| `Student_Number`          | VARCHAR | Part of **composite primary key**, Allocated Student id     |
 | `EVENT_TYPE`          | VARCHAR | what type of event it is (study,work,unit lecture)     |
 | `EVENT_START_DATETIME`   | DATETIME    | Expected event start time                          |
 | `EVENT_END_DATETIME` | DATETIME    | Expected event end time                   |
+| `EVENT_Location` | VARCHAR    | the location the event was attended                   |
 | `EVENT_ATTENDANCE`    | INT    | 1 represents did attend and 0 represents did not attend       |
+> **Primary Key**: (`Student_Number`, `event_ID`)
 
 ## Project Requirements
-| ID  | Name                          | Description  | Importance  | Expected End Date | Status  |
-|----|------------------------------|-----------------------------------------------|-------------|----------------|-----------|
-| 1  | Live Heatmap                 | Enable real-time display of university heatmap data. | High  | - | Incomplete |
-| 2  | Predictive Heatmap            | Implement AI-based predictions for heatmap trends based on past bookings and usage patterns. | High  | - | Incomplete |
-| 3  | Student KPI Dashboard         | Display key performance indicators (KPIs) for students in a clear and interactive format. | Medium | - | Incomplete |
-| 4  | Performance Goal Management   | Allow users to set custom goals or receive AI-generated recommendations to enhance performance. | High  | - | Incomplete |
-| 5  | AI-Generated Study Quotes     | Provide AI-curated motivational or relevant study quotes based on the user’s workload. | Low | - | Incomplete |
-| 6  | Weekly Performance Report     | Generate automated weekly performance reports based on KPIs and goals, with AI-driven suggestions for improvement. | High | - | Incomplete |
-| 7  | Assignment Deadline Tracker   | Display upcoming assignment details, including name, class, weighting, and due date. | High  | - | Incomplete |
-| 8  | Calendar Event Management     | Allow users to add and manage events in their personal calendar. | Medium | - | Incomplete |
-| 9  | Assignment Management         | Enable users to create, edit, and manage their assignments efficiently. | High  | - | Incomplete |
-| 10 | Timetable Filtering           | Implement filtering options for timetables based on unit codes, event types (e.g., study sessions), and tags. | Medium | - | Incomplete |
-| 11 | Timetable View Modes          | Provide options to switch between weekly, monthly, and widget-based timetable views. | Medium | - | Incomplete |
-| 12 | Database Structure Creation   | Design and create necessary database (.db) files for the application. | High  | - | Complete |
-| 13 | Database Integration          | Integrate the created database files with the application’s backend. | High  | - | Complete |
-| 14 | User Interface Development    | Develop an intuitive and user-friendly GUI for the application. | High  | - | Complete |
-| 15 | Goal Progress Line Chart      | Show how the goal has changed over time represented via a line chart. | Medium | - | Incomplete |
-| 16 | Profile Page                  | Have a profile page that allows easy information reading and updates. | Medium | - | Incomplete |
-
----
-# Testing
-## Demo Video
-
-## UI/UX navigation 
-(show different screens and explain whats happening)
-## Backend Logical tests
-(if backend can be unit tested to confirm logic put here)
+| ID  | Name                        | Description                                                                                   | Importance | Status      |
+|-----|-----------------------------|-----------------------------------------------------------------------------------------------|------------|-------------|
+| 1   | View Personal Information   | Enable students to view their personal information in the system.                            | Medium     | Completed   |
+| 2   | Edit Personal Information   | Allow students to edit their personal information from their profile page.                   | Medium     | Completed   |
+| 3   | View Study Progress         | Display study progress details on the home page for students to monitor academic progress.   | Medium     | In Progress |
+| 4   | Edit Study Progress         | Allow students to edit their study progress details directly from the home page.             | Medium     | In Progress |
+| 5   | Add Calendar Event Types    | Let students add different event types (e.g., sessions, exams) to manage schedules.          | Medium     | Completed   |
+| 6   | Edit Calendar Events        | Enable students to edit calendar events via a popup without navigating away.                 | Medium     | Completed   |
+| 7   | Delete Calendar Events      | Allow students to delete incorrect or outdated events from their calendar.                   | High       | Completed   |
+| 8   | Weekly Overview             | Provide students with AI-generated insights into their study habits and areas for improvement.| High      | Completed   |
+| 9   | AI Heatmap Overview         | Display an AI-based overview of class heatmap and attendance data.                           | High       | In Progress |
+| 10  | Input Class Schedule        | Enable students to manually input their class schedule for personalised planning.            | High       | Completed   |
+| 11  | Navigation Bar              | Add UI control elements (e.g., scroll bar, combo box) to improve interface usability.         | Low       | Completed   |
 ---
 # Appendix
 ### Documentation
 - JavaFx UI/UX components via [Oracle](https://docs.oracle.com/javase/8/javafx/user-interface-tutorial/ui_controls.htm#JFXUI336)
 - JDBC Documentation via [Geeks for Geeks](https://www.geeksforgeeks.org/establishing-jdbc-connection-in-java/)
-- Hakari Documentation via [baeldung](https://www.baeldung.com/hikaricp)
 - JavaDoc Documentation via [Geeks for Geeks](https://www.geeksforgeeks.org/what-is-javadoc-tool-and-how-to-use-it/)
-- OpenAi API Repository via [Github](https://github.com/openai/openai-java)
 ---

@@ -423,6 +423,6 @@ public class goalsPageController extends sceneLoaderController {
         String promptText = "can you suggest what can be improved given the following information:" + currentGoals + currentData + "with a text limit of 200 characters including spaces";
 
         model.promptAI(promptText);
-        AIGeneratedGoalSuggestion.setText(AI_model.reponseText);
+        AIGeneratedGoalSuggestion.setText(model.promptAI(promptText));
     }
 }

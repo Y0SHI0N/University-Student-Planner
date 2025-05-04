@@ -17,6 +17,7 @@ public class homePageController extends sceneLoaderController {
     public AI_model model = new AI_model();
     @FXML
     public void initialize() {
+        super.initialize();
         try {
             model.initialiseAIModel();
             getWeeklyOverview();

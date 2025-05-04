@@ -71,6 +71,7 @@ public class goalsPageController extends sceneLoaderController {
     public AI_model model = new AI_model();
 
     public void initialize() {
+        super.initialize();
         try{
         //get the info on the current user
         ResultSet resultSet = findUsersLatestRecords(currentUserNumber);

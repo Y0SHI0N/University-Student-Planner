@@ -157,6 +157,7 @@ public class mapPageController extends sceneLoaderController {
 
 
     public void initialize() {
+        super.initialize();
         try {
             // loadEvents(); todo: WIP, see further above, basically just providing fancier data for "sortRooms"
             for (Building building : CampusBuildings) {

@@ -4,21 +4,29 @@ package Application.Controllers;
 import Application.Main;
 import Application.Database.*;
 import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuItem;
 import javafx.fxml.FXML;
 
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.stream.Stream;
 
-public class sceneLoaderController extends Main {
+import Application.Main;
+import Application.StageController;
+public class sceneLoaderController{
     protected final UserSignupDAO userSignupDAO = DatabaseConnection.getUserSignupDAO();
     protected final UserTimetableDAO userTimetableDAO = DatabaseConnection.getUserTimetableDAO();
     protected final UserCollectedDataDAO userCollectedDataDAO = DatabaseConnection.getUserCollectedDataDAO();
-
+    private Parent root;
+    public String currentUserNumber; //used to track the user currently logged in
+    protected StageController stageController = new StageController();
     @FXML protected MenuItem viewProfileItem;
     @FXML protected MenuItem updateDetailsItem;
     @FXML protected MenuItem updateGoalsItem;
@@ -38,11 +46,23 @@ public class sceneLoaderController extends Main {
             System.out.println(e);
         }
     }
+    public void changeScene(String fxmlFilePath) throws IOException {
+        try{
+            FXMLLoader fxmlFile = new FXMLLoader(getClass().getResource(fxmlFilePath));
+            root = fxmlFile.load();
 
+            stageController.formatStage();
+
+            stageController.applicationStage.setScene(new Scene(root));
+            stageController.applicationStage.show();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
     public void switchToLoginPage() throws Exception {
         try{
             changeScene("/FXML/Login-Page.fxml");
-            closeActiveStage();
+            stageController.closeActiveStage();
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -51,7 +71,7 @@ public class sceneLoaderController extends Main {
     public void switchToRegisterPage() throws Exception {
         try{
             changeScene("/FXML/Register-Page.fxml");
-            closeActiveStage();
+            stageController.closeActiveStage();
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -60,7 +80,7 @@ public class sceneLoaderController extends Main {
     public void switchToHomePage() throws Exception {
         try{
             changeScene("/FXML/Home-Page.fxml");
-            closeActiveStage();
+            stageController.closeActiveStage();
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -69,7 +89,7 @@ public class sceneLoaderController extends Main {
     public void switchToMapPage() throws Exception {
         try{
             changeScene("/FXML/Map-Page.fxml");
-            closeActiveStage();
+            stageController.closeActiveStage();
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -78,7 +98,7 @@ public class sceneLoaderController extends Main {
     public void switchToGoalsPage() throws Exception {
         try{
             changeScene("/FXML/Goals-Page.fxml");
-            closeActiveStage();
+            stageController.closeActiveStage();
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -87,7 +107,7 @@ public class sceneLoaderController extends Main {
     public void switchToCalendarPage() throws Exception {
         try{
             changeScene("/FXML/Calendar-Page.fxml");
-            closeActiveStage();
+            stageController.closeActiveStage();
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -95,7 +115,7 @@ public class sceneLoaderController extends Main {
     public void switchToProfilePage() throws Exception{
         try{
             changeScene("/FXML/Profile-Page.fxml");
-            closeActiveStage();
+            stageController.closeActiveStage();
         } catch (Exception e){
             System.out.println(e);
         }
@@ -103,7 +123,7 @@ public class sceneLoaderController extends Main {
 
     public void logout(){
         try{
-            currentUserNumber = "";
+            this.currentUserNumber = "";
             switchToLoginPage();
         } catch (Exception e){
             System.out.println(e);

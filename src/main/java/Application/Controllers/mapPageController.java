@@ -15,7 +15,7 @@ public class mapPageController extends sceneLoaderController {
 
     // stores all vital information regarding a building's code, x/y location and classes (in that order)
     /// PLACEHOLDER DATA JUST SO THERE'S SOMETHING TO SHOW
-    /// todo: WILL BE REPLACED ONCE "User_Signup_Data" IS POPULATED
+    // todo: WILL BE REPLACED ONCE "User_Signup_Data" IS POPULATED
     public static Building[] CampusBuildings = {
             new Building('P', 254, 100, new String[]{"GP_302"}),
             new Building('S', 78, 164, new String[]{"GP_001", "GP_201", "GP_302"}),
@@ -85,8 +85,7 @@ public class mapPageController extends sceneLoaderController {
         }
     }
 
-    // TODO: HIGH priority, to be done after checkpoint & before friday when there's more breathing room
-    // requires actual DB data to be created in SQL before it can be implemented
+    // TODO: HIGH priority, requires actual DB data to be created in SQL before it can be implemented
     /// transform, use the same code to retrieve calender data and use that, can also do at least 2 tests on the data validity or size?
     /*
     public void loadEvents(){
@@ -136,7 +135,6 @@ public class mapPageController extends sceneLoaderController {
         int heat_hue_value = Math.clamp(room_number * circleTemplate.hueStepValue, 0, 255);
         // The heat hue value works as an inverse relationship with both red and blue hues.
         // The deeper the red, the less the blue and vice versa. Initally starts with max blue and zero red
-        System.out.println("INPUT: " + room_number + "  |  FINAL: " + Color.rgb(Math.abs(heat_hue_value - 255), 0, heat_hue_value, 0.5));
         return (Color.rgb(Math.abs(heat_hue_value - 255), 0, heat_hue_value, 0.5));
     }
 

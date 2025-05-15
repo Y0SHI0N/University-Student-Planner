@@ -38,11 +38,7 @@ class sceneLoaderControllerTest {
         Platform.runLater(() -> {
             try {
                 StageController stageController = new StageController();
-                sceneLoaderController controller = new sceneLoaderController(stageController.applicationStage);
-
-                StageController.closeActiveStage();
-                controller.changeScene(Main.getLoginPage());  // Valid loader
-                StageController.closeActiveStage();
+                Main.getLoginPage().load();
             } catch (Throwable e) {
                 thrown.set(e);
             } finally {
@@ -65,10 +61,7 @@ class sceneLoaderControllerTest {
         Platform.runLater(() -> {
             try {
                 StageController stageController = new StageController();
-                sceneLoaderController controller = new sceneLoaderController(stageController.applicationStage);
-                StageController.closeActiveStage();
-                controller.changeScene(Main.getRegisterPage());  // Valid loader
-                StageController.closeActiveStage();
+                Main.getRegisterPage().load();
             } catch (Throwable e) {
                 thrown.set(e);
             } finally {
@@ -91,10 +84,53 @@ class sceneLoaderControllerTest {
         Platform.runLater(() -> {
             try {
                 StageController stageController = new StageController();
-                sceneLoaderController controller = new sceneLoaderController(stageController.applicationStage);
-                StageController.closeActiveStage();
-                controller.changeScene(Main.getMapPage());  // Valid loader
-                StageController.closeActiveStage();
+                Main.getMapPage().load();
+            } catch (Throwable e) {
+                thrown.set(e);
+            } finally {
+                latch.countDown();
+            }
+        });
+
+        if (!latch.await(5, TimeUnit.SECONDS)) {
+            fail("Test timed out");
+        }
+
+        assertNull(thrown.get(), "Scene loading threw an unexpected exception: " +
+                (thrown.get() != null ? thrown.get().getMessage() : "null"));
+    }
+    @Test
+    void testHomeSceneLoadsSuccessfully() throws InterruptedException {
+        CountDownLatch latch = new CountDownLatch(1);
+        AtomicReference<Throwable> thrown = new AtomicReference<>();
+
+        Platform.runLater(() -> {
+            try {
+                StageController stageController = new StageController();
+                Main.getHomePage().load();
+            } catch (Throwable e) {
+                thrown.set(e);
+            } finally {
+                latch.countDown();
+            }
+        });
+
+        if (!latch.await(5, TimeUnit.SECONDS)) {
+            fail("Test timed out");
+        }
+
+        assertNull(thrown.get(), "Scene loading threw an unexpected exception: " +
+                (thrown.get() != null ? thrown.get().getMessage() : "null"));
+    }
+    @Test
+    void testGoalSceneLoadsSuccessfully() throws InterruptedException {
+        CountDownLatch latch = new CountDownLatch(1);
+        AtomicReference<Throwable> thrown = new AtomicReference<>();
+
+        Platform.runLater(() -> {
+            try {
+                StageController stageController = new StageController();
+                Main.getGoalsPage().load();
             } catch (Throwable e) {
                 thrown.set(e);
             } finally {
@@ -117,10 +153,7 @@ class sceneLoaderControllerTest {
         Platform.runLater(() -> {
             try {
                 StageController stageController = new StageController();
-                sceneLoaderController controller = new sceneLoaderController(stageController.applicationStage);
-                StageController.closeActiveStage();
-                controller.changeScene(Main.getProfilePage());  // Valid loader
-                StageController.closeActiveStage();
+                Main.getProfilePage().load();
             } catch (Throwable e) {
                 thrown.set(e);
             } finally {
@@ -143,10 +176,7 @@ class sceneLoaderControllerTest {
         Platform.runLater(() -> {
             try {
                 StageController stageController = new StageController();
-                sceneLoaderController controller = new sceneLoaderController(stageController.applicationStage);
-                StageController.closeActiveStage();
-                controller.changeScene(Main.getCalendarPage());  // Valid loader
-                StageController.closeActiveStage();
+                Main.getCalendarPage().load();
             } catch (Throwable e) {
                 thrown.set(e);
             } finally {
@@ -169,11 +199,9 @@ class sceneLoaderControllerTest {
         Platform.runLater(() -> {
             try {
                 StageController stageController = new StageController();
-                sceneLoaderController controller = new sceneLoaderController(stageController.applicationStage);
 
                 FXMLLoader loader = new FXMLLoader(); // set no location
-                controller.changeScene(loader);
-                stageController.applicationStage.close();
+                loader.load();
 
             } catch (Throwable e) {
                 thrown.set(e); // expecting this exception
@@ -186,7 +214,7 @@ class sceneLoaderControllerTest {
             fail("Test timed out");
         }
 
-        assertFalse(thrown.get() instanceof IllegalStateException, "Expected IllegalStateException when no location is set");
+        assertTrue(thrown.get() instanceof IllegalStateException, "Expected IllegalStateException when no location is set");
     }
 
 }

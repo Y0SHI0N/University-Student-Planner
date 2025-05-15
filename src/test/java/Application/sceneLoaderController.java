@@ -39,7 +39,10 @@ class sceneLoaderControllerTest {
             try {
                 StageController stageController = new StageController();
                 sceneLoaderController controller = new sceneLoaderController(stageController.applicationStage);
+
+                StageController.closeActiveStage();
                 controller.changeScene(Main.getLoginPage());  // Valid loader
+                StageController.closeActiveStage();
             } catch (Throwable e) {
                 thrown.set(e);
             } finally {
@@ -63,7 +66,9 @@ class sceneLoaderControllerTest {
             try {
                 StageController stageController = new StageController();
                 sceneLoaderController controller = new sceneLoaderController(stageController.applicationStage);
+                StageController.closeActiveStage();
                 controller.changeScene(Main.getRegisterPage());  // Valid loader
+                StageController.closeActiveStage();
             } catch (Throwable e) {
                 thrown.set(e);
             } finally {
@@ -87,7 +92,9 @@ class sceneLoaderControllerTest {
             try {
                 StageController stageController = new StageController();
                 sceneLoaderController controller = new sceneLoaderController(stageController.applicationStage);
+                StageController.closeActiveStage();
                 controller.changeScene(Main.getMapPage());  // Valid loader
+                StageController.closeActiveStage();
             } catch (Throwable e) {
                 thrown.set(e);
             } finally {
@@ -111,7 +118,9 @@ class sceneLoaderControllerTest {
             try {
                 StageController stageController = new StageController();
                 sceneLoaderController controller = new sceneLoaderController(stageController.applicationStage);
+                StageController.closeActiveStage();
                 controller.changeScene(Main.getProfilePage());  // Valid loader
+                StageController.closeActiveStage();
             } catch (Throwable e) {
                 thrown.set(e);
             } finally {
@@ -135,7 +144,9 @@ class sceneLoaderControllerTest {
             try {
                 StageController stageController = new StageController();
                 sceneLoaderController controller = new sceneLoaderController(stageController.applicationStage);
+                StageController.closeActiveStage();
                 controller.changeScene(Main.getCalendarPage());  // Valid loader
+                StageController.closeActiveStage();
             } catch (Throwable e) {
                 thrown.set(e);
             } finally {
@@ -162,6 +173,7 @@ class sceneLoaderControllerTest {
 
                 FXMLLoader loader = new FXMLLoader(); // set no location
                 controller.changeScene(loader);
+                stageController.applicationStage.close();
 
             } catch (Throwable e) {
                 thrown.set(e); // expecting this exception

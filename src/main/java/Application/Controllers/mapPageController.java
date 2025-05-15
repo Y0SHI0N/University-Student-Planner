@@ -12,6 +12,8 @@ public class mapPageController extends sceneLoaderController {
     @FXML public Canvas heatMap;
     @FXML public ListView<String> busyLocationList;
     @FXML public ListView<String> quietLocationList;
+    public enum feedState {LIVE, PREDICTED};
+    public feedState current_state = feedState.LIVE;
 
     // stores all vital information regarding a building's code, x/y location and classes (in that order)
     /// PLACEHOLDER DATA JUST SO THERE'S SOMETHING TO SHOW
@@ -87,8 +89,9 @@ public class mapPageController extends sceneLoaderController {
 
     // TODO: HIGH priority, requires actual DB data to be created in SQL before it can be implemented
     /// transform, use the same code to retrieve calender data and use that, can also do at least 2 tests on the data validity or size?
+    ///
     /*
-    public void loadEvents(){
+    public void loadEvents(selected_date = None){
         try {
             String profileInfoQuery = "SELECT * FROM User_Timetable_Data where StudentNumber = ?";
             PreparedStatement statement = userSignupDAO.getDBConnection().prepareStatement(profileInfoQuery);
@@ -112,6 +115,7 @@ public class mapPageController extends sceneLoaderController {
     */
 
     public void renderHeatmap(Building building) {
+        // Reset the canvas
         // The more rooms there are, the more layers of circle there are, with each warmer colors.
         for (int room_count = building.bookedRooms.length; room_count > 0; room_count--) {
             // room stores the current room increment, essentially how many layers deep the for loop is
@@ -142,7 +146,7 @@ public class mapPageController extends sceneLoaderController {
         // responsible for simply sorting and rendering rooms
         /// TEMP SORTING METHOD
         // todo: IMPROVE THIS AFTER CHECKPOINT
-        ListView<String> prefered_list_type;
+        ListView<String> prefered_list_type = null;
         if (building.bookedRooms.length > 2) {
             prefered_list_type = busyLocationList;
         } else {
@@ -153,15 +157,28 @@ public class mapPageController extends sceneLoaderController {
         prefered_list_type.getItems().addAll(rooms);
     }
 
+    public void openLiveFeed() {
+        current_state = feedState.LIVE;
+        reloadHeatmap();
+    }
+
+    public void openPredictedFeed() {
+        current_state = feedState.PREDICTED;
+        reloadHeatmap();
+    }
+
+    public void reloadHeatmap() {
+        // loadEvents(); todo: WIP, see further above, basically just providing fancier data for "sortRooms"
+        for (Building building : CampusBuildings) {
+            renderHeatmap(building);
+            sortRooms(building);
+        }
+    }
 
     public void initialize() {
         super.initialize();
         try {
-            // loadEvents(); todo: WIP, see further above, basically just providing fancier data for "sortRooms"
-            for (Building building : CampusBuildings) {
-                renderHeatmap(building);
-                sortRooms(building);
-            }
+            reloadHeatmap();
         } catch (Exception e) {
             e.printStackTrace();
         }

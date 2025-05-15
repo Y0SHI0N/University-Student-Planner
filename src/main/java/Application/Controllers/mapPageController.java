@@ -116,6 +116,7 @@ public class mapPageController extends sceneLoaderController {
 
     public void renderHeatmap(Building building) {
         // Reset the canvas
+        heatMap.getGraphicsContext2D().clearRect(0.0, 0.0, 302.0, 200.0);
         // The more rooms there are, the more layers of circle there are, with each warmer colors.
         for (int room_count = building.bookedRooms.length; room_count > 0; room_count--) {
             // room stores the current room increment, essentially how many layers deep the for loop is
@@ -154,7 +155,7 @@ public class mapPageController extends sceneLoaderController {
         }
         // create dynamic list that will update with changes, and use it to add the rooms onto the preferred list
         ObservableList<String> rooms = FXCollections.observableArrayList(building.bookedRooms);
-        prefered_list_type.getItems().addAll(rooms);
+        prefered_list_type.getItems().setAll(rooms);
     }
 
     public void openLiveFeed() {

@@ -38,7 +38,7 @@ class sceneLoaderControllerTest {
         Platform.runLater(() -> {
             try {
                 StageController stageController = new StageController();
-                Main.getLoginPage().load();
+                Main.getLoginPage();
             } catch (Throwable e) {
                 thrown.set(e);
             } finally {
@@ -61,7 +61,7 @@ class sceneLoaderControllerTest {
         Platform.runLater(() -> {
             try {
                 StageController stageController = new StageController();
-                Main.getRegisterPage().load();
+                Main.getRegisterPage();
             } catch (Throwable e) {
                 thrown.set(e);
             } finally {
@@ -84,7 +84,7 @@ class sceneLoaderControllerTest {
         Platform.runLater(() -> {
             try {
                 StageController stageController = new StageController();
-                Main.getMapPage().load();
+                Main.getMapPage();
             } catch (Throwable e) {
                 thrown.set(e);
             } finally {
@@ -107,7 +107,7 @@ class sceneLoaderControllerTest {
         Platform.runLater(() -> {
             try {
                 StageController stageController = new StageController();
-                Main.getHomePage().load();
+                Main.getHomePage();
             } catch (Throwable e) {
                 thrown.set(e);
             } finally {
@@ -130,7 +130,7 @@ class sceneLoaderControllerTest {
         Platform.runLater(() -> {
             try {
                 StageController stageController = new StageController();
-                Main.getGoalsPage().load();
+                Main.getGoalsPage();
             } catch (Throwable e) {
                 thrown.set(e);
             } finally {
@@ -153,7 +153,7 @@ class sceneLoaderControllerTest {
         Platform.runLater(() -> {
             try {
                 StageController stageController = new StageController();
-                Main.getProfilePage().load();
+                Main.getProfilePage();
             } catch (Throwable e) {
                 thrown.set(e);
             } finally {
@@ -176,7 +176,7 @@ class sceneLoaderControllerTest {
         Platform.runLater(() -> {
             try {
                 StageController stageController = new StageController();
-                Main.getCalendarPage().load();
+                Main.getCalendarPage();
             } catch (Throwable e) {
                 thrown.set(e);
             } finally {

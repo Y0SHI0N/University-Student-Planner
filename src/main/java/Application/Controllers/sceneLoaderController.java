@@ -27,7 +27,7 @@ public class sceneLoaderController{
     protected final UserTimetableDAO userTimetableDAO = DatabaseConnection.getUserTimetableDAO();
     protected final UserCollectedDataDAO userCollectedDataDAO = DatabaseConnection.getUserCollectedDataDAO();
     private Parent root;
-    public String currentUserNumber; //used to track the user currently logged in
+    public static String currentUserNumber; //used to track the user currently logged in
     protected StageController stageController = new StageController();
     @FXML protected MenuItem viewProfileItem;
     @FXML protected MenuItem updateDetailsItem;

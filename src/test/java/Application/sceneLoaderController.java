@@ -30,11 +30,6 @@ class sceneLoaderControllerTest {
         }
     }
 
-    @AfterAll
-    static void finishTest(){
-        Platform.exit();
-    }
-
     @Test
     void testLoginSceneLoadsSuccessfully() throws InterruptedException {
         CountDownLatch latch = new CountDownLatch(1);

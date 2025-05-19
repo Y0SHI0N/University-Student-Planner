@@ -30,13 +30,10 @@ class sceneLoaderControllerTest {
         System.setProperty("java.awt.headless", "true");
     }
     @BeforeAll
-    static void runJavaFX(){
-        try {
-            Platform.startup(() -> {
-
-            });
-        } catch (IllegalStateException e) {
-        }
+    static void runJavaFX() throws InterruptedException{
+        CountDownLatch latch = new CountDownLatch(1);
+        Platform.startup(latch::countDown);
+        latch.await();
     }
 
     @Test

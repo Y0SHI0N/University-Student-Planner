@@ -25,13 +25,7 @@ import java.util.concurrent.atomic.AtomicReference;
 class sceneLoaderControllerTest {
     @BeforeAll
     static void runJavaFX() throws InterruptedException{
-        CountDownLatch latch = new CountDownLatch(1);
-        try{
-        Platform.startup(() -> latch.countDown());
-        }catch(IllegalStateException e){
-            latch.countDown();
-        }
-        latch.await();
+        Platform.startup(()->{});
     }
 
     @Test

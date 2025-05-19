@@ -32,7 +32,9 @@ class sceneLoaderControllerTest {
     @BeforeAll
     static void runJavaFX() throws InterruptedException{
         CountDownLatch latch = new CountDownLatch(1);
-        Platform.startup(latch::countDown);
+        try{
+        Platform.startup(() -> latch.countDown());
+        }catch(IllegalStateException e){}
         latch.await();
     }
 

@@ -316,6 +316,7 @@ public class goalsPageController extends sceneLoaderController {
             throw new RuntimeException(e);
         }
     }
+
     public void sendChangesToDB(String currentUsersNumber) throws SQLException {
         try{
         //indexing is based on how the array is sorted: [hoursStudiedKPI, GPAKPI, attendanceKPI, hoursStudiedGoal, GPAGoal, attendanceRateGoal]

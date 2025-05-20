@@ -16,6 +16,7 @@ import javafx.fxml.FXML;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.stream.Stream;
 
 import Application.Main;
@@ -25,8 +26,9 @@ public class sceneLoaderController{
     protected final UserTimetableDAO userTimetableDAO = DatabaseConnection.getUserTimetableDAO();
     protected final UserCollectedDataDAO userCollectedDataDAO = DatabaseConnection.getUserCollectedDataDAO();
     private Parent root;
-    public String currentUserNumber; //used to track the user currently logged in
+    protected static String currentUserNumber; //used to track the user currently logged in
     protected StageController stageController = new StageController();
+    protected static ArrayList<Thread> ineruptableThreads=new ArrayList<Thread>(); //used to store AIthreads that can be interrupted when changing scene
     @FXML protected MenuItem viewProfileItem;
     @FXML protected MenuItem updateDetailsItem;
     @FXML protected MenuItem updateGoalsItem;
@@ -41,6 +43,12 @@ public class sceneLoaderController{
             updateGoalsItem.setOnAction(e -> updateGoals());
             logoutItem.setOnAction(e -> logout());
             closeAppItem.setOnAction(e -> closeApp());
+
+            //interrupt any interruptible AIthreads so they aren't still using resources
+            for(Thread thread:ineruptableThreads){
+                thread.interrupt();
+            }
+            ineruptableThreads.clear();
 
         } catch (Exception e) {
             System.out.println(e);

@@ -42,7 +42,7 @@ public class profilePageController extends sceneLoaderController {
 
     //making this a function so it can be reused in other pages
     //when given a stackPane it will add a background and text to it
-    public static void setProfileImage(UserSignup user,StackPane pane,Float size){
+    public void setProfileImage(UserSignup user,Float size){
         //set profileImg placeholder
         //get a random seed from the userNumber so the color is different for each user
         Random random = new Random(Long.parseLong(user.getStudentNumber().replaceAll("[^0-9]","")));
@@ -56,9 +56,6 @@ public class profilePageController extends sceneLoaderController {
         profileBackGround.setRadius(size);
         profileBackGround.setStrokeType(StrokeType.INSIDE);
         profileBackGround.setFill(Color.rgb(colors[0],colors[1],colors[2]));
-        System.out.println(colors[0]);
-        System.out.println(colors[1]);
-        System.out.println(colors[2]);
 
         Text profileText=new Text();
         profileText.setText(user.getFirstName().substring(0,1).toUpperCase()+user.getLastName().substring(0,1).toUpperCase());
@@ -68,8 +65,8 @@ public class profilePageController extends sceneLoaderController {
         Font font=new Font(size);
         profileText.fontProperty().setValue(font);
 
-        pane.getChildren().add(profileBackGround);
-        pane.getChildren().add(profileText);
+        profilePlace.getChildren().add(profileBackGround);
+        profilePlace.getChildren().add(profileText);
     }
 
     public void initialize(){
@@ -94,7 +91,7 @@ public class profilePageController extends sceneLoaderController {
             Email.setText("Email: "+userSignup.getEmail());
             phoneNumber.setText("Phone number: "+userSignup.getPhoneNumber());
 
-            setProfileImage(userSignup,profilePlace,55f);
+            setProfileImage(userSignup,55f);
         }catch(Exception e){
             System.out.println(e + "exception");
         }
@@ -193,7 +190,7 @@ public class profilePageController extends sceneLoaderController {
                 lastName.setText("Last Name: "+userSignup.getLastName());
                 Email.setText("Email: "+userSignup.getEmail());
                 phoneNumber.setText("Phone number: "+userSignup.getPhoneNumber());
-                setProfileImage(userSignup,profilePlace,55f);
+                setProfileImage(userSignup,55f);
 
                 notice.setText("changes saved successfully.");
                 notice.setVisible(true);

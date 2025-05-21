@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.Cursor?>
+
+<MenuButton xmlns:fx="http://javafx.com/fxml/1"
+            fx:id="optionMenu"
+            fx:controller="Application.Controllers.OptionListController"
+            text="Options"
+            prefWidth="65.0"
+            prefHeight="26.0"
+            layoutX="535.0"
+            layoutY="1.0"
+            ellipsisString=""
+            wrapText="true">
+    <items>
+        <MenuItem fx:id="viewProfileItem" text="View Profile" />
+        <MenuItem fx:id="updateDetailsItem" text="Update Details" />
+        <MenuItem fx:id="updateGoalsItem" text="Update Goals" />
+        <MenuItem fx:id="logoutItem" text="Log Out" />
+        <MenuItem fx:id="closeAppItem" text="Close App" />
+    </items>
+    <cursor>
+        <Cursor fx:constant="OPEN_HAND"/>
+    </cursor>
+    <font>
+        <Font size="10.0"/>
+    </font>
+</MenuButton>
+
+
+

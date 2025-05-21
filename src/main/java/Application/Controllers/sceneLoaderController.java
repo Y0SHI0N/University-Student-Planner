@@ -16,6 +16,7 @@ import javafx.fxml.FXML;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.stream.Stream;
 
 import Application.Main;
@@ -29,26 +30,20 @@ public class sceneLoaderController{
     private Parent root;
     public static String currentUserNumber; //used to track the user currently logged in
     protected StageController stageController = new StageController();
+    protected ArrayList<Thread> ineruptableThreads=new ArrayList<Thread>();
     @FXML protected MenuItem viewProfileItem;
     @FXML protected MenuItem updateDetailsItem;
     @FXML protected MenuItem updateGoalsItem;
     @FXML protected MenuItem logoutItem;
     @FXML protected MenuItem closeAppItem;
 
-    public sceneLoaderController(Stage stage) {stage = stageController.applicationStage;
-    }
-    public sceneLoaderController(){
-
-    }
-
     @FXML
     public void initialize() {
         try {
-            viewProfileItem.setOnAction(e -> viewProfile());
-            updateDetailsItem.setOnAction(e -> updateDetails());
-            updateGoalsItem.setOnAction(e -> updateGoals());
-            logoutItem.setOnAction(e -> logout());
-            closeAppItem.setOnAction(e -> closeApp());
+            for (Thread thread:ineruptableThreads){
+                thread.interrupt();
+            }
+            ineruptableThreads.clear();
 
         } catch (Exception e) {
             System.out.println(e);
@@ -127,54 +122,6 @@ public class sceneLoaderController{
         try{
             changeScene(Main.getProfilePage());
             stageController.closeActiveStage();
-        } catch (Exception e){
-            System.out.println(e);
-        }
-    }
-
-    public void logout(){
-        try{
-            this.currentUserNumber = "";
-            switchToLoginPage();
-        } catch (Exception e){
-            System.out.println(e);
-        }
-    }
-
-    public void closeApp() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Exit Confirmation");
-        alert.setHeaderText("Are you sure you want to close the app?");
-        alert.setContentText("Any unsaved changes will be lost.");
-
-        // Show dialog and wait for user response
-        alert.showAndWait().ifPresent(response -> {
-            if (response == ButtonType.OK) {
-                Platform.exit();
-                System.exit(0);
-            }
-        });
-    }
-
-    public void updateGoals() {
-        try{
-            switchToGoalsPage();
-        } catch (Exception e){
-            System.out.println(e);
-        }
-    }
-
-    public void updateDetails() {
-        try{
-            switchToCalendarPage();
-        } catch (Exception e){
-            System.out.println(e);
-        }
-    }
-
-    public void viewProfile() {
-        try{
-            switchToProfilePage();
         } catch (Exception e){
             System.out.println(e);
         }

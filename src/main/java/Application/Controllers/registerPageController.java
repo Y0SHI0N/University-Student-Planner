@@ -3,9 +3,12 @@ package Application.Controllers;
 import Application.Database.UserSignup;
 import Application.Validation;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+
 import java.sql.*;
 import java.util.stream.Stream;
 
@@ -18,45 +21,17 @@ public class registerPageController extends sceneLoaderController {
     @FXML private PasswordField confirmRegisterPassword;
     @FXML private Label registerErrorMessagesText;
     @FXML private TextField registerStudentNumber;
+    @FXML private Button creatAccBtn;
 
-//    public void registerUser() {
-//        String studentNumber = registerStudentNumber.getText();
-//        String firstName = registerFirstName.getText();
-//        String lastName = registerLastName.getText();
-//        String email = registerEmail.getText();
-//        String password = registerPassword.getText();
-//        String confirmedPassword = confirmRegisterPassword.getText();
-//
-//        if (studentNumber.equals("") || firstName.equals("") || lastName.equals("") || email.equals("") || password.equals("") || confirmedPassword.equals("")) {
-//            registerErrorMessagesText.setText("don't leave fields empty");
-//            return;
-//        } else if (confirmedPassword.equals(password) == false) {
-//            registerErrorMessagesText.setText("passwords don't match");
-//            return;
-//        } else {
-//            boolean isDuplicate = checkDuplicateStudentNumbers(studentNumber);
-//            if (isDuplicate == true) {
-//                registerErrorMessagesText.setText("student number is already registered");
-//                return;
-//            }
-//            else {
-//                try {
-//                    String addUserQuery = "INSERT INTO User_Signup_Data(StudentNumber, FirstName, LastName, Email, LoginPassword) VALUES(?, ?, ?, ?, ?);";
-//                    PreparedStatement statement = userSignupDAO.getDBConnection().prepareStatement(addUserQuery);
-//                    statement.setString(1,studentNumber);
-//                    statement.setString(2,firstName);
-//                    statement.setString(3,lastName);
-//                    statement.setString(4,email);
-//                    statement.setString(5,password);
-//
-//                    statement.execute();
-//                    changeScene("/FXML/Login-Page.fxml");
-//                } catch (Exception e) {
-//                    javafx.application.Platform.exit(); // exception exits platform
-//                }
-//            }
-//        }
-//    }
+    @FXML
+    public void initialize() {
+        // Pressing Enter on username moves to password
+        creatAccBtn.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                registerUser();
+            }
+        });
+    }
 
     public void registerUser() {
         String studentNumber = Validation.normaliseStudentNo(registerStudentNumber.getText());

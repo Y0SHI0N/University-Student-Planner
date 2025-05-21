@@ -7,18 +7,55 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 
 
 import java.sql.*;
 
 public class loginPageController extends sceneLoaderController {
-    public Button loginButton;
+    @FXML public Button loginButton;
+    @FXML public Button registerButton;
     @FXML private Label loginLabel;
     @FXML private TextField loginTextField;
     @FXML private PasswordField loginPasswordField;
 
-    public void loginButtonOnClick(MouseEvent click){
+    @FXML
+    public void initialize() {
+        // Pressing Enter on username moves to password
+        loginTextField.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                loginPasswordField.requestFocus();
+            }
+        });
+
+        // Pressing Enter on password triggers login
+        loginPasswordField.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                loginButtonOnClick();
+            }
+        });
+
+        // Pressing Enter on password triggers login
+        loginButton.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                loginButtonOnClick();
+            }
+        });
+
+        // Pressing Enter on password triggers login
+        registerButton.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                try {
+                    switchToRegisterPage();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+    }
+
+    public void loginButtonOnClick(){
         if(!loginTextField.getText().isBlank() && !loginPasswordField.getText().isBlank()){
             validateLogin();
         }

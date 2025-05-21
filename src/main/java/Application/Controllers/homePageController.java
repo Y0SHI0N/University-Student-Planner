@@ -1,22 +1,24 @@
 package Application.Controllers;
 
 import Application.AI_model;
-import Application.Database.DatabaseConnection;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
 
-import java.awt.*;
-import java.sql.Connection;
-import java.sql.SQLException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.HashMap;
 
 
 public class homePageController extends sceneLoaderController {
+    @FXML private Label studyLabel, gpaLabel, attLabel;
     @FXML private TextArea weeklyOverviewAI;
     @FXML private Text motivationalAI;
-    @FXML Text MondayOvr, TuesdayOvr, WedOvr, ThursOvr, FriOvr;
+    @FXML private Text MondayOvr, TuesdayOvr, WedOvr, ThursOvr, FriOvr;
+    @FXML private ProgressBar GPAProgress, StudyHourProgress, AttendanceProgress;
     public HashMap<String,String> weekDayHashMap = new HashMap<String, String>();
 
     public AI_model model = new AI_model();
@@ -32,14 +34,28 @@ public class homePageController extends sceneLoaderController {
 
             weeklyOverviewAI.setEditable(false);
             model.initialiseAIModel();
-            
-            getWeeklyOverview();
-            populateWidgets();
-            getMotivationalQuote();
+
+
+            Thread AIthread=new Thread(){
+                public void run(){
+                    getWeeklyOverview();
+                    if (!isInterrupted()) {
+                        populateWidgets();
+                    }
+                    if (!Thread.interrupted()) {
+                        getMotivationalQuote();
+                    }
+                }
+            };
+            AIthread.setName("AIthread");
+            AIthread.start();
+            ineruptableThreads.add(AIthread);
+
 
         } catch (Exception e) {
             System.out.println(e);
         }
+        populateKPI();
     }
 
     public void getWeeklyOverview(){
@@ -76,5 +92,71 @@ public class homePageController extends sceneLoaderController {
                 FriOvr.setText(response);
             }
         }
+    }
+
+    public void populateKPI(){
+        try{
+            String searchQuery = """
+                          WITH latest AS (
+                            SELECT *
+                            FROM User_Collected_Data
+                            WHERE studentNumber = ?
+                            ORDER BY datetime(dateModified) DESC
+                            LIMIT 1
+                          )
+                          SELECT
+                            SUM(u.HoursStudied)             AS totalHours,
+                            l.GPA,
+                            l.GPAGoal,
+                            l.HoursStudiedGoal,
+                            l.AttendanceRate,
+                            l.AttendanceRateGoal
+                          FROM User_Collected_Data u
+                          JOIN latest l
+                            ON u.studentNumber = l.studentNumber
+                          WHERE u.studentNumber = ?
+                          """;
+            PreparedStatement statement = userCollectedDataDAO.getDBConnection().prepareStatement(searchQuery);
+            statement.setString(1, currentUserNumber);
+            statement.setString(2, currentUserNumber);
+            ResultSet rs = statement.executeQuery();
+
+            // 1) GPA
+            double gpaValue = rs.getDouble("GPA");
+            double gpaGoal  = rs.getDouble("GPAGoal");
+            double pctGpa   = (gpaGoal > 0) ? (gpaValue / gpaGoal) : 0;
+            GPAProgress.setProgress(pctGpa);
+            gpaLabel.setText(String.format("%.2f/%.2f", gpaValue, gpaGoal));
+            applyThresholdColor(GPAProgress, pctGpa);
+
+            // 2) Hours Studied
+            double studyValue = rs.getDouble("totalHours");
+            double studyGoal  = rs.getDouble("HoursStudiedGoal");
+            double pctStudy   = (studyGoal > 0) ? (studyValue / studyGoal) : 0;
+            StudyHourProgress.setProgress(pctStudy);
+            studyLabel.setText(String.format("%.0f/%.0fh", studyValue, studyGoal));
+            applyThresholdColor(StudyHourProgress, pctStudy);
+
+            // 3) Attendance
+            double attendValue = rs.getDouble("AttendanceRate");
+            double attendGoal  = rs.getDouble("AttendanceRateGoal");
+            double pctAttend   = (attendGoal > 0) ? (attendValue / attendGoal) : 0;
+            AttendanceProgress.setProgress(pctAttend);
+            attLabel.setText(String.format("%.0f/%.0f", attendValue, attendGoal));
+            applyThresholdColor(AttendanceProgress, pctAttend);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void applyThresholdColor(ProgressIndicator pi, double frac) {
+        String colour;
+        if (frac < 0.3)       colour = "#f44336";  // red
+        else if (frac < 0.75) colour = "#FFEB3B";  // yellow
+        else                  colour = "#4CAF50";  // green
+
+        // -fx-accent works on both ProgressBar and ProgressIndicator
+        pi.setStyle("-fx-accent: " + colour + ";");
     }
 }

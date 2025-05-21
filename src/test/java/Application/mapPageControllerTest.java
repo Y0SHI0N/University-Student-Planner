@@ -11,12 +11,10 @@ class MapPageControllerTest {
     @Test
     void renderHeatmap_Storage_Test() {
         // checking that the building class can successfully store and retrieve its own values
-        String[] bookedEvents = new String[]{"GP_300"};
-        mapPageController.Building building = new mapPageController.Building('A', 100, 200, bookedEvents);
+        mapPageController.Building building = new mapPageController.Building('A', 100, 200);
         assertEquals('A', building.getBlockLetter());
         assertEquals(100, building.getXPos());
         assertEquals(200, building.getYPos());
-        assertEquals(bookedEvents, building.getbookedEvents());
     }
 
     @Test

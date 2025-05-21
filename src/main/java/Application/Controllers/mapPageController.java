@@ -1,5 +1,6 @@
 package Application.Controllers;
 
+import Application.AI_model;
 import Application.Database.UserTimetable;
 import Application.Database.UserTimetableDAO;
 import javafx.collections.FXCollections;
@@ -8,58 +9,58 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ListView;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.TextArea;
 import javafx.scene.paint.Color;
 
+import java.io.Console;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.List;
 
 public class mapPageController extends sceneLoaderController {
     @FXML public Canvas heatMap;
     @FXML public ListView<String> busyLocationList;
     @FXML public ListView<String> quietLocationList;
+    @FXML public TextArea AIMapSummary;
     public enum feedState {LIVE, PREDICTED};
     public feedState current_state = feedState.LIVE;
 
+    public ArrayList<Event> calenderEvents = new ArrayList<Event>();
+
+    public AI_model model = new AI_model();
     // stores all vital information regarding a building's code, x/y location and classes (in that order)
     /// PLACEHOLDER DATA JUST SO THERE'S SOMETHING TO SHOW
     // todo: WILL BE REPLACED ONCE "User_Signup_Data" IS POPULATED
     public static Building[] CampusBuildings = {
-            new Building('P', 254, 100, new String[]{}),
-            new Building('S', 78, 164, new String[]{}),
-            new Building('Z', 128, 166, new String[]{})
+            new Building('P', 254, 100),
+            new Building('S', 78, 164),
+            new Building('Z', 128, 166)
     };
 
     public static Circle CirclePreset =
             new Circle(25, 15, 51);
 
-    public Event[] storedEvents = new Event[]{};
-
-
     public static class Building {
-        Character blockLetter;
+        Character letterID;
         Integer xPos;
         Integer yPos;
-        String[] bookedEvents;
+        ArrayList<Event> bookedEvents;
 
-        public Building(Character BlockLetter, Integer xPos, Integer yPos, String[] bookedEvents) {
-            this.blockLetter = BlockLetter;
+        public Building(Character letterID, Integer xPos, Integer yPos) {
+            this.letterID = letterID;
             this.xPos = xPos;
             this.yPos = yPos;
-            this.bookedEvents = bookedEvents;
         }
 
         public Character getBlockLetter() {
-            return this.blockLetter;
+            return this.letterID;
         }
         public Integer getXPos() {
             return this.xPos;
         }
         public Integer getYPos() {
             return this.yPos;
-        }
-        public String[] getbookedEvents() {
-            return this.bookedEvents;
         }
     }
 
@@ -88,15 +89,17 @@ public class mapPageController extends sceneLoaderController {
     }
 
     public static class Event {
-        Integer eventName;
+        Integer eventID;
+        String eventName;
         String eventType;
         String eventStartDatetime;
         String eventEndDatetime;
         String eventLocation;
         Integer eventAttendance;
 
-        public Event(Integer eventName, String eventType, String eventStartDatetime,
+        public Event(Integer eventID, String eventName, String eventType, String eventStartDatetime,
                      String eventEndDatetime, String eventLocation, Integer eventAttendance) {
+            this.eventID = eventID;
             this.eventName = eventName;
             this.eventType = eventType;
             this.eventStartDatetime = eventStartDatetime;
@@ -105,7 +108,8 @@ public class mapPageController extends sceneLoaderController {
             this.eventAttendance = eventAttendance;
         }
 
-        public Integer getEventName() {
+        public Integer getEventID() { return this.eventID; }
+        public String getEventName() {
             return this.eventName;
         }
         public String getEventType() {
@@ -123,6 +127,17 @@ public class mapPageController extends sceneLoaderController {
         public Integer getEventAttendance() {
             return this.eventAttendance;
         }
+
+        // for wittle bubba gemini that can't chew it's fooood right awwww boo hoo
+        /// yes, I'm unreasonably mad at this lol, and no I don't want to talk about it.
+        public String pureeEventData() { return String.join(", ", (
+                getEventID().toString() +
+                getEventName() +
+                getEventType() +
+                getEventStartDatetime() +
+                getEventEndDatetime() +
+                getEventLocation() +
+                getEventAttendance().toString())); }
     }
 
 
@@ -159,28 +174,28 @@ public class mapPageController extends sceneLoaderController {
 
 
     // todo: write at least 2 tests on the data validity / size
-    public static ArrayList<UserTimetable> loadEvents(UserTimetableDAO userTimetableDAO, String UserNumber){
-        ArrayList<UserTimetable> events = new ArrayList<UserTimetable>();
+    public static void loadEvents(UserTimetableDAO userTimetableDAO, String UserNumber){
         try {
             String profileInfoQuery = "SELECT * FROM User_Timetable_Data where StudentNumber = ?";
             PreparedStatement statement = userTimetableDAO.getDBConnection().prepareStatement(profileInfoQuery);
             statement.setString(1,UserNumber);
             ResultSet resultSet = statement.executeQuery();
-            while(resultSet.next()) {
-                events.add(new UserTimetable(resultSet.getInt("EventID")
-                        ,resultSet.getString("EventName")
-                        ,UserNumber
-                        ,resultSet.getString("EventType")
-                        ,resultSet.getString("EventStartDatetime")
-                        ,resultSet.getString("EventEndDatetime")
-                        ,resultSet.getString("EventLocation")
-                        ,resultSet.getInt("EventAttendance")));
+
+            while(resultSet.next()) { Event newEvent = new Event(
+                resultSet.getInt("EventID"),
+                resultSet.getString("EventName"),
+                resultSet.getString("EventType"),
+                resultSet.getString("EventStartDatetime"),
+                resultSet.getString("EventEndDatetime"),
+                resultSet.getString("EventLocation"),
+                resultSet.getInt("EventAttendance"));
+                storedEvents.add(newEvent);
+                /// CampusBuildings
+                // either a single central database (prolly better), or individual databases for each building
             }
-        }catch(Exception e){
-            System.out.println(e + "exception");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        // output the event as a list of classes filled with the data
-        return events;
     }
 
 
@@ -212,27 +227,38 @@ public class mapPageController extends sceneLoaderController {
     }
 
 
-    public void generateAIData() {
-        /*
-        todo: this. sample code from jake's page below
-        String currentGoals = ""; // pulls the data in to parse to the ai
-        String currentData = "";
-        String promptText = "can you suggest what can be improved given the following information:" + currentGoals + currentData + "with a text limit of 200 characters including spaces";
+    public void generateAIData(ArrayList<Event> event_data) {
+        // prepare big bubba's pureed applesauce,
+        String input_data = "";
+        for (Event event : storedEvents)
+            input_data += event.pureeEventData();
+
+        System.out.print("\n\n" + input_data + "\n\n");
+        // need to parse in context lol, give it a template of what each means
+
+        String promptText = "Can you generate a summary of current activities including how clustered together the events are and their frequency given the following heatmap information for a university campus:" + input_data + " with a text limit of 200 characters including spaces and excluding any special characters." +
+                "If there is no data given, inform the user that no data exists in the calender."+
+                "The formatting for each event (stored inside the input_data as nested lists) is as follows: " +
+                " Integer eventID;\n" +
+                " String eventName," +
+                " String eventType," +
+                " String eventStartDatetime," +
+                " String eventEndDatetime," +
+                " String eventLocation," +
+                " Integer eventAttendance.";
 
         model.promptAI(promptText);
-        AIGeneratedGoalSuggestion.setText(model.promptAI(promptText));
-        */
+        AIMapSummary.setText(model.promptAI(promptText));
     }
 
 
     public void reloadHeatmap() {
-       /// event_data = loadEvents(userTimetableDAO,currentUserNumber);
-        ///  do something with the data here
-        ///storedEvents.append(*event_data); // trying to do that python '*' shortcut to autofill the data
-        ///generateAIData(event_data); // pass in all event data for gemini2b:b to use
+        loadEvents(userTimetableDAO, currentUserNumber);
+        generateAIData(storedEvents); // pass in all event data for gemini to feast on
         for (Building building : CampusBuildings) {
             renderHeatmap(building);
             sortRooms(building);
+
         }
     }
 
@@ -240,6 +266,7 @@ public class mapPageController extends sceneLoaderController {
     public void initialize() {
         super.initialize();
         try {
+            model.initialiseAIModel();
             reloadHeatmap();
         } catch (Exception e) {
             e.printStackTrace();

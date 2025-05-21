@@ -16,6 +16,7 @@ import javafx.fxml.FXML;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.stream.Stream;
 
 import Application.Main;
@@ -29,6 +30,7 @@ public class sceneLoaderController{
     private Parent root;
     public static String currentUserNumber; //used to track the user currently logged in
     protected StageController stageController = new StageController();
+    protected ArrayList<Thread> ineruptableThreads=new ArrayList<Thread>();
     @FXML protected MenuItem viewProfileItem;
     @FXML protected MenuItem updateDetailsItem;
     @FXML protected MenuItem updateGoalsItem;
@@ -49,6 +51,11 @@ public class sceneLoaderController{
             updateGoalsItem.setOnAction(e -> updateGoals());
             logoutItem.setOnAction(e -> logout());
             closeAppItem.setOnAction(e -> closeApp());
+
+            for (Thread thread:ineruptableThreads){
+                thread.interrupt();
+            }
+            ineruptableThreads.clear();
 
         } catch (Exception e) {
             System.out.println(e);

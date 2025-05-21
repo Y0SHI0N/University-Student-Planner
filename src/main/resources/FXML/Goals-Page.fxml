@@ -100,7 +100,7 @@
          </yAxis>
       </LineChart>
       <Button fx:id="updateUserDataButton" layoutX="345.0" layoutY="245.0" mnemonicParsing="false" onMouseClicked="#updateData" prefHeight="26.0" prefWidth="135.0" text="Update Data" />
-      <TextArea fx:id="AIGeneratedGoalSuggestion" layoutX="27.0" layoutY="278.0" prefHeight="67.0" prefWidth="551.0" promptText="AI generated Suggested Goals with justification" />
+      <TextArea fx:id="AIGeneratedGoalSuggestion" layoutX="27.0" layoutY="278.0" prefHeight="67.0" prefWidth="551.0" promptText="Goals loading" />
       <Rectangle fx:id="GPAKPIContainer" arcHeight="5.0" arcWidth="5.0" fill="#003c72" height="40.0" layoutX="253.0" layoutY="153.0" stroke="BLACK" strokeType="INSIDE" width="148.0" />
       <Rectangle fx:id="hoursStudiedKPIContainer" arcHeight="5.0" arcWidth="5.0" fill="#003c72" height="40.0" layoutX="43.0" layoutY="153.0" stroke="BLACK" strokeType="INSIDE" width="148.0" />
       <Rectangle fx:id="attendanceKPIContainer" arcHeight="5.0" arcWidth="5.0" fill="#003c72" height="40.0" layoutX="440.0" layoutY="153.0" stroke="BLACK" strokeType="INSIDE" width="148.0" />

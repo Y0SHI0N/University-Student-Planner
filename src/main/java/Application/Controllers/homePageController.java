@@ -34,11 +34,23 @@ public class homePageController extends sceneLoaderController {
 
             weeklyOverviewAI.setEditable(false);
             model.initialiseAIModel();
-            
-            getWeeklyOverview();
-            populateWidgets();
-            getMotivationalQuote();
-            populateKPI();
+
+
+            Thread AIthread=new Thread(){
+                public void run(){
+                    getWeeklyOverview();
+                    if (!isInterrupted()) {
+                        populateWidgets();
+                    }
+                    if (!Thread.interrupted()) {
+                        getMotivationalQuote();
+                    }
+                }
+            };
+            AIthread.setName("AIthread");
+            AIthread.start();
+            ineruptableThreads.add(AIthread);
+
 
         } catch (Exception e) {
             System.out.println(e);

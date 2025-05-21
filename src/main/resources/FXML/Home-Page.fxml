@@ -23,21 +23,7 @@
 <?import javafx.scene.control.ProgressBar?>
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Controllers.homePageController">
     <children>
-        <MenuButton ellipsisString="" layoutX="535.0" layoutY="1.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="65.0" text="Options" wrapText="true">
-            <items>
-                <MenuItem fx:id="viewProfileItem" text="View Profile" />
-                <MenuItem fx:id="updateDetailsItem" text="Update Details" />
-                <MenuItem fx:id="updateGoalsItem" text="Update Goals" />
-                <MenuItem fx:id="logoutItem" text="Log Out" />
-                <MenuItem fx:id="closeAppItem" text="Close App" />
-            </items>
-            <cursor>
-                <Cursor fx:constant="OPEN_HAND" />
-            </cursor>
-            <font>
-                <Font size="10.0" />
-            </font>
-        </MenuButton>
+        <fx:include fx:id="optionList" source="../Components/OptionList.fxml"/>
         <ButtonBar layoutY="361.0" prefHeight="40.0" prefWidth="600.0">
             <buttons>
                 <Button mnemonicParsing="false" onMouseClicked="#switchToHomePage" style="-fx-background-color: #003C72;" text="Home" textAlignment="CENTER" textFill="WHITE">

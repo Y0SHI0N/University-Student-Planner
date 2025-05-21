@@ -40,12 +40,6 @@ public class sceneLoaderController{
     @FXML
     public void initialize() {
         try {
-//            viewProfileItem.setOnAction(e -> viewProfile());
-//            updateDetailsItem.setOnAction(e -> updateDetails());
-//            updateGoalsItem.setOnAction(e -> updateGoals());
-//            logoutItem.setOnAction(e -> logout());
-//            closeAppItem.setOnAction(e -> closeApp());
-
             for (Thread thread:ineruptableThreads){
                 thread.interrupt();
             }
@@ -128,54 +122,6 @@ public class sceneLoaderController{
         try{
             changeScene(Main.getProfilePage());
             stageController.closeActiveStage();
-        } catch (Exception e){
-            System.out.println(e);
-        }
-    }
-
-    public void logout(){
-        try{
-            this.currentUserNumber = "";
-            switchToLoginPage();
-        } catch (Exception e){
-            System.out.println(e);
-        }
-    }
-
-    public void closeApp() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Exit Confirmation");
-        alert.setHeaderText("Are you sure you want to close the app?");
-        alert.setContentText("Any unsaved changes will be lost.");
-
-        // Show dialog and wait for user response
-        alert.showAndWait().ifPresent(response -> {
-            if (response == ButtonType.OK) {
-                Platform.exit();
-                System.exit(0);
-            }
-        });
-    }
-
-    public void updateGoals() {
-        try{
-            switchToGoalsPage();
-        } catch (Exception e){
-            System.out.println(e);
-        }
-    }
-
-    public void updateDetails() {
-        try{
-            switchToCalendarPage();
-        } catch (Exception e){
-            System.out.println(e);
-        }
-    }
-
-    public void viewProfile() {
-        try{
-            switchToProfilePage();
         } catch (Exception e){
             System.out.println(e);
         }

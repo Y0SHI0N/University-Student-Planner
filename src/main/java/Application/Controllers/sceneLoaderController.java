@@ -37,20 +37,14 @@ public class sceneLoaderController{
     @FXML protected MenuItem logoutItem;
     @FXML protected MenuItem closeAppItem;
 
-    public sceneLoaderController(Stage stage) {stage = stageController.applicationStage;
-    }
-    public sceneLoaderController(){
-
-    }
-
     @FXML
     public void initialize() {
         try {
-            viewProfileItem.setOnAction(e -> viewProfile());
-            updateDetailsItem.setOnAction(e -> updateDetails());
-            updateGoalsItem.setOnAction(e -> updateGoals());
-            logoutItem.setOnAction(e -> logout());
-            closeAppItem.setOnAction(e -> closeApp());
+//            viewProfileItem.setOnAction(e -> viewProfile());
+//            updateDetailsItem.setOnAction(e -> updateDetails());
+//            updateGoalsItem.setOnAction(e -> updateGoals());
+//            logoutItem.setOnAction(e -> logout());
+//            closeAppItem.setOnAction(e -> closeApp());
 
             for (Thread thread:ineruptableThreads){
                 thread.interrupt();

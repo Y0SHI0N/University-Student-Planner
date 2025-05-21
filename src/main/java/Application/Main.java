@@ -20,14 +20,6 @@ import java.util.stream.Stream;
 import Application.Controllers.sceneLoaderController;
 
 public class Main extends Application {
-    protected static FXMLLoader homePage = new FXMLLoader(Main.class.getResource("/FXML/Home-Page.fxml"));
-    protected static FXMLLoader loginPage = new FXMLLoader(Main.class.getResource("/FXML/Login-Page.fxml"));
-    protected static FXMLLoader registerPage = new FXMLLoader(Main.class.getResource("/FXML/Register-Page.fxml"));
-    protected static FXMLLoader goalsPage= new FXMLLoader(Main.class.getResource("/FXML/Goals-Page.fxml"));
-    protected static FXMLLoader mapPage = new FXMLLoader(Main.class.getResource("/FXML/Map-Page.fxml"));
-    protected static FXMLLoader calendarPage = new FXMLLoader(Main.class.getResource("/FXML/Calendar-Page.fxml"));
-    protected static FXMLLoader profilePage = new FXMLLoader(Main.class.getResource("/FXML/Profile-Page.fxml"));
-
     protected sceneLoaderController sceneLoaderController = new sceneLoaderController();
     protected StageController stageController = new StageController();
 
@@ -35,30 +27,37 @@ public class Main extends Application {
         launch(args);
     }
 
-    public static FXMLLoader getLoginPage(){
-        return loginPage;
+    public static FXMLLoader getHomePage() {
+        return new FXMLLoader(Main.class.getResource("/FXML/Home-Page.fxml"));
     }
-    public static FXMLLoader getHomePage(){
-        return homePage;
+
+    public static FXMLLoader getLoginPage() {
+        return new FXMLLoader(Main.class.getResource("/FXML/Login-Page.fxml"));
     }
-    public static FXMLLoader getRegisterPage(){
-        return registerPage;
+
+    public static FXMLLoader getRegisterPage() {
+        return new FXMLLoader(Main.class.getResource("/FXML/Register-Page.fxml"));
     }
-    public static FXMLLoader getGoalsPage(){
-        return goalsPage;
+
+    public static FXMLLoader getGoalsPage() {
+        return new FXMLLoader(Main.class.getResource("/FXML/Goals-Page.fxml"));
     }
-    public static FXMLLoader getMapPage(){
-        return mapPage;
+
+    public static FXMLLoader getMapPage() {
+        return new FXMLLoader(Main.class.getResource("/FXML/Map-Page.fxml"));
     }
-    public static FXMLLoader getCalendarPage(){
-        return calendarPage;
+
+    public static FXMLLoader getCalendarPage() {
+        return new FXMLLoader(Main.class.getResource("/FXML/Calendar-Page.fxml"));
     }
-    public static FXMLLoader getProfilePage(){
-        return profilePage;
+
+    public static FXMLLoader getProfilePage() {
+        return new FXMLLoader(Main.class.getResource("/FXML/Profile-Page.fxml"));
     }
+
     @Override
     public void start(Stage applicationStage) throws Exception {
-        sceneLoaderController.changeScene(loginPage); // loads the login page as the first scene
+        sceneLoaderController.changeScene(Main.getLoginPage()); // loads the login page as the first scene
     }
 
     @Override

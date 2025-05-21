@@ -55,6 +55,7 @@ public class homePageController extends sceneLoaderController {
         } catch (Exception e) {
             System.out.println(e);
         }
+        populateKPI();
     }
 
     public void getWeeklyOverview(){

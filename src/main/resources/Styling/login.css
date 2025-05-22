@@ -1,0 +1,10 @@
+/* login page components */
+#loginTextField{
+    flex-flow: 1;
+}
+/* login page tags */
+.button{
+    justify-content: center;
+    text-align: center;
+    color: blue;
+}

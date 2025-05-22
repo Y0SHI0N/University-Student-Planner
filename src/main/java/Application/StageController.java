@@ -10,6 +10,9 @@ import java.net.URL;
 public class StageController {
     public Stage applicationStage = new Stage();
 
+    public Stage getApplicationStage(){
+        return applicationStage;
+    }
     public void formatStage(){
         try {
             String imagePath = "/Img/QUT-Logo.jpg";

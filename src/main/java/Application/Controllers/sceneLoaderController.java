@@ -21,6 +21,8 @@ import java.util.stream.Stream;
 
 import Application.Main;
 import Application.StageController;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class sceneLoaderController{
@@ -58,8 +60,10 @@ public class sceneLoaderController{
             root = loader.load();
 
             stageController.formatStage();
+            Scene scene = new Scene(root);
+            stageController.applicationStage.setScene(scene);
+            stageController.applicationStage.setResizable(true);
 
-            stageController.applicationStage.setScene(new Scene(root));
             stageController.applicationStage.show();
         } catch (IllegalStateException e) {
             System.out.println(e);
@@ -68,6 +72,7 @@ public class sceneLoaderController{
     public void switchToLoginPage() throws Exception {
         try{
             changeScene(Main.getLoginPage());
+            stageController.applicationStage.getScene().getStylesheets().add("/Styling/login.css");
             stageController.closeActiveStage();
         } catch (Exception e) {
             System.out.println(e);

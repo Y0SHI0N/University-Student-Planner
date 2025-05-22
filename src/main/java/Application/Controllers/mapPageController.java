@@ -19,6 +19,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Dictionary;
+import java.util.HashMap;
 
 public class mapPageController extends sceneLoaderController {
     @FXML public Canvas heatMap;
@@ -35,9 +36,9 @@ public class mapPageController extends sceneLoaderController {
     /// PLACEHOLDER DATA JUST SO THERE'S SOMETHING TO SHOW
     // todo: WILL BE REPLACED ONCE "User_Signup_Data" IS POPULATED
     public static Building[] CampusBuildings = {
-            new Building('P', 254, 100),
-            new Building('S', 78, 164),
-            new Building('Z', 128, 166)
+            new Building('P', 254, 100, new ArrayList<Event>()),
+            new Building('S', 78, 164, new ArrayList<Event>()),
+            new Building('Z', 128, 166, new ArrayList<Event>())
     };
 
     public static Circle CirclePreset =
@@ -47,11 +48,13 @@ public class mapPageController extends sceneLoaderController {
         Character letterID;
         Integer xPos;
         Integer yPos;
+        ArrayList<Event> eventCount;
 
-        public Building(Character letterID, Integer xPos, Integer yPos) {
+        public Building(Character letterID, Integer xPos, Integer yPos, ArrayList<Event> eventCount) {
             this.letterID = letterID;
             this.xPos = xPos;
             this.yPos = yPos;
+            this.eventCount = eventCount;
         }
 
         public Character getBlockLetter() {
@@ -62,6 +65,10 @@ public class mapPageController extends sceneLoaderController {
         }
         public Integer getYPos() {
             return this.yPos;
+        }
+
+        public ArrayList<Event> getEventCount() {
+            return this.eventCount;
         }
     }
 
@@ -175,7 +182,7 @@ public class mapPageController extends sceneLoaderController {
     }
 
 
-    public Building findBuildingByLetter(Character letter) {
+    public static Building findBuildingByLetter(Character letter) {
         Building result = null;
         for (Building building : CampusBuildings) {
             if (building.letterID == letter)
@@ -212,6 +219,9 @@ public class mapPageController extends sceneLoaderController {
                 resultSet.getString("EventLocation"),
                 resultSet.getInt("EventAttendance"));
                 calenderEvents.add(newEvent);
+
+                // add a tally next to the event's corresponding building, makes it much easier to view event density later
+                findBuildingByLetter(newEvent.eventLocation.charAt(0)).eventCount.add(newEvent);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -224,10 +234,17 @@ public class mapPageController extends sceneLoaderController {
         ArrayList<String> quiet_areas = new ArrayList<String>();
         ArrayList<String> busy_areas = new ArrayList<String>();
 
-        //for (Event event : calender_events) {
-            //for ()
-            //if (event.eventAttendance > 2 || ) ;
-        //}
+        for (Building building : CampusBuildings) {
+            if (building.eventCount.size() > 1) {
+                for (Event event : building.eventCount) {
+                    busy_areas.add(event.eventName);
+                }
+            } else {
+                for (Event event : building.eventCount) {
+                    quiet_areas.add(event.eventName);
+                }
+            }
+        }
 
         // create dynamic list that will update with changes, and use it to add the rooms onto the preferred list
         ObservableList<String> quiet_rooms = FXCollections.observableArrayList(quiet_areas);
@@ -235,22 +252,6 @@ public class mapPageController extends sceneLoaderController {
 
         quietLocationList.getItems().setAll(quiet_rooms);
         busyLocationList.getItems().setAll(busy_rooms);
-    }
-
-
-    public Integer findEventFrequency(ArrayList<Event> calender_events) {
-        ArrayList<String> event_occurrences = new ArrayList<String>();
-
-        //compose a list of building letters and their room names
-        for (Event event : calender_events) {
-            event_occurrences.add( (event.eventLocation.charAt(0)), (event.eventLocation.substring(1)), 0 ); }
-
-        // use the recovered letters to find
-        for (int i = 0; i < event_occurrences.size(); i++) {
-            if (event_occurrences.get(i).charAt(0) == calender_events.get(i).eventLocation.charAt(0)) {
-                event_occurrences.set(2, event_occurrences.get(2) + 1);
-            }
-        }
     }
 
 

@@ -12,12 +12,13 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.TextArea;
 import javafx.scene.paint.Color;
 
+import java.awt.*;
 import java.io.Console;
+import java.sql.Array;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Dictionary;
-import java.util.List;
 
 public class mapPageController extends sceneLoaderController {
     @FXML public Canvas heatMap;
@@ -150,7 +151,7 @@ public class mapPageController extends sceneLoaderController {
             // starts on the highest heat (at the core of the ring, and slowly draws it's way outwards)
 
             // lookup letterID inside event from calender_events
-            Building building = findBuildingByLetter(calender_events.get(i));
+            Building building = findBuildingByLetter(calender_events.get(i).eventLocation.charAt(0));
             drawCircle(building, heatMap.getGraphicsContext2D(), i);
         }
         writeLabel("amongus", heatMap.getGraphicsContext2D());
@@ -174,9 +175,13 @@ public class mapPageController extends sceneLoaderController {
     }
 
 
-    public Building findBuildingByLetter(Character letterID) {
-        calender_events.get(room_count).eventLocation.charAt(0)
-        return;
+    public Building findBuildingByLetter(Character letter) {
+        Building result = null;
+        for (Building building : CampusBuildings) {
+            if (building.letterID == letter)
+                result = building;
+        }
+        return result;
     }
 
 
@@ -216,18 +221,36 @@ public class mapPageController extends sceneLoaderController {
 
     public void sortRooms(ArrayList<Event> calender_events) {
         // responsible for simply sorting and rendering rooms
+        ArrayList<String> quiet_areas = new ArrayList<String>();
+        ArrayList<String> busy_areas = new ArrayList<String>();
 
-        ///SELECT count(*) FROM User_Timetable_Data WHERE UPPER(SUBSTRING(EventLocation, 1, 1)) = "N"
+        //for (Event event : calender_events) {
+            //for ()
+            //if (event.eventAttendance > 2 || ) ;
+        //}
 
-        ListView<String> prefered_list_type = null;
-        if (calender_events > 2) {
-            prefered_list_type = busyLocationList;
-        } else {
-            prefered_list_type = quietLocationList;
-        }
         // create dynamic list that will update with changes, and use it to add the rooms onto the preferred list
-        ObservableList<String> rooms = FXCollections.observableArrayList(calender_events.);
-        prefered_list_type.getItems().setAll(rooms);
+        ObservableList<String> quiet_rooms = FXCollections.observableArrayList(quiet_areas);
+        ObservableList<String> busy_rooms = FXCollections.observableArrayList(busy_areas);
+
+        quietLocationList.getItems().setAll(quiet_rooms);
+        busyLocationList.getItems().setAll(busy_rooms);
+    }
+
+
+    public Integer findEventFrequency(ArrayList<Event> calender_events) {
+        ArrayList<String> event_occurrences = new ArrayList<String>();
+
+        //compose a list of building letters and their room names
+        for (Event event : calender_events) {
+            event_occurrences.add( (event.eventLocation.charAt(0)), (event.eventLocation.substring(1)), 0 ); }
+
+        // use the recovered letters to find
+        for (int i = 0; i < event_occurrences.size(); i++) {
+            if (event_occurrences.get(i).charAt(0) == calender_events.get(i).eventLocation.charAt(0)) {
+                event_occurrences.set(2, event_occurrences.get(2) + 1);
+            }
+        }
     }
 
 

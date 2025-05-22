@@ -16,6 +16,7 @@ import java.io.Console;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Dictionary;
 import java.util.List;
 
 public class mapPageController extends sceneLoaderController {
@@ -26,7 +27,7 @@ public class mapPageController extends sceneLoaderController {
     public enum feedState {LIVE, PREDICTED};
     public feedState current_state = feedState.LIVE;
 
-    public ArrayList<Event> calenderEvents = new ArrayList<Event>();
+    public static ArrayList<Event> calenderEvents = new ArrayList<Event>();
 
     public AI_model model = new AI_model();
     // stores all vital information regarding a building's code, x/y location and classes (in that order)
@@ -45,7 +46,6 @@ public class mapPageController extends sceneLoaderController {
         Character letterID;
         Integer xPos;
         Integer yPos;
-        ArrayList<Event> bookedEvents;
 
         public Building(Character letterID, Integer xPos, Integer yPos) {
             this.letterID = letterID;
@@ -141,15 +141,19 @@ public class mapPageController extends sceneLoaderController {
     }
 
 
-    public void renderHeatmap(Building building) {
+    public void renderHeatmap(ArrayList<Event> calender_events) {
         // Reset the canvas
         heatMap.getGraphicsContext2D().clearRect(0.0, 0.0, 302.0, 200.0);
-        // The more rooms there are, the more layers of circle there are, with each warmer colors.
-        for (int room_count = building.bookedEvents.length; room_count > 0; room_count--) {
+        // The more rooms there are in the building booked, the more layers of circle there are, with each warmer colors.
+        for (int i = 0; i < calender_events.size(); i++) {
             // room stores the current room increment, essentially how many layers deep the for loop is
             // starts on the highest heat (at the core of the ring, and slowly draws it's way outwards)
-            drawCircle(building, heatMap.getGraphicsContext2D(), room_count);
+
+            // lookup letterID inside event from calender_events
+            Building building = findBuildingByLetter(calender_events.get(i));
+            drawCircle(building, heatMap.getGraphicsContext2D(), i);
         }
+        writeLabel("amongus", heatMap.getGraphicsContext2D());
     }
 
 
@@ -158,8 +162,21 @@ public class mapPageController extends sceneLoaderController {
         graphics.setFill(calculateHeat(room_count, CirclePreset));
         // 30 is the intial circle size, chosen due to it being roughly the size of a building
         float circle_width = CirclePreset.circleWidth + (CirclePreset.circleStepValue * room_count);
+
         // removing half of the circle width from the coords is to compensate for the offset of the circle being in the top right corner (thanks javafx)
         graphics.fillOval(building.xPos - (circle_width / 2), building.yPos - (circle_width / 2), circle_width, circle_width); // first pair edits the x/y coords while the second edits the x/y size
+    }
+
+
+    public void writeLabel(String text, GraphicsContext graphics) {
+        TextArea new_label = new TextArea();
+        new_label.setText(text);
+    }
+
+
+    public Building findBuildingByLetter(Character letterID) {
+        calender_events.get(room_count).eventLocation.charAt(0)
+        return;
     }
 
 
@@ -189,9 +206,7 @@ public class mapPageController extends sceneLoaderController {
                 resultSet.getString("EventEndDatetime"),
                 resultSet.getString("EventLocation"),
                 resultSet.getInt("EventAttendance"));
-                storedEvents.add(newEvent);
-                /// CampusBuildings
-                // either a single central database (prolly better), or individual databases for each building
+                calenderEvents.add(newEvent);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -199,18 +214,19 @@ public class mapPageController extends sceneLoaderController {
     }
 
 
-    public void sortRooms(Building building) {
+    public void sortRooms(ArrayList<Event> calender_events) {
         // responsible for simply sorting and rendering rooms
-        /// TEMP SORTING METHOD
-        // todo: IMPROVE THIS AFTER CHECKPOINT
+
+        ///SELECT count(*) FROM User_Timetable_Data WHERE UPPER(SUBSTRING(EventLocation, 1, 1)) = "N"
+
         ListView<String> prefered_list_type = null;
-        if (building.bookedEvents.length > 2) {
+        if (calender_events > 2) {
             prefered_list_type = busyLocationList;
         } else {
             prefered_list_type = quietLocationList;
         }
         // create dynamic list that will update with changes, and use it to add the rooms onto the preferred list
-        ObservableList<String> rooms = FXCollections.observableArrayList(building.bookedEvents);
+        ObservableList<String> rooms = FXCollections.observableArrayList(calender_events.);
         prefered_list_type.getItems().setAll(rooms);
     }
 
@@ -230,7 +246,7 @@ public class mapPageController extends sceneLoaderController {
     public void generateAIData(ArrayList<Event> event_data) {
         // prepare big bubba's pureed applesauce,
         String input_data = "";
-        for (Event event : storedEvents)
+        for (Event event : calenderEvents)
             input_data += event.pureeEventData();
 
         System.out.print("\n\n" + input_data + "\n\n");
@@ -239,13 +255,14 @@ public class mapPageController extends sceneLoaderController {
         String promptText = "Can you generate a summary of current activities including how clustered together the events are and their frequency given the following heatmap information for a university campus:" + input_data + " with a text limit of 200 characters including spaces and excluding any special characters." +
                 "If there is no data given, inform the user that no data exists in the calender."+
                 "The formatting for each event (stored inside the input_data as nested lists) is as follows: " +
-                " Integer eventID;\n" +
+                " Integer eventID;" +
                 " String eventName," +
                 " String eventType," +
                 " String eventStartDatetime," +
                 " String eventEndDatetime," +
                 " String eventLocation," +
                 " Integer eventAttendance.";
+        // predicted feed
 
         model.promptAI(promptText);
         AIMapSummary.setText(model.promptAI(promptText));
@@ -254,10 +271,10 @@ public class mapPageController extends sceneLoaderController {
 
     public void reloadHeatmap() {
         loadEvents(userTimetableDAO, currentUserNumber);
-        generateAIData(storedEvents); // pass in all event data for gemini to feast on
-        for (Building building : CampusBuildings) {
-            renderHeatmap(building);
-            sortRooms(building);
+        generateAIData(calenderEvents); // pass in all event data for gemini to feast on
+
+        renderHeatmap(calenderEvents);
+        sortRooms(calenderEvents);
 
         }
     }

@@ -23,6 +23,8 @@ public class StageController {
             }
 
             applicationStage.getIcons().add(new Image(imageUrl.toExternalForm()));
+            applicationStage.setMinWidth(450);
+            applicationStage.setMinHeight(300);
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error loading stage icon.");

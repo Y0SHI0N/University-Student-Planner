@@ -57,23 +57,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage applicationStage) throws Exception {
-        try{
-            if (getLoginPage().getLocation() == null) {
-                throw new IllegalStateException("no location set for current FXML loader");
-            }
-            Parent root = getLoginPage().load();
-
-            stageController.formatStage();
-            Scene scene = new Scene(root);
-            stageController.applicationStage.setScene(scene);
-            stageController.applicationStage.setResizable(true);
-
-            stageController.applicationStage.getScene().getStylesheets().add("/Styling/login.css");
-
-            stageController.applicationStage.show();
-        } catch (IllegalStateException e) {
-            System.out.println(e);
-        }
+        sceneLoaderController.changeScene(getLoginPage());
     }
 
     @Override

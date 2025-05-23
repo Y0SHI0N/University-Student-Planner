@@ -15,23 +15,15 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Controllers.homePageController">
     <children>
-        <MenuButton ellipsisString="" layoutX="535.0" layoutY="1.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="65.0" text="Options" wrapText="true">
-            <items>
-                <MenuItem fx:id="viewProfileItem" text="View Profile" />
-                <MenuItem fx:id="updateDetailsItem" text="Update Details" />
-                <MenuItem fx:id="updateGoalsItem" text="Update Goals" />
-                <MenuItem fx:id="logoutItem" text="Log Out" />
-                <MenuItem fx:id="closeAppItem" text="Close App" />
-            </items>
-            <cursor>
-                <Cursor fx:constant="OPEN_HAND" />
-            </cursor>
-            <font>
-                <Font size="10.0" />
-            </font>
-        </MenuButton>
+        <fx:include fx:id="optionList" source="../Components/OptionList.fxml"/>
         <ButtonBar layoutY="361.0" prefHeight="40.0" prefWidth="600.0">
             <buttons>
                 <Button mnemonicParsing="false" onMouseClicked="#switchToHomePage" style="-fx-background-color: #003C72;" text="Home" textAlignment="CENTER" textFill="WHITE">
@@ -69,12 +61,38 @@
                 <Image url="@../Img/QUT-Logo.jpg" />
             </image>
         </ImageView>
-        <ProgressIndicator layoutX="407.0" layoutY="53.0" progress="0.0" />
-        <ProgressIndicator layoutX="325.0" layoutY="53.0" progress="0.0" />
-        <ProgressIndicator layoutX="481.0" layoutY="53.0" progress="0.0" />
-        <Text layoutX="312.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hours Studied" textAlignment="CENTER" wrappingWidth="51.439453125" />
-        <Text layoutX="394.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GPA" textAlignment="CENTER" wrappingWidth="51.439453125" />
-        <Text layoutX="460.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Attendance" textAlignment="CENTER" wrappingWidth="68.23944091796875" />
+<!--        <ProgressIndicator fx:id="GPAProgress" layoutX="407.0" layoutY="53.0" progress="0.0" />-->
+<!--        <ProgressIndicator fx:id="StudyHourProgress" layoutX="325.0" layoutY="53.0" progress="0.0" />-->
+<!--        <ProgressIndicator fx:id="AttendanceProgress" layoutX="481.0" layoutY="53.0" progress="0.0" />-->
+<!--        <Text layoutX="312.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hours Studied" textAlignment="CENTER" wrappingWidth="51.439453125" />-->
+<!--        <Text layoutX="394.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GPA" textAlignment="CENTER" wrappingWidth="51.439453125" />-->
+<!--        <Text layoutX="460.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Attendance" textAlignment="CENTER" wrappingWidth="68.23944091796875" />-->
+        <!-- ─── BEGIN DASHBOARD SUMMARY ─── -->
+        <AnchorPane layoutX="310.0" layoutY="17.0" prefWidth="260.0" prefHeight="180.0">
+
+            <!-- Top-Left: Hours Studied -->
+            <VBox layoutX="0.0"   layoutY="0.0" alignment="CENTER" spacing="1">
+                <Label text="Hours Studied"/>
+                <ProgressBar fx:id="StudyHourProgress" prefWidth="100.0"/>
+                <Label fx:id="studyLabel" text="0/20h"/>
+            </VBox>
+
+            <!-- Top-Right: GPA -->
+            <VBox layoutX="120.0" layoutY="0.0" alignment="CENTER" spacing="1">
+                <Label text="GPA"/>
+                <ProgressBar fx:id="GPAProgress" prefWidth="100.0"/>
+                <Label fx:id="gpaLabel" text="0.00/4.00"/>
+            </VBox>
+
+            <!-- Bottom-Middle: Attendance -->
+            <VBox layoutX="60.0"  layoutY="55.0" alignment="CENTER" spacing="1">
+                <Label text="Attendance"/>
+                <ProgressBar fx:id="AttendanceProgress" prefWidth="100.0"/>
+                <Label fx:id="attLabel" text="0/0"/>
+            </VBox>
+
+        </AnchorPane>
+        <!-- ─── END DASHBOARD SUMMARY ─── -->
         <SplitPane dividerPositions="0.2599206349206349" layoutX="12.0" layoutY="138.0" orientation="VERTICAL" prefHeight="127.0" prefWidth="102.0">
             <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
@@ -84,7 +102,7 @@
                 </AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="110.0" prefWidth="160.0">
                     <children>
-                        <Text fx:id="MondayOvr" layoutX="4.0" layoutY="12.0" strokeType="OUTSIDE" strokeWidth="0.0" text="dot points on what events are happening" wrappingWidth="90" style="-fx-font-size: 10px;" />
+                        <Text fx:id="MondayOvr" layoutX="4.0" layoutY="12.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Snapshot loading" wrappingWidth="90" style="-fx-font-size: 10px;" />
                     </children>
                 </AnchorPane>
             </items>
@@ -98,7 +116,7 @@
                 </AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="110.0" prefWidth="160.0">
                     <children>
-                        <Text fx:id="TuesdayOvr" layoutX="4.0" layoutY="12.0" strokeType="OUTSIDE" strokeWidth="0.0" text="dot points on what events are happening" wrappingWidth="90" style="-fx-font-size: 10px;" />
+                        <Text fx:id="TuesdayOvr" layoutX="4.0" layoutY="12.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Snapshot loading" wrappingWidth="90" style="-fx-font-size: 10px;" />
                     </children>
                 </AnchorPane>
             </items>
@@ -112,7 +130,7 @@
                 </AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="110.0" prefWidth="160.0">
                     <children>
-                        <Text fx:id="WedOvr" layoutX="4.0" layoutY="12.0" strokeType="OUTSIDE" strokeWidth="0.0" text="dot points on what events are happening" wrappingWidth="90" style="-fx-font-size: 10px;" />
+                        <Text fx:id="WedOvr" layoutX="4.0" layoutY="12.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Snapshot loading" wrappingWidth="90" style="-fx-font-size: 10px;" />
                     </children>
                 </AnchorPane>
             </items>
@@ -126,7 +144,7 @@
                 </AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="110.0" prefWidth="160.0">
                     <children>
-                        <Text fx:id="ThursOvr" layoutX="4.0" layoutY="12.0" strokeType="OUTSIDE" strokeWidth="0.0" text="dot points on what events are happening" wrappingWidth="90" style="-fx-font-size: 10px;" />
+                        <Text fx:id="ThursOvr" layoutX="4.0" layoutY="12.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Snapshot loading" wrappingWidth="90" style="-fx-font-size: 10px;" />
                     </children>
                 </AnchorPane>
             </items>
@@ -140,17 +158,17 @@
                 </AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="110.0" prefWidth="160.0">
                     <children>
-                        <Text fx:id="FriOvr" layoutX="4.0" layoutY="12.0" strokeType="OUTSIDE" strokeWidth="0.0" text="dot points on what events are happening" wrappingWidth="90" style="-fx-font-size: 10px;" />
+                        <Text fx:id="FriOvr" layoutX="4.0" layoutY="12.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Snapshot loading" wrappingWidth="90" style="-fx-font-size: 10px;" />
                     </children>
                 </AnchorPane>
             </items>
         </SplitPane>
 
         <Text fx:id="motivationalAI" layoutX="81.0" layoutY="304.0" strokeType="OUTSIDE" strokeWidth="0.0"
-              text="AI generated Weekly overview that tells a user what they did good at and suggests what to improve on basd on your goals, due assignments, and workload into account"
+              text="Quote loading"
               wrappingWidth="464.8753662109375" style="-fx-font-size: 18px;"
         />
-        <TextArea fx:id="weeklyOverviewAI" layoutX="4.0" layoutY="2.0" prefHeight="127.0" prefWidth="294.0" text="You have no weekly overview yet" wrapText="true">
+        <TextArea fx:id="weeklyOverviewAI" layoutX="4.0" layoutY="2.0" prefHeight="127.0" prefWidth="294.0" text="Overview loading" wrapText="true">
             <font>
                 <Font size="10.0" />
             </font>

@@ -90,7 +90,16 @@ public class goalsPageController extends sceneLoaderController {
         //set the labels to the data
         initialiseTextFields(userCollectedData);
         displayDataChangesOverTime();
-        generateAIRecommendedGoals();
+
+        Runnable AItask = new Runnable() {
+            @Override
+            public void run() {
+                generateAIRecommendedGoals();
+            }
+        };
+        Thread AIthread=new Thread(AItask);
+        AIthread.start();
+
         resultSet.close();
         }catch(Exception e) {
         System.out.println(e);
@@ -316,6 +325,7 @@ public class goalsPageController extends sceneLoaderController {
             throw new RuntimeException(e);
         }
     }
+
     public void sendChangesToDB(String currentUsersNumber) throws SQLException {
         try{
         //indexing is based on how the array is sorted: [hoursStudiedKPI, GPAKPI, attendanceKPI, hoursStudiedGoal, GPAGoal, attendanceRateGoal]

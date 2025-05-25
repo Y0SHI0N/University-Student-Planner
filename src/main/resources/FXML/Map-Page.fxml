@@ -10,7 +10,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Controllers.mapPageController">
     <children>
-        <fx:include fx:id="optionList" source="../Components/OptionList.fxml"/>
+        <fx:include fx:id="optionList" source="../Components/OptionList.fxml" />
         <ButtonBar layoutY="361.0" prefHeight="40.0" prefWidth="600.0">
             <buttons>
                 <Button mnemonicParsing="false" onMouseClicked="#switchToHomePage" style="-fx-background-color: #87CEEB;" text="Home" textAlignment="CENTER">
@@ -85,6 +85,6 @@
             </image>
         </ImageView>
         <Canvas fx:id="heatMap" height="200.0" layoutX="250.0" layoutY="150.0" width="302.0" />
-      <TextArea fx:id="AIMapSummary" layoutX="250.0" layoutY="20.0" prefHeight="77.0" prefWidth="269.0" />
+      <TextArea fx:id="AIMapSummary" editable="false" layoutX="250.0" layoutY="20.0" prefHeight="77.0" prefWidth="269.0" />
     </children>
 </AnchorPane>

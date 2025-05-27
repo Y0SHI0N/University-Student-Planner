@@ -1,9 +1,6 @@
 import Application.Controllers.mapPageController;
 import org.junit.jupiter.api.Test;
 
-import java.awt.*;
-import java.awt.color.ICC_ColorSpace;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class MapPageControllerTest {

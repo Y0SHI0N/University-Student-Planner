@@ -85,6 +85,12 @@
             </image>
         </ImageView>
         <Canvas fx:id="heatMap" height="200.0" layoutX="250.0" layoutY="150.0" width="302.0" />
-      <TextArea fx:id="AIMapSummary" editable="false" layoutX="250.0" layoutY="20.0" prefHeight="77.0" prefWidth="269.0" />
+      <TextArea fx:id="AIMapSummary" editable="false" layoutX="250.0" layoutY="20.0" prefHeight="77.0" prefWidth="269.0" text="Summary loading..." wrapText="true" />
+      <HBox fx:id="dateContainer" layoutX="400.0" layoutY="151.0" prefHeight="26.0" prefWidth="151.0" visible="false">
+         <children>
+              <DatePicker fx:id="predictedDate" accessibleRoleDescription="event start date" minHeight="20" minWidth="100" prefHeight="26.0" prefWidth="151.0" />
+            <Button fx:id="dateButton" ellipsisString="Ok" mnemonicParsing="false" onMouseClicked="#confirmDate" prefHeight="26.0" prefWidth="41.0" text="Ok" />
+         </children>
+      </HBox>
     </children>
 </AnchorPane>

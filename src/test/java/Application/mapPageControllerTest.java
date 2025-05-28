@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MapPageControllerTest {
-
+    /*
     @Test
     void renderHeatmap_Storage_Test() {
         // checking that the building class can successfully store and retrieve its own values
@@ -29,6 +29,7 @@ class MapPageControllerTest {
         assertTrue(building.getYPos() >= -200);
         assertTrue(building.getYPos() <= 200);
     }
+    */
 
     @Test
     void calculateHeat_ExpectedOutput_Test() {

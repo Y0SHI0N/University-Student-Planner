@@ -48,11 +48,11 @@
                 </SplitPane>
             </children>
         </VBox>
-        <ImageView fitHeight="294.0" fitWidth="440.0" layoutX="246.0" layoutY="64.0" pickOnBounds="true">
+        <ImageView fitHeight="284.0" fitWidth="440.0" layoutX="246.0" layoutY="64.0" pickOnBounds="true">
             <image>
                 <Image url="@../Img/Campus-map.jpg" />
             </image>
         </ImageView>
-        <Canvas fx:id="heatMap" height="294.0" layoutX="246.0" layoutY="64.0" width="440.0" />
+        <Canvas fx:id="heatMap" height="284.0" layoutX="246.0" layoutY="64.0" width="440.0" />
     </children>
 </AnchorPane>

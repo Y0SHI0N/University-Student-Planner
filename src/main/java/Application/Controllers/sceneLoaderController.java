@@ -33,6 +33,7 @@ public class sceneLoaderController{
     protected final UserCollectedDataDAO userCollectedDataDAO = DatabaseConnection.getUserCollectedDataDAO();
     private Parent root;
     public static String currentUserNumber; //used to track the user currently logged in
+    public static String curPage = ""; //used to track the current page
     protected StageController stageController = new StageController();
     protected ArrayList<Thread> ineruptableThreads=new ArrayList<Thread>();
     @FXML protected MenuItem viewProfileItem;
@@ -99,6 +100,7 @@ public class sceneLoaderController{
 
     public void switchToLoginPage() throws Exception {
         try{
+            curPage = "login";
             changeScene(Main.getLoginPage());
             stageController.applicationStage.getScene().getStylesheets().add("/Styling/login.css");
             stageController.closeActiveStage();
@@ -109,6 +111,7 @@ public class sceneLoaderController{
 
     public void switchToRegisterPage() throws Exception {
         try{
+            curPage = "register";
             changeScene(Main.getRegisterPage());
             stageController.closeActiveStage();
         } catch (Exception e) {
@@ -118,6 +121,7 @@ public class sceneLoaderController{
 
     public void switchToHomePage() throws Exception {
         try{
+            curPage = "home";
             changeScene(Main.getHomePage());
             stageController.closeActiveStage();
         } catch (Exception e) {
@@ -127,6 +131,7 @@ public class sceneLoaderController{
 
     public void switchToMapPage() throws Exception {
         try{
+            curPage = "map";
             changeScene(Main.getMapPage());
             stageController.closeActiveStage();
         } catch (Exception e) {
@@ -136,6 +141,7 @@ public class sceneLoaderController{
 
     public void switchToGoalsPage() throws Exception {
         try{
+            curPage = "goals";
             changeScene(Main.getGoalsPage());
             stageController.closeActiveStage();
         } catch (Exception e) {
@@ -145,6 +151,7 @@ public class sceneLoaderController{
 
     public void switchToCalendarPage() throws Exception {
         try{
+            curPage = "calendar";
             changeScene(Main.getCalendarPage());
             stageController.closeActiveStage();
         } catch (Exception e) {
@@ -153,6 +160,7 @@ public class sceneLoaderController{
     }
     public void switchToProfilePage() throws Exception{
         try{
+            curPage = "profile";
             changeScene(Main.getProfilePage());
             stageController.closeActiveStage();
         } catch (Exception e){

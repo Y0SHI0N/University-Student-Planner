@@ -22,27 +22,27 @@
 
     <ButtonBar layoutY="361.0" prefHeight="40.0" prefWidth="600.0">
         <buttons>
-            <Button mnemonicParsing="false" onMouseClicked="#switchToHomePage" style="-fx-background-color: #003C72;" text="Home" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="homeButton" mnemonicParsing="false" onMouseClicked="#switchToHomePage" style="-fx-background-color: #003C72;" text="Home" textAlignment="CENTER" textFill="WHITE">
                 <cursor>
                     <Cursor fx:constant="OPEN_HAND" />
                 </cursor>
             </Button>
-            <Button mnemonicParsing="false" onMouseClicked="#switchToGoalsPage" style="-fx-background-color: #87CEEB;" text="Goals">
+            <Button fx:id="goalsButton" mnemonicParsing="false" onMouseClicked="#switchToGoalsPage" style="-fx-background-color: #87CEEB;" text="Goals">
                 <cursor>
                     <Cursor fx:constant="OPEN_HAND" />
                 </cursor>
             </Button>
-            <Button mnemonicParsing="false" onMouseClicked="#switchToMapPage" style="-fx-background-color: #87CEEB;" text="Map">
+            <Button fx:id="mapButton" mnemonicParsing="false" onMouseClicked="#switchToMapPage" style="-fx-background-color: #87CEEB;" text="Map">
                 <cursor>
                     <Cursor fx:constant="OPEN_HAND" />
                 </cursor>
             </Button>
-            <Button mnemonicParsing="false" onMouseClicked="#switchToCalendarPage" style="-fx-background-color: #87CEEB;" text="Calendar">
+            <Button fx:id="calendarButton" mnemonicParsing="false" onMouseClicked="#switchToCalendarPage" style="-fx-background-color: #87CEEB;" text="Calendar">
                 <cursor>
                     <Cursor fx:constant="OPEN_HAND" />
                 </cursor>
             </Button>
-            <Button mnemonicParsing="false" onMouseClicked="#switchToProfilePage" style="-fx-background-color: #87CEEB;" text="Profile">
+            <Button fx:id="profileButton" mnemonicParsing="false" onMouseClicked="#switchToProfilePage" style="-fx-background-color: #87CEEB;" text="Profile">
                 <cursor>
                     <Cursor fx:constant="OPEN_HAND" />
                 </cursor>

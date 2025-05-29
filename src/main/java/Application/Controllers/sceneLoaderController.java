@@ -102,7 +102,7 @@ public class sceneLoaderController{
         try{
             curPage = "login";
             changeScene(Main.getLoginPage());
-            stageController.applicationStage.getScene().getStylesheets().add("/Styling/login.css");
+//            stageController.applicationStage.getScene().getStylesheets().add("/Styling/login.css");  //commented out because it is giving silent error
             stageController.closeActiveStage();
         } catch (Exception e) {
             System.out.println(e);
@@ -113,6 +113,7 @@ public class sceneLoaderController{
         try{
             curPage = "register";
             changeScene(Main.getRegisterPage());
+//            stageController.applicationStage.getScene().getStylesheets().add(getClass().getResource("/Styling/register.css").toExternalForm()); //commented out because it is giving silent error
             stageController.closeActiveStage();
         } catch (Exception e) {
             System.out.println(e);

@@ -20,7 +20,7 @@
         </image>
     </ImageView>
 
-    <ButtonBar layoutY="361.0" prefHeight="40.0" prefWidth="600.0">
+    <ButtonBar layoutX="62.5" layoutY="361.0" prefHeight="40.0" prefWidth="600.0">
         <buttons>
             <Button fx:id="homeButton" mnemonicParsing="false" onMouseClicked="#switchToHomePage" style="-fx-background-color: #003C72;" text="Home" textAlignment="CENTER" textFill="WHITE">
                 <cursor>

@@ -215,6 +215,7 @@ public class goalsPageController extends sceneLoaderController {
         hideEditingGoals();
         showData();
         showGoals();
+        editingErrorText.setText(""); // removes error messages
         editGoalButton.setVisible(true);
         updateUserDataButton.setVisible(true);
         cancelChangesButton.setVisible(false);

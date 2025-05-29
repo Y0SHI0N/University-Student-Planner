@@ -187,7 +187,11 @@ public class mapPageController extends sceneLoaderController {
 
             // lookup letterID inside event from calender_events
             Building building = findBuildingByLetter(calender_events.get(i).eventLocation.charAt(0));
-            drawCircle(building, heatMap.getGraphicsContext2D(), i, calender_events.get(i));
+            drawCircle(building, heatMap.getGraphicsContext2D(), i, calender_events.get(i)); //todo: REPLACE WITH IT'S POSITION IN THE ORDERED CALENDER EVENTS SET
+            System.out.println("6 6 6");
+            System.out.println(building);
+            System.out.println(calender_events.get(i));
+            System.out.println("9 9 9");
         }
     }
 
@@ -222,6 +226,7 @@ public class mapPageController extends sceneLoaderController {
         // The values range from 0 to 255 to encompass the full RGB scale of color.
 
         int heat_hue_value = Math.clamp(room_number * circleTemplate.hueStepValue, 0, 255);
+        System.out.println(heat_hue_value);
         // The heat hue value works as an inverse relationship with both red and blue hues.
         // The deeper the red, the less the blue and vice versa. Initally starts with max blue and zero red
         return (Color.rgb(Math.abs(heat_hue_value - 255), 0, heat_hue_value, 0.5));

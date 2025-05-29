@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
@@ -370,7 +371,7 @@ public class goalsPageController extends sceneLoaderController {
         }
     }
 
-    public void saveChanges() throws SQLException {
+    public void saveChanges() throws Exception {
         boolean updatedUser = verifyUsersChanges();
         if (updatedUser == true){
             sendChangesToDB(currentUserNumber);
@@ -385,6 +386,7 @@ public class goalsPageController extends sceneLoaderController {
             saveChangesButton.setVisible(false);
             resetTextFields();
             editingErrorText.setText(""); // don't want to display any error when the user has made it successful if an error was made previously
+            switchToGoalsPage();
         }
         else {
             //doesn't change visibility of any components

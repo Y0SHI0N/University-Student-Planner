@@ -419,9 +419,6 @@ public class goalsPageController extends sceneLoaderController {
             XYChart.Series<String, Double> GPASeries = new XYChart.Series();
             XYChart.Series<String, Double> attendanceSeries = new XYChart.Series();
 
-            DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
-            DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd/MM");
-
             while(resultSet.next()){
                 String formattedDate = resultSet.getString("formattedDate");
 

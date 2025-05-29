@@ -60,7 +60,7 @@ public class goalsPageController extends sceneLoaderController {
     @FXML CategoryAxis hoursStudiedXAxis;
     @FXML NumberAxis hoursStudiedYAxis;
 
-    @FXML LineChart<String,Integer> GPAGraph;
+    @FXML LineChart<String,Double> GPAGraph;
     @FXML CategoryAxis GPAXAxis;
     @FXML NumberAxis GPAYAxis;
 
@@ -399,27 +399,36 @@ public class goalsPageController extends sceneLoaderController {
             GPAGraph.getData().removeAll();
             attendanceGraph.getData().removeAll();
 
-            String searchQuery = "SELECT * FROM User_Collected_Data WHERE studentNumber = ?;";
+            String searchQuery = "SELECT strftime('%d/%m', dateModified) AS formattedDate, " +
+                            "AVG(GPA) AS GPA, " +
+                            "AVG(HoursStudied) AS HoursStudied, " +
+                            "AVG(AttendanceRate) AS AttendanceRate, " +
+                            "AVG(GPAGoal) AS GPAGoal, " +
+                            "AVG(HoursStudiedGoal) AS HoursStudiedGoal, " +
+                            "AVG(AttendanceRateGoal) AS AttendanceRateGoal " +
+                            "FROM User_Collected_Data " +
+                            "WHERE studentNumber = ? " +
+                            "GROUP BY strftime('%d/%m', dateModified) " +
+                            "ORDER BY strftime('%d/%m', dateModified);";
+
             PreparedStatement statement = userCollectedDataDAO.getDBConnection().prepareStatement(searchQuery);
             statement.setString(1, currentUserNumber);
             ResultSet resultSet = statement.executeQuery();
 
             XYChart.Series<String, Double> hoursStudiedSeries = new XYChart.Series();
-            XYChart.Series<String, Integer> GPASeries = new XYChart.Series();
+            XYChart.Series<String, Double> GPASeries = new XYChart.Series();
             XYChart.Series<String, Double> attendanceSeries = new XYChart.Series();
 
             DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
             DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd/MM");
 
             while(resultSet.next()){
-                String dateModified = resultSet.getString("dateModified");
+                String formattedDate = resultSet.getString("formattedDate");
 
                 // Convert dateModified to desired format
-                LocalDateTime dateTime = LocalDateTime.parse(dateModified, inputFormatter);
-                String formattedDate = dateTime.format(outputFormatter);
-                hoursStudiedSeries.getData().add(new XYChart.Data(formattedDate, Double.parseDouble(resultSet.getString("hoursStudied"))));
-                GPASeries.getData().add(new XYChart.Data(formattedDate, Integer.parseInt(resultSet.getString("GPA"))));
-                attendanceSeries.getData().add(new XYChart.Data(formattedDate, Double.parseDouble(resultSet.getString("attendanceRate"))));
+                hoursStudiedSeries.getData().add(new XYChart.Data(formattedDate, Double.parseDouble(resultSet.getString("HoursStudied"))));
+                GPASeries.getData().add(new XYChart.Data(formattedDate, Double.parseDouble(resultSet.getString("GPA"))));
+                attendanceSeries.getData().add(new XYChart.Data(formattedDate, Double.parseDouble(resultSet.getString("AttendanceRate"))));
             }
 
             hoursStudiedGraph.getData().addAll(hoursStudiedSeries);
